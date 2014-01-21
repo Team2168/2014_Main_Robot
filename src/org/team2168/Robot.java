@@ -22,7 +22,7 @@ import org.team2168.commands.CommandBase;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class RobotTemplate extends IterativeRobot {
+public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
 
