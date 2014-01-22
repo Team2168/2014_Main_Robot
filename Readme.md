@@ -5,7 +5,7 @@ This repository is for development of the 2014 Robot for the FIRST Robotics Comp
 It is written in Java and uses the Command Based Robot framework.
 
 ###Environment Setup
-After cloning the repo and importing the project in eclipse, follow the steps belwo to configure your build path.  
+After cloning the repo and importing the project in eclipse, follow the steps below to configure your build path.
 <ol>
 <li>Right click on the project folder, Build Path > Configure Build Path.</li>
 <li>Click the "Add External JARs" button.</li>
