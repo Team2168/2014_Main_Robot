@@ -1,5 +1,7 @@
 package org.team2168.subsystems;
 
+import org.team2168.RobotMap;
+
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -11,8 +13,8 @@ public class Drivetrain extends Subsystem {
     Talon leftMotor;
 
     public void Dirvetrain() {
-    	rightMotor = new Talon(1);
-    	leftMotor = new Talon(2);
+    	rightMotor = new Talon(RobotMap.rightDriveMotor.getInt());
+    	leftMotor = new Talon(RobotMap.leftDriveMotor.getInt());
     }
     
     public void initDefaultCommand() {
