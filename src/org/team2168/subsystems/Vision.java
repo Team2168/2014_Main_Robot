@@ -84,23 +84,27 @@ public class Vision extends Subsystem{
         }
 
         //Return values in a string for calling user.
+
+        String retString;
+
         if(hotGoal_m)
         {
             //Because there is a hot goal use the switch case command to find out what side it is.
             switch(hotGoalSide_m)
                 {
-                    case 1 : return "right";
+                    case 1 : retString = "right";
                     break;
 
-                    case 2 : return "left";
+                    case 2 : retString = "left";
                     break;
                 }
         }
         else
         {
-            return "null";
+            retString =  "null";
         }
 
+        return retString;
     }
 	
 }
