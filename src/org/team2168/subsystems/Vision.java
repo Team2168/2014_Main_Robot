@@ -10,25 +10,30 @@ public class Vision {
 	
 	void getTCPPacket(String ip, int port) throws IOException
 	{
-		
-			//TODO Need to edit to 
 	
-			Socket clientSocket = new Socket(ip, port);
-			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-			outToServer.writeBytes("1");	
+			//TODO decide if the server should be on the beaglebone or the cRIO.
+			Socket clientSocket = new Socket(ip, port); //Connect to TCP server
+			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream()); //Create an output stream to write to.
+			outToServer.writeBytes("1"); //Send a packet "1" to the server
+			
+			//Because the server is going to be 1:1 (every packet sent we will recieve one packet)
+			
 			String sentence;
 			String modifiedSentence;
-			BufferedReader inFromUser = new BufferedReader( new InputStreamReader(System.in));
-			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			sentence = inFromUser.readLine();
-			modifiedSentence = inFromServer.readLine();
-			System.out.println("FROM SERVER: " + modifiedSentence);
+			
+			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); //this will read the packet from the server. If no packets are sent then it will never get past this line of code.
+			modifiedSentence = inFromServer.readLine(); //Convert it to a workable string
+			System.out.println("FROM SERVER: " + modifiedSentence); //Print out to console
+			
+			//TODO change to vector
 			
 			for(String d : modifiedSentence.split(","))
 			{
 				data.add(d);
 			}
-			clientSocket.close();
+			
+			clientSocket.close(); //Close the connection
+			
 	
 	}
 	
