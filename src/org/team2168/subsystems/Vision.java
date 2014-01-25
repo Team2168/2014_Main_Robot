@@ -3,6 +3,7 @@ package org.team2168.subsystems;
 import java.io.*;
 import java.net.*;
 import java.util.Vector;
+import edu.wpi.first.wpilibj.command.Subsystem
 
 public class Vision extends Subsystem{
 
