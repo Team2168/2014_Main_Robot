@@ -3,7 +3,7 @@ package org.team2168.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team2168.OI;
-import org.team2168.subsystems.ExampleSubsystem;
+import org.team2168.subsystems.*;
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
@@ -15,6 +15,7 @@ public abstract class CommandBase extends Command {
 
     public static OI oi;
     // Create a single static instance of all of your subsystems
+    public static Drivetrain drivetrain = new Drivetrain(); 
     public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 
     public static void init() {
@@ -26,7 +27,7 @@ public abstract class CommandBase extends Command {
         oi = new OI();
 
         // Show what command your subsystem is running on the SmartDashboard
-        SmartDashboard.putData(exampleSubsystem);
+        //SmartDashboard.putData(exampleSubsystem);
     }
 
     public CommandBase(String name) {
