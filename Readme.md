@@ -35,14 +35,13 @@ A limit switch (digital input) will likey need to be added to detect the zero/ho
 This subsystem also includes the firing mechanism. Assume this is controlled by a single pneumatic actuator.
 * One double solenoid.
 
-####Catapult_Arrest (OBE? - fixed spring on strap?)
-This mechanism is responsible for the position at which the catapult stops when it is fired. This is controlled by a single pneumatic actuator. Assume one double solenoid controlling the two positions of the actuator.
-
-It is also responsible for disipating the shock load experienced by the robot when the catapult is fired. This is a mechanical function of the device and doesn't require software attention to operate properly.
-
 ####Catapult_Tusks
 This subsystem controlls the exit angle of the ball when it is fired from the catapult. This will be implemented as a multi-position mechanism at the back of the catapult. It will have three positions. The three positions are: Long range, Short range, and Truss shot (in order from fully extended to fully retracted).
 * Assume two double solenoid.
+
+####Catapult_Arrest
+This mechanism is responsible for the position at which the catapult stops when it is fired. It is also responsible for disipating the shock load experienced by the robot when the catapult is fired. It will be composed of a single spring and strap. It has evolved into a completely mechanical device and as such does not need to be represented in our code.
+
 
 ###Intake
 The intake will be responsible for picking up/passing balls into/out of our robot. This mechanism will be implemented as multiple subsystems to allow for concurrent operation of its components.
