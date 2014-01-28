@@ -16,10 +16,10 @@ public class Vision extends Subsystem{
      * @return Vector<String>
      * @throws IOException
      */
-	Vector<String> getTCPPacket(String ip, int port) throws IOException
+	Vector getTCPPacket(String ip, int port) throws IOException
 	{
 
-        Vector<String> retVec = new Vector<String>();
+        Vector retVec = new Vector ();
 
 
 		//TODO decide if the server should be on the beaglebone or the cRIO.
@@ -41,7 +41,7 @@ public class Vision extends Subsystem{
 		for(String d : modifiedSentence.split(","))
 		{
 			retVec.add(d);
-            System.out.println(d);
+            		System.out.println(d);
 		}
 			
 		clientSocket.close(); //Close the connection
@@ -55,7 +55,7 @@ public class Vision extends Subsystem{
      * @param TCPPacket
      * @return String
      */
-    String isHotTarget(Vector<String> TCPPacket)
+    String isHotTarget(Vector TCPPacket)
     {
 
         boolean hotGoal_m;
@@ -67,7 +67,7 @@ public class Vision extends Subsystem{
 
         //Interpert the HOT Goal from the Vector of Strings.
         int hotGoal = Integer.parseInt(TCPPacket[0]);
-        if(hostGoal) //If hotGoal has a value of 1 then there is a hot goal.
+        if(hotGoal) //If hotGoal has a value of 1 then there is a hot goal.
         {
             hotGoal_m = true;
             //Find out what side the HOT Goal is.
