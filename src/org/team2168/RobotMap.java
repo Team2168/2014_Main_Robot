@@ -28,6 +28,10 @@ public class RobotMap extends ConstantsBase {
 	//Solenoid Channels(third slot on cRio)///////////////////////////
 	public static final Constant intakeUpPort = new Constant("intakeUpPort", 1);
 	public static final Constant intakeDownPort = new Constant("intakeDownPort", 2);
+	public static final Constant catUpPort1 = new Constant("catUpPort1", 3);
+	public static final Constant catDownPort1 = new Constant("catDownPort1", 4);
+	public static final Constant catUpPort2 = new Constant("catUpPort2", 5);
+	public static final Constant catDownPort2 = new Constant("catDownPort2", 6);
 	
 	//Solenoid Channels(fourth slot on cRio)//////////////////////////
 	
