@@ -17,6 +17,7 @@ public abstract class CommandBase extends Command {
     // Create a single static instance of all of your subsystems
     public static Drivetrain drivetrain = new Drivetrain();
     public static IntakePosition intakePosition = new IntakePosition();
+    public static CatapultTusks catapultTusks = new CatapultTusks();
     public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 
     public static void init() {
