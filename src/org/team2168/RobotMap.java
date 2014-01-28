@@ -26,6 +26,8 @@ public class RobotMap extends ConstantsBase {
 	//Relay Output Channels///////////////////////////////////////////
 	
 	//Solenoid Channels(third slot on cRio)///////////////////////////
+	public static final Constant intakeUpPort = new Constant("intakeUpPort", 1);
+	public static final Constant intakeDownPort = new Constant("intakeDownPort", 2);
 	
 	//Solenoid Channels(fourth slot on cRio)//////////////////////////
 	
