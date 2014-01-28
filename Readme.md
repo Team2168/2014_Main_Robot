@@ -41,7 +41,7 @@ This mechanism is responsible for the position at which the catapult stops when 
 It is also responsible for disipating the shock load experienced by the robot when the catapult is fired. This is a mechanical function of the device and doesn't require software attention to operate properly.
 
 ####Catapult_Tusks
-This subsystem controlls the exit angle of the ball when it is fired from the catapult. This will be implemented as a multi-position mechanism at the back of the catapult.
+This subsystem controlls the exit angle of the ball when it is fired from the catapult. This will be implemented as a multi-position mechanism at the back of the catapult. It will have three positions. The three positions are: Long range, Short range, and Truss shot (in order from fully extended to fully retracted).
 * Assume two double solenoid.
 
 ###Intake
@@ -54,8 +54,8 @@ The rollers on the intake will make it easier for the driver to pick up balls. R
 If we get strapped for PWM outputs we could run all three sides from a single PWM output channel.
 
 ####Intake_Position
-The vertical position of the intake will be controlled by pneumatics. Likely two pneumatic cylinders, back to back, giving the intake three possible positions it could be in. Assume two double solenoid valves controlling these actuators.
-* assume Two Double Solenoids
+The vertical position of the intake will be controlled by pneumatics. A single pneumatic actuator, giving the intake two possible positions it could be in. 
+* assume One Double Solenoids
 
 ###Vision
 The vision subsystem will consist of a camera with a beaglebone processing images. The beaglebone will communicate, through TCP messages, the results of it's image processing to the cRIO. Data communicated through this subsystem will likely consist of distance and angle information to the nearest goal, and whether or not it is "hot".
