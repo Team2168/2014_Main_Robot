@@ -54,9 +54,15 @@ public class RobotMap extends ConstantsBase {
 	/****************************************************************
 	 * 								Gyros
 	 ***************************************************************/
-	
 	//TODO Needs to be changed
 	public static final int rotateGyro = 3;
+	
+	/****************************************************************
+	 * 								Encoder
+	 * *************************************************************/
+	//TODO Needs to be changed
+	public static final int driveTrainEncoderP1 = 4;
+	public static final int driveTrainEncoderP2 = 5;
 	
 	static {
 		// Set any overridden constants from the file on startup.
