@@ -33,7 +33,7 @@ public class RotateDrivetrain extends CommandBase{
 			while(startAngle < endAngle)
 			{
 				
-				driveTrain.drive(0, 6);
+				driveTrain.driveRight(6);
 				
 				startAngle = rotateGyro.getAngle();
 			}
@@ -41,12 +41,12 @@ public class RotateDrivetrain extends CommandBase{
 		{
 			while(startAngle > endAngle)
 			{
-				driveTrain.drive(6, 0);		
+				driveTrain.driveLeft(6);	
 				startAngle = rotateGyro.getAngle();
 			}
 		}
 		
-		driveTrain.drive(0, 0);
+		driveTrain.stopDrivetrain();
 		
 	}
 
