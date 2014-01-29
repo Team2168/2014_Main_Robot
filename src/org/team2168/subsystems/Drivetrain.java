@@ -5,6 +5,7 @@ import org.team2168.utils.FalconGyro;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.Encoder;
 
 /**
  *
@@ -13,11 +14,16 @@ public class Drivetrain extends Subsystem {
     Talon rightMotor;
     Talon leftMotor;
     FalconGyro gyro;
-
+    Encoder driveTrainEncoder;
+    
     public void Dirvetrain() {
+    	
     	rightMotor = new Talon(RobotMap.rightDriveMotor.getInt());
     	leftMotor = new Talon(RobotMap.leftDriveMotor.getInt());
     	gyro = new FalconGyro(RobotMap.gyroPort.getInt());
+    	driveTrainEncoder = new Encoder(RobotMap.driveTrainEncoderP1,RobotMap.driveTrainEncoderP2);
+ 
+    	
     }
     
     public void initDefaultCommand() {
@@ -31,16 +37,39 @@ public class Drivetrain extends Subsystem {
      * @param rightSpeed the speed to drive the right motor at 
      * @param leftSpeed the speed to drive the left motor at
      */
-    public void drive(double rightSpeed, double leftSpeed) {
-    	rightMotor.set(rightSpeed);
-    	leftMotor.set(leftSpeed);
+    public void driveLeft(double speed)
+    {
+    	leftMotor.set(speed);
     }
+    
+    public void driveRight(double speed)
+    {
+    	rightMotor.set(speed);
+    }
+    
     
     /**
      * Get the current angle of the gyro.
      * 
      * @return the angle of the gyro, in degrees.
      */
+    
+    public double getEncoderDataRaw()
+    {
+    	return driveTrainEncoder.getRaw();
+    }
+    
+    public double getEncoderDataDistance()
+    {
+    	return driveTrainEncoder.getDistance();
+    }
+    
+    public void stopDrivetrain()
+    {
+    	leftMotor.stopMotor();
+    	rightMotor.stopMotor();
+    }
+    
     public double getGyroAngle() {
     	return gyro.getAngle();
     }
