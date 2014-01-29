@@ -43,13 +43,21 @@ public class RobotMap extends ConstantsBase {
      *                    Drivetrain Parameters                     *
      ****************************************************************/
 	//add them here
+	public static final int wheelRadiusDrivetrain = 2;
 	
 	/****************************************************************
      *                      Catapult Parameters                     *
      ****************************************************************/
 	public static final Constant wheelRadius = new Constant("wheelRadius", 2);
+	
 
-
+	/****************************************************************
+	 * 								Gyros
+	 ***************************************************************/
+	
+	//TODO Needs to be changed
+	public static final int rotateGyro = 3;
+	
 	static {
 		// Set any overridden constants from the file on startup.
 		readConstantsFromFile();
