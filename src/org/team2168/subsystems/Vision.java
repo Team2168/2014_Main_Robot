@@ -66,13 +66,13 @@ public class Vision extends Subsystem{
         int hotGoalSide_m = 0;
 
         //Interpert the HOT Goal from the Vector of Strings.
-        int hotGoal = Integer.parseInt(TCPPacket[0]);
+        int hotGoal = Integer.parseInt(TCPPacket.get(0));
         if(hotGoal == 1) //If hotGoal has a value of 1 then there is a hot goal.
         {
             hotGoal_m = true;
             //Find out what side the HOT Goal is.
 
-            int hotGoalSide = Integer.parseInt(TCPPacket[1]);
+            int hotGoalSide = Integer.parseInt(TCPPacket.get(1));
             //If hotGoalSide has a value of 1 it is the left side. If hotGoalSide has a value of 0 is it the right side
             if(hotGoalSide == 1)
             {
