@@ -3,7 +3,7 @@ package org.team2168.subsystems;
 import java.io.*;
 import java.net.*;
 import java.util.Vector;
-import edu.wpi.first.wpilibj.command.Subsystem
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Vision extends Subsystem{
 
@@ -58,23 +58,23 @@ public class Vision extends Subsystem{
     String isHotTarget(Vector TCPPacket)
     {
 
-        boolean hotGoal_m;
+        boolean hotGoal_m = false;
 
         //When 2 hotGoalSide is left
         //When 1 hotGoalSide is right
         //When 0 no hot goal was found.
-        int hotGoalSide_m;
+        int hotGoalSide_m = 0;
 
         //Interpert the HOT Goal from the Vector of Strings.
         int hotGoal = Integer.parseInt(TCPPacket[0]);
-        if(hotGoal) //If hotGoal has a value of 1 then there is a hot goal.
+        if(hotGoal == 1) //If hotGoal has a value of 1 then there is a hot goal.
         {
             hotGoal_m = true;
             //Find out what side the HOT Goal is.
 
             int hotGoalSide = Integer.parseInt(TCPPacket[1]);
             //If hotGoalSide has a value of 1 it is the left side. If hotGoalSide has a value of 0 is it the right side
-            if(hotGoalSide)
+            if(hotGoalSide == 1)
             {
                 hotGoalSide_m = 2;
             }
@@ -86,7 +86,7 @@ public class Vision extends Subsystem{
 
         //Return values in a string for calling user.
 
-        String retString;
+        String retString = null;
 
         if(hotGoal_m)
         {
@@ -107,5 +107,9 @@ public class Vision extends Subsystem{
 
         return retString;
     }
-	
+
+    @Override
+    protected void initDefaultCommand() {
+
+    }
 }
