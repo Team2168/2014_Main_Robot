@@ -1,40 +1,31 @@
-package org.team2168.subsystems
+package org.team2168.subsystems;
+
+import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.Talon;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Intake extends Subsystem{
-	
 	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     
 	}
 	
-	Talon rightMotorController;
-	Talon leftMotorController;
-	Talon centerMotorController;
-	
+	Talon intakeMotorController;
 	
 	// TODO put in correct inputs
 	public Intake(){
-		rightMotorController=new Talon(1);
-		leftMotorController=new Talon (2);
-		centerMotorController=new Talon (3);
+		intakeMotorController = new Talon(RobotMap.intakeMotorController);
 	}
 	
 	void intakeMotorControl(double speed)
 	{
-		rightMotorController.set(speed);
-		leftMotorController.set(speed);
-		centerMotorController.set(speed);
+		intakeMotorController.set(speed);
 	}
 	
 	void stopMotors(){
-		rightMotorController.stopMotor();
-		leftMotorController.stopMotor();
-		centerMotorController.stopMotor();
+		intakeMotorController.set(0);
 	}
 
 	
