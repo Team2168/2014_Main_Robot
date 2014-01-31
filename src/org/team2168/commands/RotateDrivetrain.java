@@ -17,14 +17,12 @@ public class RotateDrivetrain extends CommandBase{
 		this.angle = angle;
 	}
 
-	
-	@Override
+
 	protected void end() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
 		
@@ -33,7 +31,7 @@ public class RotateDrivetrain extends CommandBase{
 			while(startAngle < endAngle)
 			{
 				
-				driveTrain.drive(0, 6);
+				//driveTrain.drive(0, 6);
 				
 				startAngle = rotateGyro.getAngle();
 			}
@@ -41,16 +39,15 @@ public class RotateDrivetrain extends CommandBase{
 		{
 			while(startAngle > endAngle)
 			{
-				driveTrain.drive(6, 0);		
+				//driveTrain.drive(6, 0);		
 				startAngle = rotateGyro.getAngle();
 			}
 		}
 		
-		driveTrain.drive(0, 0);
+		//driveTrain.drive(0, 0);
 		
 	}
 
-	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
 		rotateGyro = new Gyro(RobotMap.rotateGyro);
@@ -58,13 +55,11 @@ public class RotateDrivetrain extends CommandBase{
 		endAngle = startAngle + angle;
 	}
 
-	@Override
 	protected void interrupted() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
 		return false;

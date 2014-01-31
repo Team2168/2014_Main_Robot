@@ -21,8 +21,7 @@ public class Drivetrain extends Subsystem {
     	rightMotor = new Talon(RobotMap.rightDriveMotor.getInt());
     	leftMotor = new Talon(RobotMap.leftDriveMotor.getInt());
     	gyro = new FalconGyro(RobotMap.gyroPort.getInt());
-    	driveTrainEncoder = new Encoder(RobotMap.driveTrainEncoderP1,RobotMap.driveTrainEncoderP2);
- 
+    	//driveTrainEncoder = new Encoder(RobotMap.driveTrainEncoderP1,RobotMap.driveTrainEncoderP2);
     	
     }
     
@@ -56,12 +55,14 @@ public class Drivetrain extends Subsystem {
     
     public double getEncoderDataRaw()
     {
-    	return driveTrainEncoder.getRaw();
+    	//return driveTrainEncoder.getRaw();
+    	return 0;
     }
     
     public double getEncoderDataDistance()
     {
-    	return driveTrainEncoder.getDistance();
+    	//return driveTrainEncoder.getDistance();
+    	return 0;
     }
     
     public void stopDrivetrain()
