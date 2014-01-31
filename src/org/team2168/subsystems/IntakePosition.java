@@ -16,8 +16,8 @@ public class IntakePosition extends Subsystem {
 	MomentaryDoubleSolenoid actuator;
 	
 	public IntakePosition() {
-		actuator = new MomentaryDoubleSolenoid(RobotMap.intakeUpPort.getInt(),
-				RobotMap.intakeDownPort.getInt());
+		actuator = new MomentaryDoubleSolenoid(RobotMap.intakeExtPort.getInt(),
+				RobotMap.intakeRetPort.getInt());
 		
 	}
 
