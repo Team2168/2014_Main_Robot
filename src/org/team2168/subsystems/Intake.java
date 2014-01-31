@@ -9,7 +9,7 @@ public class Intake extends Subsystem{
 	Talon intakeMotorController;
 
 	public Intake(){
-		intakeMotorController = new Talon(RobotMap.intakeMotorController);
+		intakeMotorController = new Talon(RobotMap.intakeMotor.getInt());
 	}
 	
 	public void initDefaultCommand() {
