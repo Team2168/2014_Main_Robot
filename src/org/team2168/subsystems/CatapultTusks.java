@@ -19,10 +19,10 @@ public class CatapultTusks extends Subsystem {
 	 * This is a constructor for the class.
 	 */
 	public CatapultTusks() {
-		solenoid1 = new MomentaryDoubleSolenoid(RobotMap.catUpPort1.getInt(),
-				RobotMap.catDownPort1.getInt());
-		solenoid2 = new MomentaryDoubleSolenoid(RobotMap.catUpPort2.getInt(),
-				RobotMap.catDownPort2.getInt());
+		solenoid1 = new MomentaryDoubleSolenoid(RobotMap.catExtPort1.getInt(),
+				RobotMap.catRetPort1.getInt());
+		solenoid2 = new MomentaryDoubleSolenoid(RobotMap.catExtPort2.getInt(),
+				RobotMap.catRetPort2.getInt());
 	}
     
 	/**

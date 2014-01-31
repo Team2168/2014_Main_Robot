@@ -9,6 +9,14 @@
 # IDE specific #
 *.classpath
 *.settings
+.metadata
+.launch
+.loadpath
+*.swp
+*.bak
+*.tmp
+tmp/
+.gradle
 
 
 #FRC Specific
