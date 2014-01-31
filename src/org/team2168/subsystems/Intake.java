@@ -6,27 +6,24 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Intake extends Subsystem{
+	Talon intakeMotorController;
+
+	public Intake(){
+		intakeMotorController = new Talon(RobotMap.intakeMotorController);
+	}
+	
 	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     
 	}
 	
-	Talon intakeMotorController;
-	
-	// TODO put in correct inputs
-	public Intake(){
-		intakeMotorController = new Talon(RobotMap.intakeMotorController);
-	}
-	
-	void intakeMotorControl(double speed)
+	public void intakeMotorControl(double speed)
 	{
 		intakeMotorController.set(speed);
 	}
 	
-	void stopMotors(){
+	public void stopMotors(){
 		intakeMotorController.set(0);
 	}
-
-	
 }
