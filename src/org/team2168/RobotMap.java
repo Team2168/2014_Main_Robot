@@ -22,7 +22,9 @@ public class RobotMap extends ConstantsBase {
 			new Constant("leftDriveMotor", 2);
 	public static final Constant winchDriveMotor = 
 			new Constant("winchDriveMotor",3);
-	
+	public static final Constant intakeMotor =
+			new Constant("intakeMotor", 4);
+
 	//DIO Channels////////////////////////////////////////////////////
 	public static final Constant winchLimitSwitch = 
 			new Constant("winchLimitSwitch",5);
