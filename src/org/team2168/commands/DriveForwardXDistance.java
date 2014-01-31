@@ -48,7 +48,7 @@ public class MoveForwardXDistance extends CommandBase{
 			}
 		}
 		
-		driveTrain.stopDrivetrain();
+		driveTrain.drive(0, 0);
 		
 	}
 

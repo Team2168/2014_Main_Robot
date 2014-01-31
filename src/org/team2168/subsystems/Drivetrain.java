@@ -47,6 +47,10 @@ public class Drivetrain extends Subsystem {
     	rightMotor.set(speed);
     }
     
+    public void drive(double rightSpeed, double leftSpeed) {
+    	this.driveRight(rightSpeed);
+    	this.driveLeft(leftSpeed);
+    }
     
     /**
      * Get the current angle of the gyro.
@@ -62,12 +66,6 @@ public class Drivetrain extends Subsystem {
     public double getEncoderDataDistance()
     {
     	return driveTrainEncoder.getDistance();
-    }
-    
-    public void stopDrivetrain()
-    {
-    	leftMotor.stopMotor();
-    	rightMotor.stopMotor();
     }
     
     public double getGyroAngle() {

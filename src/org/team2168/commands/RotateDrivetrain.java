@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.Gyro;
 
 public class RotateDrivetrain extends CommandBase{
 
-	Gyro rotateGyro;
 	double startAngle;
 	double angle;
 	double endAngle;
@@ -35,26 +34,26 @@ public class RotateDrivetrain extends CommandBase{
 				
 				driveTrain.driveRight(6);
 				
-				startAngle = rotateGyro.getAngle();
+				startAngle = driveTrain.getGyroAngle();
 			}
 		}else
 		{
 			while(startAngle > endAngle)
 			{
 				driveTrain.driveLeft(6);	
-				startAngle = rotateGyro.getAngle();
+				startAngle = driveTrain.getGyroAngle();
 			}
 		}
 		
-		driveTrain.stopDrivetrain();
+		driveTrain.drive(0,0);
+
 		
 	}
 
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-		rotateGyro = new Gyro(RobotMap.rotateGyro);
-		startAngle = rotateGyro.getAngle();
+		startAngle = driveTrain.getGyroAngle();
 		endAngle = startAngle + angle;
 	}
 
