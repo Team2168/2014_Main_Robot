@@ -3,10 +3,8 @@ package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
 import org.team2168.utils.MomentaryDoubleSolenoid;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -15,10 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *at the set position.
  */
 public class CatapultWinch extends Subsystem {
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 	Talon winchMotor;
-	Encoder winchEncoder;
 	DigitalInput winchInputSwitch;
 	MomentaryDoubleSolenoid winchSolenoid;
 
@@ -43,7 +38,7 @@ public class CatapultWinch extends Subsystem {
     
     /**
      * This method sets the motor to move the catapult to the set position.
-     * @param winchSpeed
+     * @param winchSpeed 1.0 to -1.0
      */
     public void setCatapult(double winchSpeed){
     	winchMotor.set(winchSpeed);
@@ -65,12 +60,11 @@ public class CatapultWinch extends Subsystem {
     
     /**
      * This method checks if the catapult has reached the set position.
-     * @return
+     * @return true when the winch is lowered all the way
      */
     public boolean isCatapultSet(){
     	//TODO: Verify that the switch returns true when the switch is pressed.
        	return winchInputSwitch.get();
-       	
     }
 }
 
