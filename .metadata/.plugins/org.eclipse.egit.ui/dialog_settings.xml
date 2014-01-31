@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<section name="Workbench">
-	<item value="C:\Users\Owner\git\FRC2014_Main_Robot\.git" key="GitSelectRepositoryPage.lastRepository"/>
-	<item value="2" key="org.eclipse.egit.ui.internal.clone.GitSelectWizardPageWizardSel"/>
-	<section name="GitImportWizard">
-		<item value="true" key="GitProjectsImportPage.STORE_NESTED_PROJECTS"/>
-	</section>
-</section>
