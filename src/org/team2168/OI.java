@@ -1,7 +1,9 @@
 package org.team2168;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.DigitalIOButton;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -41,6 +43,8 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
     
      //Create mapping for buttons on joystick
+	Joystick baseDriver = new Joystick(1);
+	
         public Button driveButtonA = new JoystickButton(baseDriver, 1),
                                   driveButtonB = new JoystickButton(baseDriver, 2),
                                   driveButtonX = new JoystickButton(baseDriver, 3),

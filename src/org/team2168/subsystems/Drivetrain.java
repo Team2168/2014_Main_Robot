@@ -14,19 +14,25 @@ public class Drivetrain extends Subsystem {
     Talon rightMotor;
     Talon leftMotor;
     FalconGyro gyro;
-    Encoder driveTrainEncoder;
+    Encoder driveTrainEncoderLeft;
+    Encoder driveTrainEncoderRight;
     
-    public void Dirvetrain() {
-    	
+    public Drivetrain()
+    {
+    	//TODO Change distance to an actual number
     	rightMotor = new Talon(RobotMap.rightDriveMotor.getInt());
     	leftMotor = new Talon(RobotMap.leftDriveMotor.getInt());
     	gyro = new FalconGyro(RobotMap.gyroPort.getInt());
-    	driveTrainEncoder = new Encoder(RobotMap.driveTrainEncoderP1,RobotMap.driveTrainEncoderP2);
- 
-    	
+    	driveTrainEncoderRight = new Encoder(RobotMap.driveTrainEncoderRightA.getInt(),
+    			RobotMap.driveTrainEncoderRightB.getInt());
+    	driveTrainEncoderRight.setDistancePerPulse();
+    	driveTrainEncoderLeft = new Encoder(RobotMap.driveTrainEncoderLeftA.getInt(),
+    			RobotMap.driveTrainEncoderLeftB.getInt());
+    	driveTrainEncoderLeft.setDistancePerPulse(1);
     }
     
-    public void initDefaultCommand() {
+    public void initDefaultCommand()
+    {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
@@ -47,9 +53,26 @@ public class Drivetrain extends Subsystem {
     	rightMotor.set(speed);
     }
     
-    public void drive(double rightSpeed, double leftSpeed) {
+    public void drive(double rightSpeed, double leftSpeed)
+    {
     	this.driveRight(rightSpeed);
     	this.driveLeft(leftSpeed);
+    }
+    
+    public double getRightEncoderDistance()
+    {
+    	return driveTrainEncoderRight.getDistance();
+    }
+    
+    public double getLeftEncoderDistance()
+    {
+    	return driveTrainEncoderLeft.getDistance();
+    }
+    
+    
+    public double getAveragedEncoderDistance()
+    {
+    	return (getLeftEncoderDistance() + getRightEncoderDistance())/2;
     }
     
     /**
@@ -57,32 +80,24 @@ public class Drivetrain extends Subsystem {
      * 
      * @return the angle of the gyro, in degrees.
      */
-    
-    public double getEncoderDataRaw()
+    public double getGyroAngle()
     {
-    	return driveTrainEncoder.getRaw();
-    }
-    
-    public double getEncoderDataDistance()
-    {
-    	return driveTrainEncoder.getDistance();
-    }
-    
-    public double getGyroAngle() {
     	return gyro.getAngle();
     }
 
     /**
      * Re-initialize the gyro. This should not be called during a match.
      */
-	public void reinitGyro() {
+	public void reinitGyro()
+	{
 		gyro.initGyro();
 	}
 
 	/**
 	 * Set the current robot heading to 0.0
 	 */
-	public void resetGyro() {
+	public void resetGyro()
+	{
 		gyro.reset();
 	}
 }

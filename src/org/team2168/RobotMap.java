@@ -22,6 +22,11 @@ public class RobotMap extends ConstantsBase {
 			new Constant("leftDriveMotor", 1);
 	
 	//DIO Channels////////////////////////////////////////////////////
+	public static final Constant driveTrainEncoderRightA = new Constant("driveTrainEncoderRightA",1);
+	public static final Constant driveTrainEncoderRightB = new Constant("driveTrainEncoderRightB",2);
+	public static final Constant driveTrainEncoderLeftA = new Constant("driveTrainEncoderLeftA",3);
+	public static final Constant driveTrainEncoderLeftB = new Constant("driveTrainEncoderLeftB",4);
+	
 	
 	//Relay Output Channels///////////////////////////////////////////
 	
@@ -43,26 +48,17 @@ public class RobotMap extends ConstantsBase {
      *                    Drivetrain Parameters                     *
      ****************************************************************/
 	//add them here
-	public static final int wheelRadiusDrivetrain = 2;
+	public static final Constant wheelDiameterDrivetrain = 
+			new Constant("wheelDiameterDriveTrain",3);
+	public static final Constant ticksPerRevolutionDrivetrain = 
+			new Constant("ticksPerRevolutionDrivetrain",256);
+	public static final Constant drivetrainGearRatio = 
+			new Constant("drivetrainGearRatio",(27/24));
 	
 	/****************************************************************
      *                      Catapult Parameters                     *
      ****************************************************************/
 	public static final Constant wheelRadius = new Constant("wheelRadius", 2);
-	
-
-	/****************************************************************
-	 * 								Gyros
-	 ***************************************************************/
-	//TODO Needs to be changed
-	public static final int rotateGyro = 3;
-	
-	/****************************************************************
-	 * 								Encoder
-	 * *************************************************************/
-	//TODO Needs to be changed
-	public static final int driveTrainEncoderP1 = 4;
-	public static final int driveTrainEncoderP2 = 5;
 	
 	static {
 		// Set any overridden constants from the file on startup.
