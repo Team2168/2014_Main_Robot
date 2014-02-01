@@ -19,16 +19,20 @@ public class Drivetrain extends Subsystem {
     
     public Drivetrain()
     {
-    	//TODO Change distance to an actual number
+    	//converts ticks to distance in inches
+    	double ticksPerRev =
+    			(RobotMap.wheelDiameterDrivetrain.getDouble() * Math.PI) * 
+    			(RobotMap.drivetrainGearRatio.getDouble()) /
+    			RobotMap.ticksPerRevolutionDrivetrain.getDouble();
     	rightMotor = new Talon(RobotMap.rightDriveMotor.getInt());
     	leftMotor = new Talon(RobotMap.leftDriveMotor.getInt());
     	gyro = new FalconGyro(RobotMap.gyroPort.getInt());
     	driveTrainEncoderRight = new Encoder(RobotMap.driveTrainEncoderRightA.getInt(),
     			RobotMap.driveTrainEncoderRightB.getInt());
-    	driveTrainEncoderRight.setDistancePerPulse();
+    	driveTrainEncoderRight.setDistancePerPulse(ticksPerRev);
     	driveTrainEncoderLeft = new Encoder(RobotMap.driveTrainEncoderLeftA.getInt(),
     			RobotMap.driveTrainEncoderLeftB.getInt());
-    	driveTrainEncoderLeft.setDistancePerPulse(1);
+    	driveTrainEncoderLeft.setDistancePerPulse(ticksPerRev);
     }
     
     public void initDefaultCommand()
@@ -58,21 +62,52 @@ public class Drivetrain extends Subsystem {
     	this.driveRight(rightSpeed);
     	this.driveLeft(leftSpeed);
     }
-    
+    /**
+     * Gets the distance the right encoder has turned
+     * 
+     * @return distance in inches
+     */
     public double getRightEncoderDistance()
     {
     	return driveTrainEncoderRight.getDistance();
     }
-    
+    /**
+     * Gets the distance the left encoder has turned
+     * 
+     * @return distance in inches
+     */
     public double getLeftEncoderDistance()
     {
     	return driveTrainEncoderLeft.getDistance();
     }
     
-    
+    /**
+     * Averages the distance of the two encoders to get the distance the robot
+     * has traveled
+     * 
+     * @return distance in inches
+     */
     public double getAveragedEncoderDistance()
     {
     	return (getLeftEncoderDistance() + getRightEncoderDistance())/2;
+    }
+    
+    /**
+     * resets right encoder to 0
+     * 
+     */
+    public void resetRightEncoder()
+    {
+    	driveTrainEncoderRight.reset();
+    }
+    
+    /**
+     * resets left encoder to 0
+     * 
+     */
+    public void resetLeftEncoder()
+    {
+    	driveTrainEncoderLeft.reset();
     }
     
     /**
