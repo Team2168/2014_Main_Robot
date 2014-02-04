@@ -19,7 +19,9 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant rightDriveMotor = 
 			new Constant("rightDriveMotor", 1);
 	public static final Constant leftDriveMotor =
-			new Constant("leftDriveMotor", 1);
+			new Constant("leftDriveMotor", 2);
+	public static final Constant cameraServo = 
+			new Constant ("cameraServo", 5);
 	
 	//DIO Channels////////////////////////////////////////////////////
 	
