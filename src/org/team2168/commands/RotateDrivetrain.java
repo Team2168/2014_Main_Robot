@@ -1,55 +1,46 @@
 package org.team2168.commands;
 
-import org.team2168.RobotMap;
-import org.team2168.subsystems.*;
-
-import edu.wpi.first.wpilibj.Gyro;
-
 public class RotateDrivetrain extends CommandBase{
-
 	double startAngle;
 	double angle;
 	double endAngle;
-	Drivetrain driveTrain;
 	
 	public RotateDrivetrain (double angle){
 		this.angle = angle;
 	}
 
-	
 	protected void end() {
 		// TODO Auto-generated method stub
 		
 	}
+	
 	protected void execute() {
-		// TODO Auto-generated method stub
-		
-		if(startAngle < endAngle)
-		{
-			while(startAngle < endAngle)
-			{
-				
-				driveTrain.driveRight(6);
-				
-				startAngle = driveTrain.getGyroAngle();
-			}
-		}else
-		{
-			while(startAngle > endAngle)
-			{
-				driveTrain.driveLeft(6);	
-				startAngle = driveTrain.getGyroAngle();
-			}
-		}
-		
-		driveTrain.drive(0,0);
-
-		
+		//TODO: NO while loops inside of a command.
+		//  The execute method needs to run and complete quickly. 
+		//  It might take multiple calls of the execute() method for
+		//  the command to be finished.
+//		if(startAngle < endAngle)
+//		{
+//			while(startAngle < endAngle)
+//			{
+//				
+//				drivetrain.driveRight(6);
+//				
+//				startAngle = drivetrain.getGyroAngle();
+//			}
+//		} else {
+//			while(startAngle > endAngle)
+//			{
+//				drivetrain.driveLeft(6);	
+//				startAngle = drivetrain.getGyroAngle();
+//			}
+//		}
+//		
+		drivetrain.drive(0,0);		
 	}
 
 	protected void initialize() {
-		// TODO Auto-generated method stub
-		startAngle = driveTrain.getGyroAngle();
+		startAngle = drivetrain.getGyroAngle();
 		endAngle = startAngle + angle;
 	}
 
@@ -59,7 +50,7 @@ public class RotateDrivetrain extends CommandBase{
 	}
 
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
+		// TODO This needs to return true when it's compelte
 		return false;
 	}
 

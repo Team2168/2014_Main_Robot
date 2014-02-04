@@ -41,12 +41,6 @@ public class Drivetrain extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    /**
-     * A method to drive the motors on the drivetrain with.
-     * 
-     * @param rightSpeed the speed to drive the right motor at 
-     * @param leftSpeed the speed to drive the left motor at
-     */
     public void driveLeft(double speed)
     {
     	leftMotor.set(speed);
@@ -57,11 +51,18 @@ public class Drivetrain extends Subsystem {
     	rightMotor.set(speed);
     }
     
+    /**
+     * A method to drive the motors on the drivetrain with.
+     * 
+     * @param rightSpeed the speed to drive the right motor at 
+     * @param leftSpeed the speed to drive the left motor at
+     */
     public void drive(double rightSpeed, double leftSpeed)
     {
     	this.driveRight(rightSpeed);
     	this.driveLeft(leftSpeed);
     }
+    
     /**
      * Gets the distance the right encoder has turned
      * 
@@ -71,6 +72,7 @@ public class Drivetrain extends Subsystem {
     {
     	return driveTrainEncoderRight.getDistance();
     }
+    
     /**
      * Gets the distance the left encoder has turned
      * 
