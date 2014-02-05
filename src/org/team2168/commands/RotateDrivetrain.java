@@ -1,12 +1,11 @@
 package org.team2168.commands;
 
 public class RotateDrivetrain extends CommandBase{
-	double startAngle;
-	double angle;
 	double endAngle;
+	boolean finished;
 	
 	public RotateDrivetrain (double angle){
-		this.angle = angle;
+		endAngle = drivetrain.getGyroAngle() + angle;
 	}
 
 	protected void end() {
@@ -15,33 +14,29 @@ public class RotateDrivetrain extends CommandBase{
 	}
 	
 	protected void execute() {
-		//TODO: NO while loops inside of a command.
-		//  The execute method needs to run and complete quickly. 
-		//  It might take multiple calls of the execute() method for
-		//  the command to be finished.
-//		if(startAngle < endAngle)
-//		{
-//			while(startAngle < endAngle)
-//			{
-//				
-//				drivetrain.driveRight(6);
-//				
-//				startAngle = drivetrain.getGyroAngle();
-//			}
-//		} else {
-//			while(startAngle > endAngle)
-//			{
-//				drivetrain.driveLeft(6);	
-//				startAngle = drivetrain.getGyroAngle();
-//			}
-//		}
-//		
-		drivetrain.drive(0,0);		
+		
+		double currentAngle = drivetrain.getGyroAngle();
+		
+		if (Math.abs(endAngle - currentAngle) < 1) {
+			drivetrain.drive(0,0);
+			finished = true;
+		}
+		if(currentAngle < endAngle)
+		{
+			drivetrain.driveRight(-1);
+			drivetrain.driveLeft(1);
+		}
+		else if (currentAngle > endAngle)
+		{
+			drivetrain.driveRight(1);
+			drivetrain.driveLeft(-1);
+		}
+		
+		drivetrain.drive(0,0);
 	}
 
 	protected void initialize() {
-		startAngle = drivetrain.getGyroAngle();
-		endAngle = startAngle + angle;
+		drivetrain.drive(0,0);
 	}
 
 	protected void interrupted() {
@@ -50,8 +45,7 @@ public class RotateDrivetrain extends CommandBase{
 	}
 
 	protected boolean isFinished() {
-		// TODO This needs to return true when it's compelte
-		return false;
+		return finished;
 	}
 
 }

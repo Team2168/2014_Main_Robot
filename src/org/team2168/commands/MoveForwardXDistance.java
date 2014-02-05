@@ -31,13 +31,11 @@ public class MoveForwardXDistance extends CommandBase{
 		}
 		if(currentDistance < endDistance)
 		{
-			//TODO:this method can only take in values from 1 to -1 
-			//drivetrain.drive(6,6);
+			drivetrain.drive(1,1);
 		}
 		else if (currentDistance > endDistance)
 		{
-			//TODO:this method can only take in values from 1 to -1
-			drivetrain.drive(-6,-6);
+			drivetrain.drive(-1,-1);
 		}
 		
 	}
