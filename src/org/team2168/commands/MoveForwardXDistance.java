@@ -12,7 +12,6 @@ public class MoveForwardXDistance extends CommandBase{
 	{
 		this.distance = distance;
 		endDistance = drivetrain.getAveragedEncoderDistance() + distance;
-		finished = false;
 		drivetrain = new Drivetrain();
 	}
 
@@ -42,6 +41,7 @@ public class MoveForwardXDistance extends CommandBase{
 
 	protected void initialize()
 	{
+		finished = false;
 		drivetrain.drive(0, 0);
 	}
 

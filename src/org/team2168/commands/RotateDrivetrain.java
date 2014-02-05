@@ -36,12 +36,12 @@ public class RotateDrivetrain extends CommandBase{
 	}
 
 	protected void initialize() {
+		finished = false;
 		drivetrain.drive(0,0);
 	}
 
 	protected void interrupted() {
-		// TODO Auto-generated method stub
-		
+		drivetrain.drive(0, 0);
 	}
 
 	protected boolean isFinished() {
