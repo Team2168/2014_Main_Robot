@@ -20,6 +20,7 @@ public abstract class CommandBase extends Command {
     public static Intake intakeRollers = new Intake();
     public static CatapultTusks catapultTusks = new CatapultTusks();
     public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+    public static Flashlight flashlight = new Flashlight();
 
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
