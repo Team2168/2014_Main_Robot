@@ -79,6 +79,13 @@ public class RobotMap extends ConstantsBase {
 		readConstantsFromFile();
 	}
 
+	
+	/****************************************************************
+	 * 						Control Layout							*
+	 ***************************************************************/
+	public static final int rightJoyAxis = 5;
+	public static final int leftJoyAxis = 2;
+	
 	/**
 	 * Prevent instantiation of this class, as it should only be used
 	 * statically.
