@@ -66,5 +66,6 @@ public class CatapultWinch extends Subsystem {
     	//TODO: Verify that the switch returns true when the switch is pressed.
        	return winchInputSwitch.get();
     }
+    
 }
 
