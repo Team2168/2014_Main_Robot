@@ -8,6 +8,7 @@
 package org.team2168;
 
 import org.team2168.commands.ExampleCommand;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -24,9 +25,10 @@ import org.team2168.utils.Debouncer;
  */
 public class Robot extends IterativeRobot {
 
-	int gyroReinits;
-	double lastAngle;
-	Debouncer gyroDriftDetector = new Debouncer(1.0);
+	private int gyroReinits;
+	private double lastAngle;
+	private Debouncer gyroDriftDetector = new Debouncer(1.0);
+	private Compressor compressor;
 	
 	Command autonomousCommand;
 
@@ -36,6 +38,9 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new ExampleCommand();
+
+		compressor = new Compressor(RobotMap.pressureSwitch.getInt(),
+				RobotMap.compressorRelay.getInt());
 
 		// Initialize all subsystems
 		CommandBase.init();
@@ -77,6 +82,9 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		// schedule the autonomous command (example)
 		autonomousCommand.start();
+		
+		//No compressor for auto mode, lower battery load
+		//compressor.start();
 	}
 
 	/**
@@ -95,6 +103,8 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		autonomousCommand.cancel();
+		
+		compressor.start();
 	}
 
 	/**
