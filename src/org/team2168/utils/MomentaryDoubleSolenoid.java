@@ -43,7 +43,7 @@ public class MomentaryDoubleSolenoid extends DoubleSolenoid{
 	 */
 	public MomentaryDoubleSolenoid(final int forwardChannel,
 			final int reverseChannel) {
-		this(forwardChannel, reverseChannel, 1000);
+		this(forwardChannel, reverseChannel, (long) 1000);
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class MomentaryDoubleSolenoid extends DoubleSolenoid{
 	 */
 	public MomentaryDoubleSolenoid(final int moduleNumber,
 			final int forwardChannel, final int reverseChannel) {
-		this(moduleNumber, forwardChannel, reverseChannel, 1000);
+		this(moduleNumber, forwardChannel, reverseChannel, (long) 1000);
 	}
 	
 	/**
