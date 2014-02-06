@@ -1,8 +1,7 @@
-
 package org.team2168.commands;
 
 /**
- * Turn the flashlight off.
+ * Turn the flashlight on.
  * 
  *  This command doesn't complete. If it is going to be used in a sequence,
  *  specify a timeout!
