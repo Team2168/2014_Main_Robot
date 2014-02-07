@@ -43,7 +43,26 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
     
      //Create mapping for buttons on joystick
-	Joystick baseDriver = new Joystick(1);
+/**	public static final double minDriveSpeed = 0.222;
+	static double JoyStickScale[][] = {
+		{1.00,1.00},
+		{0.90,0.68},
+		{0.50,0.32},
+		{0.06,minDriveSpeed},
+		{0.06,0.00},
+		{0.00,0.00},
+		{-0.06,0.00},
+		{-0.06,-minDriveSpeed},
+		{-0.50,-0.32},
+		{-0.90,-.68},
+		{-1.00,-1.00},
+		};*/
+	
+	public static final int     rightJoyAxis = 5;
+	public static final int     leftJoyAxis  = 2;
+	public static final int     triggerAxis  = 3;
+	
+	public Joystick baseDriver = new Joystick(1);	
 	
         public Button driveButtonA = new JoystickButton(baseDriver, 1),
                                   driveButtonB = new JoystickButton(baseDriver, 2),
@@ -55,7 +74,45 @@ public class OI {
                                   driveButtonStart = new JoystickButton(baseDriver, 8),
                                   driveButtonLeftStick = new JoystickButton(baseDriver, 9),
                                   driveButtonRightStick = new JoystickButton(baseDriver, 10);
-
     
-}
+/**    public double getbaseDriverLeftAxis() {
+    	double leftSpeed = interpolate(baseDriver.getRawAxis(leftJoyAxis));
+    	
+    	return -leftSpeed;
+    }
+    
+    public double getbaseDriverRightAxis() {
+    	double rightSpeed = interpolate(baseDriver.getRawAxis(rightJoyAxis));
+    	
+    	return -rightSpeed;
+    }*/
+    
 
+/**	private double interpolate(double input) {
+		double retVal = 0.0;
+		boolean done = false;
+		double m, b;
+		
+		
+		if (input > 1.0) {
+				input = 1.0;
+		} else if (input < -1.0) {
+				input = -1.0;
+		}
+		
+		
+		
+		for (int i = 1; !done && i < JoyStickScale.length; i++){
+			if (input >= JoyStickScale[i][0]) {
+				m = (JoyStickScale[i][1] - JoyStickScale[i-1][1])/(JoyStickScale[i][0]- JoyStickScale[i-1][0]);
+				b = JoyStickScale[i][1] - (m * JoyStickScale[i][0]);
+				retVal = m * input + b;
+				
+				done = true;
+			}
+		}
+		
+		return retVal;
+		
+	}*/
+}
