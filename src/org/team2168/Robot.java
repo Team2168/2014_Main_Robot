@@ -7,6 +7,7 @@
 
 package org.team2168;
 
+import org.team2168.PIDController.Sensors.TCPCameraSensor;
 import org.team2168.commands.ExampleCommand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -27,6 +28,8 @@ public class Robot extends IterativeRobot {
 	int gyroReinits;
 	double lastAngle;
 	Debouncer gyroDriftDetector = new Debouncer(1.0);
+	TCPCameraSensor cam = new TCPCameraSensor(1111, 1000);
+	
 	
 	Command autonomousCommand;
 
@@ -39,12 +42,15 @@ public class Robot extends IterativeRobot {
 
 		// Initialize all subsystems
 		CommandBase.init();
+		
+		cam.start();
 	}
 
 	/**
 	 * This method is run once each time the robot is disabled.
 	 */
 	public void disabledInit() {
+		System.out.println("Robot Done Loading");
 
 	}
 
@@ -52,6 +58,8 @@ public class Robot extends IterativeRobot {
 	 * This method is run repeatedly while the robot is disabled.
 	 */
 	public void disabledPeriodic() {
+		
+		
 		
 		//Check to see if the gyro is drifting, if it is re-initialize it.
 		//Thanks FRC254.

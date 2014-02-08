@@ -24,7 +24,8 @@ public class TCPCameraSensor {
 	private byte[] buf;
 	private String[] dataReceived;
 	private StringBuffer sb = new StringBuffer();
-	private boolean enable;
+	private volatile boolean sendEnable;
+	private volatile boolean recvEnable;
 
 	// A TCP Socket Connection
 	private ServerSocketConnection conn = null;
@@ -61,18 +62,9 @@ public class TCPCameraSensor {
 		this.port = port;
 		addressIn = "socket://:" + port;
 
-		// make this true if you want to send data to the beaglebone as well
-		enable = false;
 
-		// Opens a socket to listen for incoming connections
-		try {
-			conn = (ServerSocketConnection) Connector.open(addressIn);
 
-			System.out.println("Listening on: " + conn.getLocalAddress()
-					+ " on port: " + conn.getLocalPort());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
 	}
 
 	public void start() {
@@ -81,16 +73,33 @@ public class TCPCameraSensor {
 			public void run() {
 
 				try {
+					
+					// Opens a socket to listen for incoming connections
+					try {
+						conn = (ServerSocketConnection) Connector.open(addressIn);
+
+
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+
+					
 					// wait for a client to connect, this blocks until a connect
 					// is made
+					System.out.println("Listening on: " + conn.getLocalAddress()
+							+ " on port: " + conn.getLocalPort());
 					sc = conn.acceptAndOpen();
 					System.out.println("Client Connected");
+					
+					// make this true if you want to send data to the beaglebone as well
+					recvEnable = true;
 
 					listener();
 					sender();
 
 				} catch (IOException e) {
-					e.printStackTrace();
+					
 
 				}
 			}
@@ -144,25 +153,42 @@ public class TCPCameraSensor {
 
 			public void run() {
 				OutputStream os = null;
+				int count = 0;
 				try {
 					os = sc.openOutputStream();
 
-					while (true) {
-						if (enable) {
-							messageOut = "something to send to bone";
+					while (recvEnable) 
+					{							
+							
+							messageOut = "something to send to bone " + count + " \n";
+							
+							System.out.println("Sending : "+ messageOut); 
 
-							buf = messageOut.getBytes();
+							buf = messageOut.getBytes("US_ASCII");
 
+							count++;
+							
 							try {
 								os.write(buf);
 							} catch (IOException e) {
 								// e.printStackTrace();
 								System.out.println("Appears Client Closed "
 										+ "the Connection");
-								enable = false;
 
+								stopThreads();
+								
+								//close streams
+								os.close();
+								sc.close();
+								conn.close();
+								
+
+
+								//restart server
 								start();
-							}
+								
+					
+						
 						}
 
 						try {
@@ -183,4 +209,12 @@ public class TCPCameraSensor {
 		t2.start();
 
 	}
+
+
+private void stopThreads()
+{
+	sendEnable = false;
+	recvEnable = false;
+}
+
 }
