@@ -8,6 +8,8 @@ import javax.microedition.io.ServerSocketConnection;
 import javax.microedition.io.StreamConnection;
 import org.team2168.utils.Util;
 
+import edu.wpi.first.wpilibj.DriverStation;
+
 /**
  * The TCPCameraSensor class is used to grab data from a TCP socket and provide
  * it for use on an FRC robot. The intended use of this class is to retrieve
@@ -22,10 +24,13 @@ public class TCPCameraSensor {
 	private int port;
 	private String messageOut;
 	private byte[] buf;
-	private String[] dataReceived;
+	private volatile String[] dataReceived;
 	private StringBuffer sb = new StringBuffer();
-	private boolean enable;
-
+	private volatile boolean sendEnable;
+	private volatile boolean recvEnable;
+	
+	private DriverStation ds;
+	
 	// A TCP Socket Connection
 	private ServerSocketConnection conn = null;
 
@@ -52,27 +57,19 @@ public class TCPCameraSensor {
 		this.requestPeriod = requestPeriod;
 
 		// initialize data messageOut
-		dataReceived = new String[3];
+		dataReceived = new String[4];
 		dataReceived[0] = "0";
 		dataReceived[1] = "0";
 		dataReceived[2] = "0";
+		dataReceived[3] = "0";
 
 		// setup socket to listen on
 		this.port = port;
 		addressIn = "socket://:" + port;
 
-		// make this true if you want to send data to the beaglebone as well
-		enable = false;
+		ds = DriverStation.getInstance();
 
-		// Opens a socket to listen for incoming connections
-		try {
-			conn = (ServerSocketConnection) Connector.open(addressIn);
 
-			System.out.println("Listening on: " + conn.getLocalAddress()
-					+ " on port: " + conn.getLocalPort());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void start() {
@@ -81,16 +78,33 @@ public class TCPCameraSensor {
 			public void run() {
 
 				try {
+					
+					// Opens a socket to listen for incoming connections
+					try {
+						conn = (ServerSocketConnection) Connector.open(addressIn);
+
+
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+
+					
 					// wait for a client to connect, this blocks until a connect
 					// is made
+					System.out.println("Listening on: " + conn.getLocalAddress()
+							+ " on port: " + conn.getLocalPort());
 					sc = conn.acceptAndOpen();
 					System.out.println("Client Connected");
+					
+					// make this true if you want to send data to the beaglebone as well
+					recvEnable = true;
 
 					listener();
 					sender();
 
 				} catch (IOException e) {
-					e.printStackTrace();
+					
 
 				}
 			}
@@ -117,10 +131,12 @@ public class TCPCameraSensor {
 							sb.append((char) ch);
 						else {
 							// print data received to the screen
-							System.out.println(sb.toString());
+
 
 							// split data into array
 							dataReceived = Util.split(sb.toString(), ","); // splits
+							
+							System.out.println("Match Start: " + dataReceived[0]+", " + "Hot: " + dataReceived[1]+", " + "dist: " + dataReceived[2]+", " + "Count: " + dataReceived[3]);
 
 							// create new buffer
 							sb = new StringBuffer();
@@ -144,25 +160,48 @@ public class TCPCameraSensor {
 
 			public void run() {
 				OutputStream os = null;
+				int count = 0;
 				try {
 					os = sc.openOutputStream();
 
-					while (true) {
-						if (enable) {
-							messageOut = "something to send to bone";
+					while (recvEnable) 
+					{							
+						//we want to send if match has started to camera
+						int matchStart = 0;
+						
+						if(ds.isEnabled())
+							matchStart = 1;
+						
+						
+							messageOut = String.valueOf(matchStart) + " " + count + " \n";
+							
+							System.out.println("Sending Match Start: "+ messageOut); 
 
-							buf = messageOut.getBytes();
+							buf = messageOut.getBytes("US_ASCII");
 
+							count++;
+							
 							try {
 								os.write(buf);
 							} catch (IOException e) {
 								// e.printStackTrace();
 								System.out.println("Appears Client Closed "
 										+ "the Connection");
-								enable = false;
 
+								stopThreads();
+								
+								//close streams
+								os.close();
+								sc.close();
+								conn.close();
+								
+
+
+								//restart server
 								start();
-							}
+								
+					
+						
 						}
 
 						try {
@@ -183,4 +222,12 @@ public class TCPCameraSensor {
 		t2.start();
 
 	}
+
+
+private void stopThreads()
+{
+	sendEnable = false;
+	recvEnable = false;
+}
+
 }
