@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.Encoder;
  *
  */
 public class Drivetrain extends Subsystem {
-    Talon rightMotor;
-    Talon leftMotor;
+    Talon rightMotor, rightMotor2;
+    Talon leftMotor, leftMotor2;
     FalconGyro gyro;
     Encoder driveTrainEncoderLeft;
     Encoder driveTrainEncoderRight;
@@ -26,6 +26,8 @@ public class Drivetrain extends Subsystem {
     			RobotMap.ticksPerRevolutionDrivetrain.getDouble();
     	rightMotor = new Talon(RobotMap.rightDriveMotor.getInt());
     	leftMotor = new Talon(RobotMap.leftDriveMotor.getInt());
+    	rightMotor2 = new Talon(RobotMap.rightDriveMotor2.getInt());
+    	leftMotor2 = new Talon(RobotMap.leftDriveMotor2.getInt());
     	gyro = new FalconGyro(RobotMap.gyroPort.getInt());
     	driveTrainEncoderRight = new Encoder(RobotMap.driveTrainEncoderRightA.getInt(),
     			RobotMap.driveTrainEncoderRightB.getInt());
@@ -44,10 +46,12 @@ public class Drivetrain extends Subsystem {
     public void driveLeft(double speed)
     {
     	leftMotor.set(speed);
+    	leftMotor2.set(speed);
     }
     
     public void driveRight(double speed)
     {
+    	rightMotor.set(speed);
     	rightMotor.set(speed);
     }
     
