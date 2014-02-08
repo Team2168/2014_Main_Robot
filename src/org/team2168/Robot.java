@@ -44,12 +44,18 @@ public class Robot extends IterativeRobot {
 
 		// Initialize all subsystems
 		CommandBase.init();
+		
+		
+		//Console Message so we know robot finished loading
+		System.out.println("****Robot Done Loading****");
 	}
 
 	/**
 	 * This method is run once each time the robot is disabled.
 	 */
 	public void disabledInit() {
+		
+
 
 	}
 
