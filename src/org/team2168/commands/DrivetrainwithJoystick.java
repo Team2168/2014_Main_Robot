@@ -10,29 +10,26 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  *
  * @author bradmiller
  */
-public class DrivetrainwithJoystick extends CommandBase {
+public class DrivetrainWithJoystick extends CommandBase {
 	
 	private double leftSpeed, rightSpeed;
 
 	OI oi = new OI();
 	
-    public DrivetrainwithJoystick() {
+    public DrivetrainWithJoystick() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	drivetrain.drive(0,0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	leftSpeed = oi.baseDriver.getRawAxis(-oi.leftJoyAxis);
-    	rightSpeed = oi.baseDriver.getRawAxis(oi.rightJoyAxis);
-    	
-    	drivetrain.drive(leftSpeed,rightSpeed);
+    	//TODO: one of these will need to be negated
+    	drivetrain.drive(oi.getBaseDriverLeftStick(),
+    			oi.getBaseDriverRightStick());
     
     }
 
