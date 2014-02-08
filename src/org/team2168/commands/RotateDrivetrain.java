@@ -1,12 +1,11 @@
 package org.team2168.commands;
 
 public class RotateDrivetrain extends CommandBase{
-	double startAngle;
-	double angle;
 	double endAngle;
+	boolean finished;
 	
 	public RotateDrivetrain (double angle){
-		this.angle = angle;
+		endAngle = drivetrain.getGyroAngle() + angle;
 	}
 
 
@@ -16,44 +15,38 @@ public class RotateDrivetrain extends CommandBase{
 	}
 
 	protected void execute() {
-		// TODO Auto-generated method stub
 		
-		if(startAngle < endAngle)
+		double currentAngle = drivetrain.getGyroAngle();
+		
+		if (Math.abs(endAngle - currentAngle) < 1) {
+			drivetrain.drive(0,0);
+			finished = true;
+		}
+		if(currentAngle < endAngle)
 		{
-			while(startAngle < endAngle)
-			{
-				
-				//driveTrain.drive(0, 6);
-				
-				startAngle = drivetrain.getGyroAngle();
-			}
-		}else
+			drivetrain.driveRight(-1);
+			drivetrain.driveLeft(1);
+		}
+		else if (currentAngle > endAngle)
 		{
-			while(startAngle > endAngle)
-			{
-				//driveTrain.drive(6, 0);		
-				startAngle = drivetrain.getGyroAngle();
-			}
+			drivetrain.driveRight(1);
+			drivetrain.driveLeft(-1);
 		}
 		
-		//driveTrain.drive(0, 0);
-		
+		drivetrain.drive(0,0);
 	}
 
 	protected void initialize() {
-		// TODO Auto-generated method stub
-		startAngle = drivetrain.getGyroAngle();
-		endAngle = startAngle + angle;
+		finished = false;
+		drivetrain.drive(0,0);
 	}
 
 	protected void interrupted() {
-		// TODO Auto-generated method stub
-		
+		drivetrain.drive(0, 0);
 	}
 
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
+		return finished;
 	}
 
 }
