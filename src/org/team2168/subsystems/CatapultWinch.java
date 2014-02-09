@@ -1,7 +1,7 @@
-
 package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
+import org.team2168.commands.WinchWithJoystick;
 import org.team2168.utils.MomentaryDoubleSolenoid;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -33,11 +33,13 @@ public class CatapultWinch extends Subsystem {
 	 * Sets the default command for the subsystem.
 	 */
     public void initDefaultCommand() {
-
+    	setDefaultCommand(new WinchWithJoystick());
     }
     
     /**
      * This method sets the motor to move the catapult to the set position.
+     * A positive value will drive the winch downward.
+     * 
      * @param winchSpeed 1.0 to -1.0
      */
     public void setCatapult(double winchSpeed){
