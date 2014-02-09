@@ -1,5 +1,7 @@
 package org.team2168;
 
+import org.team2168.commands.RotateDrivetrain;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.DigitalIOButton;
@@ -61,10 +63,10 @@ public class OI {
 			driveButtonStart = new JoystickButton(baseDriver, 8),
 			driveButtonLeftStick = new JoystickButton(baseDriver, 9),
 			driveButtonRightStick = new JoystickButton(baseDriver, 10);
-
+	
 	// minSpeed needs to be tweaked based on the particular drivetrain.
 	// It is the speed at which the drivetrain barely starts moving
-	public static final double minDriveSpeed = 0.222;
+	public static final double minDriveSpeed = 0.11;
 	static double joystickScale[][] = {
 		/* Joystick Input, Scaled Output */
 		{ 1.00, 1.00 },
@@ -79,13 +81,18 @@ public class OI {
 		{ -0.90, -0.68 },
 		{ -1.00, -1.00 } };
 
+	public OI() {
+		//TODO: remove this assignment, was for testing commands
+		driveButtonA.whenPressed(new RotateDrivetrain(90));
+		driveButtonB.whenPressed(new RotateDrivetrain(-90));
+	}
 	/**
 	 * Get the left joystick axis value positive is pushing up on the stick.
 	 * 
 	 * @return the base driver's left joystick value (1.0 to -1.0)
 	 */
 	public double getBaseDriverLeftStick() {
-		return baseDriver.getRawAxis(-leftJoyAxis);
+		return interpolate(-(baseDriver.getRawAxis(leftJoyAxis)));
 	}
 	
 	/**
@@ -94,7 +101,7 @@ public class OI {
 	 * @return the base driver's right joystick value (1.0 to -1.0)
 	 */
 	public double getBaseDriverRightStick() {
-		return baseDriver.getRawAxis(-rightJoyAxis);
+		return interpolate(-(baseDriver.getRawAxis(rightJoyAxis)));
 	}
 	
 	/**
