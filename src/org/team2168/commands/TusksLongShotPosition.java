@@ -24,7 +24,7 @@ public class TusksLongShotPosition extends CommandBase {
 
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *the catapult.
  */
 public class CatapultTusks extends Subsystem {
-	public MomentaryDoubleSolenoid tuskSolenoid1;
-	public MomentaryDoubleSolenoid tuskSolenoid2;
+	private MomentaryDoubleSolenoid tuskSolenoid1;
+	private MomentaryDoubleSolenoid tuskSolenoid2;
 	
 	/**
 	 * This is a constructor for the class.
