@@ -18,10 +18,10 @@ public class RobotMap extends ConstantsBase {
     //PWM Channels////////////////////////////////////////////////////
 	public static final Constant rightDriveMotor = 
 			new Constant("rightDriveMotor", 1);
-	public static final Constant leftDriveMotor =
-			new Constant("leftDriveMotor", 2);
 	public static final Constant rightDriveMotor2 = 
-			new Constant("rightDriveMotor2", 3);
+			new Constant("rightDriveMotor2", 2);
+	public static final Constant leftDriveMotor =
+			new Constant("leftDriveMotor", 3);
 	public static final Constant leftDriveMotor2 =
 			new Constant("leftDriveMotor2", 4);
 	public static final Constant winchDriveMotor = 
