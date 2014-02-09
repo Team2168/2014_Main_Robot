@@ -5,40 +5,32 @@ public class RotateDrivetrain extends CommandBase{
 	boolean finished;
 	
 	public RotateDrivetrain (double angle){
-		endAngle = drivetrain.getGyroAngle() + angle;
-	}
-
-
-	protected void end() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	protected void execute() {
-		
-		double currentAngle = drivetrain.getGyroAngle();
-		
-		if (Math.abs(endAngle - currentAngle) < 1) {
-			drivetrain.drive(0,0);
-			finished = true;
-		}
-		if(currentAngle < endAngle)
-		{
-			drivetrain.driveRight(-1);
-			drivetrain.driveLeft(1);
-		}
-		else if (currentAngle > endAngle)
-		{
-			drivetrain.driveRight(1);
-			drivetrain.driveLeft(-1);
-		}
-		
-		drivetrain.drive(0,0);
+		endAngle = angle;
 	}
 
 	protected void initialize() {
+		//System.out.println("init gyro. angle = " + endAngle);
+		drivetrain.resetGyro();
 		finished = false;
-		drivetrain.drive(0,0);
+		drivetrain.drive(0, 0);
+	}
+
+	protected void execute() {
+		double currentAngle = drivetrain.getGyroAngle();
+		
+		if (Math.abs(endAngle - currentAngle) < 0.5) {
+			//We are done
+			drivetrain.drive(0,0);
+			finished = true;
+		} if(currentAngle < endAngle) {
+			//Turn to the right
+			drivetrain.driveRight(-0.2);
+			drivetrain.driveLeft(0.2);
+		} else {
+			//Turn to the left
+			drivetrain.driveRight(0.2);
+			drivetrain.driveLeft(-0.2);
+		}
 	}
 
 	protected void interrupted() {
@@ -47,6 +39,11 @@ public class RotateDrivetrain extends CommandBase{
 
 	protected boolean isFinished() {
 		return finished;
+	}
+	
+	protected void end() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
