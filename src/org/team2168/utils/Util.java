@@ -19,6 +19,9 @@ public class Util {
 
 	/**
 	 * Limits the given input to the given magnitude.
+	 * @param v the value to limit
+	 * @param limit a positive value defining the allowable magnitude of the 
+	 * @return the limited value
 	 */
 	public static double limit(double v, double limit) {
 		return (Math.abs(v) < limit) ? v : limit * (v < 0 ? -1 : 1);

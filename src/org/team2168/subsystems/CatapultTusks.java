@@ -8,21 +8,33 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *This subsystem controls the exit angle of the ball when it is fired from 
- *the catapult.
+ * This subsystem controls the exit angle of the ball when it is fired from 
+ * the catapult.
  */
 public class CatapultTusks extends Subsystem {
-	MomentaryDoubleSolenoid solenoid1;
-	MomentaryDoubleSolenoid solenoid2;
-	
+	private static CatapultTusks instance = null;
+	private static MomentaryDoubleSolenoid solenoid1;
+	private static MomentaryDoubleSolenoid solenoid2;
+
 	/**
-	 * This is a constructor for the class.
+	 * A private constructor to prevent multiple instances from being created.
 	 */
-	public CatapultTusks() {
+	private CatapultTusks() {
 		solenoid1 = new MomentaryDoubleSolenoid(RobotMap.catExtPort1.getInt(),
 				RobotMap.catRetPort1.getInt());
 		solenoid2 = new MomentaryDoubleSolenoid(RobotMap.catExtPort2.getInt(),
 				RobotMap.catRetPort2.getInt());
+	}
+	
+	/**
+	 * 
+	 * @return the instance of this subsystem.
+	 */
+	public static CatapultTusks getInstance() {
+		if (instance == null) {
+			instance = new CatapultTusks();
+		}
+		return instance;
 	}
     
 	/**

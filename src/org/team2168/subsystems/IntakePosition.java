@@ -11,14 +11,25 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class IntakePosition extends Subsystem {
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+	private static IntakePosition instance = null;
 	MomentaryDoubleSolenoid actuator;
 	
-	public IntakePosition() {
+	/**
+	 * A private constructor to prevent multiple instances from being created.
+	 */
+	private IntakePosition() {
 		actuator = new MomentaryDoubleSolenoid(RobotMap.intakeExtPort.getInt(),
 				RobotMap.intakeRetPort.getInt());
-		
+	}
+	
+	/**
+	 * @return the instance of this subsystem.
+	 */
+	public static IntakePosition getInstance() {
+		if (instance == null) {
+			instance = new IntakePosition();
+		}
+		return instance;
 	}
 
     public void initDefaultCommand() {

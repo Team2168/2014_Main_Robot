@@ -12,11 +12,24 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * lining up our alliance partners with our truss shots.
  */
 public class Flashlight extends Subsystem {
-    Relay lightRelay;
+    private static Flashlight instance = null;
+	private Relay lightRelay;
 
-    public Flashlight() {
+	/**
+	 * A private constructor to prevent multiple instances from being created.
+	 */
+    private Flashlight() {
     	lightRelay = new Relay(RobotMap.flashlightRelay.getInt());
     	lightRelay.setDirection(Relay.Direction.kForward);
+    }
+    /**
+	 * @return the instance of this subsystem.
+	 */
+    public static Flashlight getInstance() {
+    	if (instance == null) {
+			instance = new Flashlight();
+		}
+		return instance;
     }
     
     /**

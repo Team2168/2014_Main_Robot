@@ -15,12 +15,12 @@ public abstract class CommandBase extends Command {
 
     public static OI oi;
     // Create a single static instance of all of your subsystems
-    public static Drivetrain drivetrain = new Drivetrain();
-    public static IntakePosition intakePosition = new IntakePosition();
-    public static Intake intakeRollers = new Intake();
-    public static CatapultTusks catapultTusks = new CatapultTusks();
-    public static CatapultWinch catapultWinch = new CatapultWinch();
-    public static Flashlight flashlight = new Flashlight();
+    public static Drivetrain drivetrain = Drivetrain.getInstance();
+    public static IntakePosition intakePosition = IntakePosition.getInstance();
+    public static Intake intakeRollers = Intake.getInstance();
+    public static CatapultTusks catapultTusks = CatapultTusks.getInstance();
+    public static CatapultWinch catapultWinch = CatapultWinch.getInstance();
+    public static Flashlight flashlight = Flashlight.getInstance();
 
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely

@@ -6,8 +6,11 @@ public class MoveForwardXDistance extends CommandBase{
 	boolean finished;
 	double angle;
 	
-	public MoveForwardXDistance(double distance)
-	{
+	/**
+	 * Move the drivetrain forward the specified distance.
+	 * @param distance in inches
+	 */
+	public MoveForwardXDistance(double distance) {
 		this.distance = distance;
 		endDistance = drivetrain.getAveragedEncoderDistance() + distance;
 		angle = drivetrain.getGyroAngle();
@@ -28,44 +31,39 @@ public class MoveForwardXDistance extends CommandBase{
 		//if the current angle is less than the angle we want to be at, by more than 10 degrees
 		if (drivetrain.getGyroAngle() < angle && !(Math.abs(drivetrain.getGyroAngle() - angle) < 10))
 		{
-			//speed = (-1/450)x + 1, where x is the difference between the current angle and the angle we
-			//want to be heading
-			rightSpeed = ((-1/450)*Math.abs(drivetrain.getGyroAngle() - angle))+1;
+			//speed = (-1/450)x + 1, where x is the difference between the
+			//  current angle and the angle we want to be heading
+			rightSpeed = ((-1/450) * Math.abs(drivetrain.getGyroAngle() - angle)) + 1;
 		}
 		else if (drivetrain.getGyroAngle() > angle && !(Math.abs(drivetrain.getGyroAngle() - angle) < 10))
 		{
-			leftSpeed = ((-1/450)*Math.abs(drivetrain.getGyroAngle() - angle))+1;
+			leftSpeed = ((-1/450) * Math.abs(drivetrain.getGyroAngle() - angle)) + 1;
 		}
 
-		//check if the robot is within the margin of error (1)
-		if (Math.abs(endDistance - currentDistance) < 1)
-		{
+		//check if the robot is within the margin of error (1 inch)
+		if (Math.abs(endDistance - currentDistance) < 1) {
+			//we're there, stop
 			drivetrain.drive(0,0);
 			finished = true;
-		}
-		else if(currentDistance < endDistance)
-		{
+		} else if(currentDistance < endDistance) {
+			//Drive forward 
 			drivetrain.drive(leftSpeed,rightSpeed);
-		}
-		else if(currentDistance > endDistance)
-		{
+		} else {
+			//Drive backwards
 			drivetrain.drive(-leftSpeed,-rightSpeed);
 		}
 	}
 
-	protected void initialize()
-	{
+	protected void initialize() {
 		finished = false;
 		drivetrain.drive(0, 0);
 	}
 
-	protected void interrupted() 
-	{
+	protected void interrupted() {
 		drivetrain.drive(0, 0);
 	}
 
-	protected boolean isFinished() 
-	{
+	protected boolean isFinished() {
 		return finished;
 	}
 

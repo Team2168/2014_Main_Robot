@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Encoder;
  *
  */
 public class Drivetrain extends Subsystem {
+	private static Drivetrain instance = null;
 	private static final boolean INVERT_LEFT = true;
 	private static final boolean INVERT_RIGHT = false;
 	private Talon rightMotor, rightMotor2;
@@ -19,9 +20,11 @@ public class Drivetrain extends Subsystem {
     private FalconGyro gyro;
     private Encoder driveTrainEncoderLeft;
     private Encoder driveTrainEncoderRight;
-     
-    
-    public Drivetrain()
+
+    /**
+     * A private constructor to prevent multiple instances from being created.
+     */
+    private Drivetrain()
     {
     	rightMotor = new Talon(RobotMap.rightDriveMotor.getInt());
     	leftMotor = new Talon(RobotMap.leftDriveMotor.getInt());
@@ -41,6 +44,17 @@ public class Drivetrain extends Subsystem {
     	driveTrainEncoderLeft = new Encoder(RobotMap.driveTrainEncoderLeftA.getInt(),
     			RobotMap.driveTrainEncoderLeftB.getInt());
     	driveTrainEncoderLeft.setDistancePerPulse(ticksPerRev);
+    }
+    
+	/**
+	 * 
+	 * @return the instance of this subsystem.
+	 */
+    public static Drivetrain getInstance() {
+    	if (instance == null) {
+			instance = new Drivetrain();
+		}
+		return instance;
     }
     
     public void initDefaultCommand()

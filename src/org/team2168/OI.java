@@ -1,5 +1,6 @@
 package org.team2168;
 
+import org.team2168.commands.MoveForwardXDistance;
 import org.team2168.commands.RotateDrivetrain;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -86,6 +87,8 @@ public class OI {
 		//TODO: remove this assignment, was for testing commands
 		driveButtonA.whenPressed(new RotateDrivetrain(90));
 		driveButtonB.whenPressed(new RotateDrivetrain(-90));
+		driveButtonY.whenPressed(new MoveForwardXDistance(24));
+		driveButtonX.whenPressed(new MoveForwardXDistance(-24));
 		
 		// OPERATOR CONTROLLER BUTTON MAP //////////////////////
 		

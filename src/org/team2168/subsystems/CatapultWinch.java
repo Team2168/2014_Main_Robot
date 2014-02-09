@@ -13,20 +13,29 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *at the set position.
  */
 public class CatapultWinch extends Subsystem {
-	Talon winchMotor;
-	DigitalInput winchInputSwitch;
-	MomentaryDoubleSolenoid winchSolenoid;
+	private static CatapultWinch instance = null;
+	private static Talon winchMotor;
+	private static DigitalInput winchInputSwitch;
+	private static MomentaryDoubleSolenoid winchSolenoid;
 
 	/**
-	 * This is the constructor for the subsystem.
+	 * A private constructor to prevent multiple instances from being created.
 	 */
-	public CatapultWinch(){
+	private CatapultWinch(){
 		winchMotor = new Talon(RobotMap.winchDriveMotor.getInt());
 		winchInputSwitch = new DigitalInput(RobotMap.winchLimitSwitch.getInt());
 		winchSolenoid = new MomentaryDoubleSolenoid(
 				RobotMap.winchExtPort.getInt(),RobotMap.winchRetPort.getInt());
-		
-		
+	}
+	
+	/**
+	 * @return the instance of this subsystem.
+	 */
+	public static CatapultWinch getInstance() {
+		if (instance == null) {
+			instance = new CatapultWinch();
+		}
+		return instance;
 	}
 	
 	/**
