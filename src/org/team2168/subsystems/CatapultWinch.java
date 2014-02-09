@@ -1,8 +1,6 @@
-
 package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
-import org.team2168.commands.DrivetrainWithJoystick;
 import org.team2168.commands.WinchWithJoystick;
 import org.team2168.utils.MomentaryDoubleSolenoid;
 import edu.wpi.first.wpilibj.DigitalInput;
