@@ -1,10 +1,12 @@
 package org.team2168.commands;
 
 public class RotateDrivetrain extends CommandBase{
-	double endAngle;
-	boolean finished;
+	private double endAngle;
+	private boolean finished = false;
 	
 	public RotateDrivetrain (double angle){
+		requires(drivetrain);
+		drivetrain.resetGyro();
 		endAngle = angle;
 	}
 
@@ -17,16 +19,23 @@ public class RotateDrivetrain extends CommandBase{
 
 	protected void execute() {
 		double currentAngle = drivetrain.getGyroAngle();
+		System.out.println("End Angle: " + endAngle + " Current Angle: " + currentAngle);
 		
-		if (Math.abs(endAngle - currentAngle) < 0.5) {
+		if (endAngle < 0 && currentAngle < endAngle ||
+				endAngle > 0 && currentAngle > endAngle) 
+		{
 			//We are done
 			drivetrain.drive(0,0);
 			finished = true;
-		} if(currentAngle < endAngle) {
+		}
+		else if(currentAngle < endAngle)
+		{
 			//Turn to the right
 			drivetrain.driveRight(-0.2);
 			drivetrain.driveLeft(0.2);
-		} else {
+		} 
+		else 
+		{
 			//Turn to the left
 			drivetrain.driveRight(0.2);
 			drivetrain.driveLeft(-0.2);
@@ -42,8 +51,7 @@ public class RotateDrivetrain extends CommandBase{
 	}
 	
 	protected void end() {
-		// TODO Auto-generated method stub
-		
+		drivetrain.drive(0, 0);
 	}
 
 }

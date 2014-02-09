@@ -4,9 +4,11 @@ import org.team2168.RobotMap;
 import org.team2168.commands.DrivetrainWithJoystick;
 import org.team2168.utils.FalconGyro;
 
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Encoder;
+
 
 /**
  *
@@ -15,11 +17,11 @@ public class Drivetrain extends Subsystem {
 	private static Drivetrain instance = null;
 	private static final boolean INVERT_LEFT = true;
 	private static final boolean INVERT_RIGHT = false;
-	private Talon rightMotor, rightMotor2;
-    private Talon leftMotor, leftMotor2;
-    private FalconGyro gyro;
-    private Encoder driveTrainEncoderLeft;
-    private Encoder driveTrainEncoderRight;
+	private static Talon rightMotor, rightMotor2;
+    private static Talon leftMotor, leftMotor2;
+    private static Gyro gyro;
+    private static Encoder driveTrainEncoderLeft;
+    private static Encoder driveTrainEncoderRight;
 
     /**
      * A private constructor to prevent multiple instances from being created.
@@ -30,7 +32,7 @@ public class Drivetrain extends Subsystem {
     	leftMotor = new Talon(RobotMap.leftDriveMotor.getInt());
     	rightMotor2 = new Talon(RobotMap.rightDriveMotor2.getInt());
     	leftMotor2 = new Talon(RobotMap.leftDriveMotor2.getInt());
-    	gyro = new FalconGyro(RobotMap.gyroPort.getInt());
+    	gyro = new Gyro(RobotMap.gyroPort.getInt());
 
     	//converts ticks to distance in inches
     	double ticksPerRev =
@@ -41,9 +43,11 @@ public class Drivetrain extends Subsystem {
     	driveTrainEncoderRight = new Encoder(RobotMap.driveTrainEncoderRightA.getInt(),
     			RobotMap.driveTrainEncoderRightB.getInt());
     	driveTrainEncoderRight.setDistancePerPulse(ticksPerRev);
+    	driveTrainEncoderRight.start();
     	driveTrainEncoderLeft = new Encoder(RobotMap.driveTrainEncoderLeftA.getInt(),
     			RobotMap.driveTrainEncoderLeftB.getInt());
     	driveTrainEncoderLeft.setDistancePerPulse(ticksPerRev);
+    	driveTrainEncoderLeft.start();
     }
     
 	/**
@@ -98,7 +102,7 @@ public class Drivetrain extends Subsystem {
      */
     public double getRightEncoderDistance()
     {
-    	return driveTrainEncoderRight.getDistance();
+    	return -driveTrainEncoderRight.getDistance();
     }
     
     /**
@@ -140,6 +144,11 @@ public class Drivetrain extends Subsystem {
     	driveTrainEncoderLeft.reset();
     }
     
+    public void resetEncoders()
+    {
+    	resetLeftEncoder();
+    	resetRightEncoder();
+    }
     /**
      * Get the current angle of the gyro.
      * 
@@ -155,7 +164,7 @@ public class Drivetrain extends Subsystem {
      */
 	public void reinitGyro()
 	{
-		gyro.initGyro();
+	//	gyro.initGyro();
 	}
 
 	/**
@@ -163,6 +172,8 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void resetGyro()
 	{
+		double before = getGyroAngle();
 		gyro.reset();
+		System.out.println("Gyro Before: " + before + " After: " + getGyroAngle());
 	}
 }
