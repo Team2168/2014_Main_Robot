@@ -2,23 +2,14 @@
 package org.team2168.commands;
 
 import org.team2168.OI;
-import org.team2168.subsystems.Drivetrain;
 
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
-/**
- *
- * @author bradmiller
- */
 public class DrivetrainWithJoystick extends CommandBase {
-	
-	private double leftSpeed, rightSpeed;
 
 	OI oi = new OI();
 	
     public DrivetrainWithJoystick() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(drivetrain);
     }
 
     // Called just before this Command runs the first time
@@ -28,8 +19,8 @@ public class DrivetrainWithJoystick extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//TODO: one of these will need to be negated
-    	drivetrain.drive(oi.getBaseDriverLeftStick(),
-    			oi.getBaseDriverRightStick());
+    	drivetrain.drive(oi.getBaseDriverRightStick(),
+    			oi.getBaseDriverLeftStick());
     
     }
 
