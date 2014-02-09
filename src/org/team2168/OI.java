@@ -82,12 +82,17 @@ public class OI {
 		{ -1.00, -1.00 } };
 
 	public OI() {
+		// DRIVER CONTROLLER BUTTON MAP ////////////////////////
 		//TODO: remove this assignment, was for testing commands
 		driveButtonA.whenPressed(new RotateDrivetrain(90));
 		driveButtonB.whenPressed(new RotateDrivetrain(-90));
+		
+		// OPERATOR CONTROLLER BUTTON MAP //////////////////////
+		
 	}
+
 	/**
-	 * Get the left joystick axis value positive is pushing up on the stick.
+	 * Get the left joystick y-axis value. Positive is pushing up on the stick.
 	 * 
 	 * @return the base driver's left joystick value (1.0 to -1.0)
 	 */
@@ -96,12 +101,30 @@ public class OI {
 	}
 	
 	/**
-	 * Get the right joystick axis value positive is pushing up on the stick.
+	 * Get the right joystick y-axis value. Positive is pushing up on the stick.
 	 * 
 	 * @return the base driver's right joystick value (1.0 to -1.0)
 	 */
 	public double getBaseDriverRightStick() {
 		return interpolate(-(baseDriver.getRawAxis(rightJoyAxis)));
+	}
+	
+	/**
+	 * Get the left joystick y-axis value. Positive is pushing up on the stick.
+	 * 
+	 * @return the operator's left joystick value (1.0 to -1.0)
+	 */
+	public double getOperatorLeftStick() {
+		return -operator.getRawAxis(leftJoyAxis);
+	}
+	
+	/**
+	 * Get the right joystick y-axis value. Positive is pushing up on the stick.
+	 * 
+	 * @return the operator's right joystick value (1.0 to -1.0)
+	 */
+	public double getOperatorRightStick() {
+		return -operator.getRawAxis(rightJoyAxis);
 	}
 	
 	/**
