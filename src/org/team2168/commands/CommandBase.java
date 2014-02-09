@@ -19,7 +19,6 @@ public abstract class CommandBase extends Command {
     public static IntakePosition intakePosition = new IntakePosition();
     public static Intake intakeRollers = new Intake();
     public static CatapultTusks catapultTusks = new CatapultTusks();
-    public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
     public static Flashlight flashlight = new Flashlight();
 
     public static void init() {

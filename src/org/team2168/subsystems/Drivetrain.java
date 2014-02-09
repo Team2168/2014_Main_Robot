@@ -1,6 +1,7 @@
 package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
+import org.team2168.commands.DrivetrainWithJoystick;
 import org.team2168.utils.FalconGyro;
 
 import edu.wpi.first.wpilibj.Talon;
@@ -11,22 +12,29 @@ import edu.wpi.first.wpilibj.Encoder;
  *
  */
 public class Drivetrain extends Subsystem {
-    Talon rightMotor;
-    Talon leftMotor;
-    FalconGyro gyro;
-    Encoder driveTrainEncoderLeft;
-    Encoder driveTrainEncoderRight;
+	private static final boolean INVERT_LEFT = true;
+	private static final boolean INVERT_RIGHT = false;
+	private Talon rightMotor, rightMotor2;
+    private Talon leftMotor, leftMotor2;
+    private FalconGyro gyro;
+    private Encoder driveTrainEncoderLeft;
+    private Encoder driveTrainEncoderRight;
+     
     
     public Drivetrain()
     {
+    	rightMotor = new Talon(RobotMap.rightDriveMotor.getInt());
+    	leftMotor = new Talon(RobotMap.leftDriveMotor.getInt());
+    	rightMotor2 = new Talon(RobotMap.rightDriveMotor2.getInt());
+    	leftMotor2 = new Talon(RobotMap.leftDriveMotor2.getInt());
+    	gyro = new FalconGyro(RobotMap.gyroPort.getInt());
+
     	//converts ticks to distance in inches
     	double ticksPerRev =
     			(RobotMap.wheelDiameterDrivetrain.getDouble() * Math.PI) * 
     			(RobotMap.drivetrainGearRatio.getDouble()) /
     			RobotMap.ticksPerRevolutionDrivetrain.getDouble();
-    	rightMotor = new Talon(RobotMap.rightDriveMotor.getInt());
-    	leftMotor = new Talon(RobotMap.leftDriveMotor.getInt());
-    	gyro = new FalconGyro(RobotMap.gyroPort.getInt());
+    	
     	driveTrainEncoderRight = new Encoder(RobotMap.driveTrainEncoderRightA.getInt(),
     			RobotMap.driveTrainEncoderRightB.getInt());
     	driveTrainEncoderRight.setDistancePerPulse(ticksPerRev);
@@ -38,17 +46,23 @@ public class Drivetrain extends Subsystem {
     public void initDefaultCommand()
     {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new DrivetrainWithJoystick());
     }
     
     public void driveLeft(double speed)
     {
+    	if(INVERT_LEFT) speed = -speed;
+    	
     	leftMotor.set(speed);
+    	leftMotor2.set(speed);
     }
     
     public void driveRight(double speed)
     {
+    	if(INVERT_RIGHT) speed = -speed;
+    	
     	rightMotor.set(speed);
+    	rightMotor2.set(speed);
     }
     
     /**

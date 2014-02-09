@@ -1,5 +1,7 @@
 package org.team2168;
 
+import org.team2168.commands.RotateDrivetrain;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.DigitalIOButton;
@@ -10,7 +12,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	// // CREATING BUTTONS
+	// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	// joystick.
 	// You create one by telling it which joystick it's on and which button
@@ -44,7 +46,12 @@ public class OI {
 	// button.whenReleased(new ExampleCommand());
 
 	// Create mapping for buttons on joystick
-	Joystick baseDriver = new Joystick(1);
+	private Joystick baseDriver = new Joystick(1);
+	private Joystick operator   = new Joystick(2);
+	
+	public static final int rightJoyAxis = 5;
+	public static final int leftJoyAxis  = 2;
+	public static final int triggerAxis  = 3;
 
 	public Button driveButtonA = new JoystickButton(baseDriver, 1),
 			driveButtonB = new JoystickButton(baseDriver, 2),
@@ -56,11 +63,10 @@ public class OI {
 			driveButtonStart = new JoystickButton(baseDriver, 8),
 			driveButtonLeftStick = new JoystickButton(baseDriver, 9),
 			driveButtonRightStick = new JoystickButton(baseDriver, 10);
-
-
+	
 	// minSpeed needs to be tweaked based on the particular drivetrain.
 	// It is the speed at which the drivetrain barely starts moving
-	public static final double minDriveSpeed = 0.222;
+	public static final double minDriveSpeed = 0.11;
 	static double joystickScale[][] = {
 		/* Joystick Input, Scaled Output */
 		{ 1.00, 1.00 },
@@ -75,6 +81,29 @@ public class OI {
 		{ -0.90, -0.68 },
 		{ -1.00, -1.00 } };
 
+	public OI() {
+		//TODO: remove this assignment, was for testing commands
+		driveButtonA.whenPressed(new RotateDrivetrain(90));
+		driveButtonB.whenPressed(new RotateDrivetrain(-90));
+	}
+	/**
+	 * Get the left joystick axis value positive is pushing up on the stick.
+	 * 
+	 * @return the base driver's left joystick value (1.0 to -1.0)
+	 */
+	public double getBaseDriverLeftStick() {
+		return interpolate(-(baseDriver.getRawAxis(leftJoyAxis)));
+	}
+	
+	/**
+	 * Get the right joystick axis value positive is pushing up on the stick.
+	 * 
+	 * @return the base driver's right joystick value (1.0 to -1.0)
+	 */
+	public double getBaseDriverRightStick() {
+		return interpolate(-(baseDriver.getRawAxis(rightJoyAxis)));
+	}
+	
 	/**
 	 * Electronic braking - aka "Falcon Claw"
 	 * The more the "brake" is pulled, the slower output speed
