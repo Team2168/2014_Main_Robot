@@ -1,28 +1,37 @@
 package org.team2168.commands;
 
 public class RotateDrivetrain extends CommandBase{
-	private double endAngle;
+	private double endAngle = 0.0;
+	private double startAngle = 0.0;
+	private double commandedAngle = 0.0;
 	private boolean finished = false;
 	
 	public RotateDrivetrain (double angle){
 		requires(drivetrain);
-		drivetrain.resetGyro();
-		endAngle = angle;
+		//drivetrain.resetGyro(); //resetting gyro doesn't seem to work 100% of
+		// the time, revisit. Until then just use current angle,
+		// and drive to offset.
+		commandedAngle = angle;
 	}
 
 	protected void initialize() {
 		//System.out.println("init gyro. angle = " + endAngle);
-		drivetrain.resetGyro();
 		finished = false;
+		//drivetrain.resetGyro();
+		
 		drivetrain.drive(0, 0);
+		startAngle = drivetrain.getGyroAngle(); 
+		endAngle = startAngle + commandedAngle;
+		System.out.println("\n\nStarting rotate to " + commandedAngle + ". S: "
+		+ startAngle + "  e: " + endAngle);
 	}
 
 	protected void execute() {
 		double currentAngle = drivetrain.getGyroAngle();
 		System.out.println("End Angle: " + endAngle + " Current Angle: " + currentAngle);
 		
-		if (endAngle < 0 && currentAngle < endAngle ||
-				endAngle > 0 && currentAngle > endAngle) 
+		if (endAngle < startAngle && currentAngle < endAngle ||
+				endAngle > startAngle && currentAngle > endAngle) 
 		{
 			//We are done
 			drivetrain.drive(0,0);

@@ -25,8 +25,6 @@ import org.team2168.utils.Debouncer;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
-
 	private int gyroReinits;
 	private double lastAngle;
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
