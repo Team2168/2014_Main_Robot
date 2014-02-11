@@ -72,13 +72,11 @@ public class OI {
 		/* Joystick Input, Scaled Output */
 		{ 1.00, 1.00 },
 		{ 0.90, 0.68 },
-		{ 0.50, 0.32 },
 		{ 0.06, minDriveSpeed },
 		{ 0.06, 0.00 },
 		{ 0.00, 0.00 },
 		{ -0.06, 0.00 },
 		{ -0.06, -minDriveSpeed },
-		{ -0.50, -0.32 },
 		{ -0.90, -0.68 },
 		{ -1.00, -1.00 } };
 
@@ -87,8 +85,8 @@ public class OI {
 		//TODO: remove this assignment, was for testing commands
 		driveButtonA.whenPressed(new RotateDrivetrain(90));
 		driveButtonB.whenPressed(new RotateDrivetrain(-90));
-		driveButtonY.whenPressed(new MoveForwardXDistance(24));
-		driveButtonX.whenPressed(new MoveForwardXDistance(-24));
+		driveButtonY.whenPressed(new MoveForwardXDistance(160));
+		driveButtonX.whenPressed(new MoveForwardXDistance(-160));
 		
 		// OPERATOR CONTROLLER BUTTON MAP //////////////////////
 		

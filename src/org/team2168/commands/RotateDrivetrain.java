@@ -1,32 +1,50 @@
 package org.team2168.commands;
 
 public class RotateDrivetrain extends CommandBase{
-	double endAngle;
-	boolean finished;
+	private double endAngle = 0.0;
+	private double startAngle = 0.0;
+	private double commandedAngle = 0.0;
+	private boolean finished = false;
 	
 	public RotateDrivetrain (double angle){
-		endAngle = angle;
+		requires(drivetrain);
+		//drivetrain.resetGyro(); //resetting gyro doesn't seem to work 100% of
+		// the time, revisit. Until then just use current angle,
+		// and drive to offset.
+		commandedAngle = angle;
 	}
 
 	protected void initialize() {
 		//System.out.println("init gyro. angle = " + endAngle);
-		drivetrain.resetGyro();
 		finished = false;
+		//drivetrain.resetGyro();
+		
 		drivetrain.drive(0, 0);
+		startAngle = drivetrain.getGyroAngle(); 
+		endAngle = startAngle + commandedAngle;
+		System.out.println("\n\nStarting rotate to " + commandedAngle + ". S: "
+		+ startAngle + "  e: " + endAngle);
 	}
 
 	protected void execute() {
 		double currentAngle = drivetrain.getGyroAngle();
+		System.out.println("End Angle: " + endAngle + " Current Angle: " + currentAngle);
 		
-		if (Math.abs(endAngle - currentAngle) < 0.5) {
+		if (endAngle < startAngle && currentAngle < endAngle ||
+				endAngle > startAngle && currentAngle > endAngle) 
+		{
 			//We are done
 			drivetrain.drive(0,0);
 			finished = true;
-		} if(currentAngle < endAngle) {
+		}
+		else if(currentAngle < endAngle)
+		{
 			//Turn to the right
 			drivetrain.driveRight(-0.2);
 			drivetrain.driveLeft(0.2);
-		} else {
+		} 
+		else 
+		{
 			//Turn to the left
 			drivetrain.driveRight(0.2);
 			drivetrain.driveLeft(-0.2);
@@ -42,8 +60,7 @@ public class RotateDrivetrain extends CommandBase{
 	}
 	
 	protected void end() {
-		// TODO Auto-generated method stub
-		
+		drivetrain.drive(0, 0);
 	}
 
 }

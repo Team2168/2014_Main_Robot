@@ -25,8 +25,6 @@ import org.team2168.utils.Debouncer;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
-
 	private int gyroReinits;
 	private double lastAngle;
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
@@ -70,7 +68,9 @@ public class Robot extends IterativeRobot {
 	 * This method is run repeatedly while the robot is disabled.
 	 */
 	public void disabledPeriodic() {
-		
+		//Kill all active commands
+		Scheduler.getInstance().removeAll();
+		Scheduler.getInstance().disable();
 		
 		
 		//Check to see if the gyro is drifting, if it is re-initialize it.
@@ -95,6 +95,7 @@ public class Robot extends IterativeRobot {
 	 * This method is run once each time the robot enters autonomous mode.
 	 */
 	public void autonomousInit() {
+		Scheduler.getInstance().enable();
 		// schedule the autonomous command (example)
 		autonomousCommand.start();
 		
@@ -117,13 +118,14 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		Scheduler.getInstance().enable();
 		autonomousCommand.cancel();
 		
 		compressor.start();
 	}
 
 	/**
-	 * This methof is called periodically during teleoperated mode.
+	 * This method is called periodically during teleoperated mode.
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();

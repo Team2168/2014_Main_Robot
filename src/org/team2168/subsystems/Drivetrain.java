@@ -3,10 +3,10 @@ package org.team2168.subsystems;
 import org.team2168.RobotMap;
 import org.team2168.commands.DrivetrainWithJoystick;
 import org.team2168.utils.FalconGyro;
-
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Encoder;
+
 
 /**
  *
@@ -15,11 +15,14 @@ public class Drivetrain extends Subsystem {
 	private static Drivetrain instance = null;
 	private static final boolean INVERT_LEFT = true;
 	private static final boolean INVERT_RIGHT = false;
-	private Talon rightMotor, rightMotor2;
-    private Talon leftMotor, leftMotor2;
-    private FalconGyro gyro;
-    private Encoder driveTrainEncoderLeft;
-    private Encoder driveTrainEncoderRight;
+	private static Talon rightMotor, rightMotor2;
+    private static Talon leftMotor, leftMotor2;
+    private static FalconGyro gyro;
+    //private static Gyro gyro;
+    private static Encoder driveTrainEncoderLeft;
+    private static Encoder driveTrainEncoderRight;
+    private double lastLeftSpeed = 0.0;
+    private double lastRightSpeed = 0.0;
 
     /**
      * A private constructor to prevent multiple instances from being created.
@@ -31,19 +34,23 @@ public class Drivetrain extends Subsystem {
     	rightMotor2 = new Talon(RobotMap.rightDriveMotor2.getInt());
     	leftMotor2 = new Talon(RobotMap.leftDriveMotor2.getInt());
     	gyro = new FalconGyro(RobotMap.gyroPort.getInt());
-
+    	gyro.setSensitivity(0.0070);
+    	//gyro = new Gyro(RobotMap.gyroPort.getInt());
+    	
     	//converts ticks to distance in inches
-    	double ticksPerRev =
+    	double distancePerTick =
     			(RobotMap.wheelDiameterDrivetrain.getDouble() * Math.PI) * 
     			(RobotMap.drivetrainGearRatio.getDouble()) /
     			RobotMap.ticksPerRevolutionDrivetrain.getDouble();
     	
     	driveTrainEncoderRight = new Encoder(RobotMap.driveTrainEncoderRightA.getInt(),
     			RobotMap.driveTrainEncoderRightB.getInt());
-    	driveTrainEncoderRight.setDistancePerPulse(ticksPerRev);
+    	driveTrainEncoderRight.setDistancePerPulse(distancePerTick);
+    	driveTrainEncoderRight.start();
     	driveTrainEncoderLeft = new Encoder(RobotMap.driveTrainEncoderLeftA.getInt(),
     			RobotMap.driveTrainEncoderLeftB.getInt());
-    	driveTrainEncoderLeft.setDistancePerPulse(ticksPerRev);
+    	driveTrainEncoderLeft.setDistancePerPulse(distancePerTick);
+    	driveTrainEncoderLeft.start();
     }
     
 	/**
@@ -63,20 +70,24 @@ public class Drivetrain extends Subsystem {
         setDefaultCommand(new DrivetrainWithJoystick());
     }
     
-    public void driveLeft(double speed)
-    {
+    public void driveLeft(double speed) {
     	if(INVERT_LEFT) speed = -speed;
     	
-    	leftMotor.set(speed);
-    	leftMotor2.set(speed);
+    	lastLeftSpeed = rateLimit(speed, lastLeftSpeed,
+    			RobotMap.driveRateLimit.getDouble());
+    	
+    	leftMotor.set(lastLeftSpeed);
+    	leftMotor2.set(lastLeftSpeed);
     }
     
-    public void driveRight(double speed)
-    {
+    public void driveRight(double speed) {
     	if(INVERT_RIGHT) speed = -speed;
     	
-    	rightMotor.set(speed);
-    	rightMotor2.set(speed);
+    	lastRightSpeed = rateLimit(speed, lastRightSpeed,
+    			RobotMap.driveRateLimit.getDouble());
+    	
+    	rightMotor.set(lastRightSpeed);
+    	rightMotor2.set(lastRightSpeed);
     }
     
     /**
@@ -98,7 +109,7 @@ public class Drivetrain extends Subsystem {
      */
     public double getRightEncoderDistance()
     {
-    	return driveTrainEncoderRight.getDistance();
+    	return -driveTrainEncoderRight.getDistance();
     }
     
     /**
@@ -119,6 +130,8 @@ public class Drivetrain extends Subsystem {
      */
     public double getAveragedEncoderDistance()
     {
+    	//System.out.println("  l: " + getLeftEncoderDistance() + "  r: " +
+    	//		getRightEncoderDistance());
     	return (getLeftEncoderDistance() + getRightEncoderDistance())/2;
     }
     
@@ -140,6 +153,11 @@ public class Drivetrain extends Subsystem {
     	driveTrainEncoderLeft.reset();
     }
     
+    public void resetEncoders()
+    {
+    	resetLeftEncoder();
+    	resetRightEncoder();
+    }
     /**
      * Get the current angle of the gyro.
      * 
@@ -153,16 +171,65 @@ public class Drivetrain extends Subsystem {
     /**
      * Re-initialize the gyro. This should not be called during a match.
      */
-	public void reinitGyro()
-	{
+	public void reinitGyro() {
 		gyro.initGyro();
 	}
 
 	/**
 	 * Set the current robot heading to 0.0
 	 */
-	public void resetGyro()
-	{
+	public void resetGyro() {
+		//double before = getGyroAngle();
 		gyro.reset();
+		//System.out.println("Gyro Before: " + before + " After: " + getGyroAngle());
+	}
+	
+    /**
+     * A  simple rate limiter.
+     * http://www.chiefdelphi.com/forums/showpost.php?p=1212189&postcount=3
+     * 
+     * @param input the input value (speed from command/joystick)
+	 * @param speed the speed currently being traveled at
+	 * @param limit the rate limit
+	 * @return the new output speed (rate limited)
+     */
+    public static double rateLimit(double input, double speed, double limit) {
+    	return rateLimit(input, speed, limit, limit);
+    }
+    
+    /**
+	 * A simple rate limiter.
+	 * http://www.chiefdelphi.com/forums/showpost.php?p=1212189&postcount=3
+	 * 
+	 * @param input the input value (speed from command/joystick)
+	 * @param speed the speed currently being traveled at
+	 * @param posRateLimit the rate limit for accelerating
+	 * @param negRateLimit the rate limit for decelerating
+	 * @return the new output speed (rate limited)
+	 */
+	public static double rateLimit(double input, double speed,
+			double posRateLimit, double negRateLimit) {
+		if (input > 0) {
+			if (input > (speed + posRateLimit)) {
+				//Accelerating positively
+		        speed = speed + posRateLimit;
+			} else if (input < (speed - negRateLimit)) {
+				//Decelerating positively 
+		        speed = speed - negRateLimit;
+			} else {
+		        speed = input;
+			}
+		} else {
+			if (input < (speed - posRateLimit)) {
+				//Accelerating negatively
+		        speed = speed - posRateLimit;
+			} else if (input > (speed + negRateLimit)) {
+				//Decelerating negatively
+		        speed = speed + negRateLimit;
+			} else {
+		        speed = input;
+			}
+		}
+		return speed;
 	}
 }

@@ -74,16 +74,18 @@ public class RobotMap extends ConstantsBase {
      *                    Drivetrain Parameters                     *
      ****************************************************************/
 	public static final Constant wheelDiameterDrivetrain = 
-			new Constant("wheelDiameterDriveTrain",3);
+			new Constant("wheelDiameterDriveTrain", 3.0330);
 	public static final Constant ticksPerRevolutionDrivetrain = 
 			new Constant("ticksPerRevolutionDrivetrain",256);
 	public static final Constant drivetrainGearRatio = 
-			new Constant("drivetrainGearRatio",(27/24));
+			new Constant("drivetrainGearRatio",(24.0/27.0));
+	public static final Constant driveRateLimit = 
+			new Constant("driveRateLimit", 0.15);
 	
 	/****************************************************************
      *                      Catapult Parameters                     *
      ****************************************************************/
-	public static final Constant wheelRadius = new Constant("wheelRadius", 2);
+	//public static final Constant wheelRadius = new Constant("wheelRadius", 2);
 	
 	static {
 		// Set any overridden constants from the file on startup.
