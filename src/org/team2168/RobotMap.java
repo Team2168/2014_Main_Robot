@@ -60,15 +60,15 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant catRetPort1 = new Constant("catRetPort1", 4);
 	public static final Constant catExtPort2 = new Constant("catExtPort2", 5);
 	public static final Constant catRetPort2 = new Constant("catRetPort2", 6);
-	public static final Constant winchExtPort = new Constant("winchExtPort",7);
-	public static final Constant winchRetPort = new Constant("winchRetPort",8);
+	public static final Constant winchExtPort = new Constant("winchExtPort", 7);
+	public static final Constant winchRetPort = new Constant("winchRetPort", 8);
 	
 	//Solenoid Channels(fourth slot on cRio)//////////////////////////
 	
 	
 	//Analog Input Channels///////////////////////////////////////////
 	public static final Constant gyroPort = new Constant("gyroPort", 1);
-	public static final Constant ballSensorPort = new Constant("ballSensorPort",2);
+	public static final Constant ballSensorPort = new Constant("ballSensorPort", 2);
 
 	/****************************************************************
      *                    Drivetrain Parameters                     *
@@ -76,7 +76,7 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant wheelDiameterDrivetrain = 
 			new Constant("wheelDiameterDriveTrain", 3.0330);
 	public static final Constant ticksPerRevolutionDrivetrain = 
-			new Constant("ticksPerRevolutionDrivetrain",256);
+			new Constant("ticksPerRevolutionDrivetrain", 256);
 	public static final Constant drivetrainGearRatio = 
 			new Constant("drivetrainGearRatio",(24.0/27.0));
 	public static final Constant driveRateLimit = 
