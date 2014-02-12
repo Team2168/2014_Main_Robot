@@ -118,8 +118,8 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		Scheduler.getInstance().enable();
 		autonomousCommand.cancel();
+		Scheduler.getInstance().enable();
 		
 		compressor.start();
 	}
