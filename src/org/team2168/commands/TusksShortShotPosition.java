@@ -6,32 +6,23 @@ public class TusksShortShotPosition extends CommandBase {
 	 * Prevents the tusks from trying to change all at the same time
 	 */
 	public TusksShortShotPosition() {
-		requires(catapultTusks); 
-	}
-	
-	protected void end() {
-		// TODO Auto-generated method stub
-
-	}
-
-	protected void execute() {
-		// TODO Auto-generated method stub
-		catapultTusks.shortRangeShot();
+		requires(catapultTusks);
 	}
 
 	protected void initialize() {
-		// TODO Auto-generated method stub
+	}
 
+	protected void execute() {
+		catapultTusks.shortRangeShot();
 	}
 
 	protected void interrupted() {
-		// TODO Auto-generated method stub
-
 	}
 
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
+	protected void end() {
+	}
 }
