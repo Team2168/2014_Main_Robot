@@ -54,18 +54,10 @@ public class CatapultWinch extends Subsystem {
     public void setCatapult(double winchSpeed){
     	winchMotor.set(winchSpeed);
     }
-    
-    /**
-     * This method closes the latch to keep the catapult in place.
-     */
-    public void closeLatch(){
-    	winchSolenoid.set(DoubleSolenoid.Value.kForward);
-    }
-    
     /**
      * This method releases the latch on the catapult.
      */
-    public void openLatch(){
+    public void open(){
     	winchSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
     
