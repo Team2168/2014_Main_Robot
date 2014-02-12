@@ -68,7 +68,7 @@ public class RobotMap extends ConstantsBase {
 	
 	//Analog Input Channels///////////////////////////////////////////
 	public static final Constant gyroPort = new Constant("gyroPort", 1);
-
+	public static final Constant ballSensorPort = new Constant("ballSensorPort",2);
 
 	/****************************************************************
      *                    Drivetrain Parameters                     *
