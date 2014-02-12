@@ -13,16 +13,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class CatapultTusks extends Subsystem {
 	private static CatapultTusks instance = null;
-	private static MomentaryDoubleSolenoid solenoid1;
-	private static MomentaryDoubleSolenoid solenoid2;
+	private static MomentaryDoubleSolenoid tuskSolenoid1;
+	private static MomentaryDoubleSolenoid tuskSolenoid2;
 
 	/**
 	 * A private constructor to prevent multiple instances from being created.
 	 */
 	private CatapultTusks() {
-		solenoid1 = new MomentaryDoubleSolenoid(RobotMap.catExtPort1.getInt(),
+		tuskSolenoid1 = new MomentaryDoubleSolenoid(RobotMap.catExtPort1.getInt(),
 				RobotMap.catRetPort1.getInt());
-		solenoid2 = new MomentaryDoubleSolenoid(RobotMap.catExtPort2.getInt(),
+		tuskSolenoid2 = new MomentaryDoubleSolenoid(RobotMap.catExtPort2.getInt(),
 				RobotMap.catRetPort2.getInt());
 	}
 	
@@ -48,8 +48,8 @@ public class CatapultTusks extends Subsystem {
 	 * the tusks.
 	 */
 	public void trussShot() {
-		solenoid1.set(DoubleSolenoid.Value.kReverse);
-		solenoid2.set(DoubleSolenoid.Value.kReverse);
+		tuskSolenoid1.set(DoubleSolenoid.Value.kReverse);
+		tuskSolenoid2.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	/**
@@ -57,8 +57,8 @@ public class CatapultTusks extends Subsystem {
 	 * of the tusks.
 	 */
 	public void longRangeShot(){
-		solenoid1.set(DoubleSolenoid.Value.kForward);
-		solenoid2.set(DoubleSolenoid.Value.kForward);
+		tuskSolenoid1.set(DoubleSolenoid.Value.kForward);
+		tuskSolenoid2.set(DoubleSolenoid.Value.kForward);
 	}
 	
 	/**
@@ -66,35 +66,35 @@ public class CatapultTusks extends Subsystem {
 	 * the tusks.
 	 */
 	public void shortRangeShot(){
-		solenoid1.set(DoubleSolenoid.Value.kForward);
-		solenoid2.set(DoubleSolenoid.Value.kReverse);
+		tuskSolenoid1.set(DoubleSolenoid.Value.kForward);
+		tuskSolenoid2.set(DoubleSolenoid.Value.kReverse);
 	}
 	/**
 	 * For manually extending solenoid 1.
 	 */
 	public void extendSolenoid1(){
-		solenoid1.set(DoubleSolenoid.Value.kForward);
+		tuskSolenoid1.set(DoubleSolenoid.Value.kForward);
 	}
 	
 	/**
 	 * For manually retracting solenoid 1.
 	 */
 	public void retractSolenoid1(){
-		solenoid1.set(DoubleSolenoid.Value.kReverse);
+		tuskSolenoid1.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	/**
 	 * For manually extending solenoid 2.
 	 */
 	public void extendSolenoid2(){
-		solenoid2.set(DoubleSolenoid.Value.kForward);
+		tuskSolenoid2.set(DoubleSolenoid.Value.kForward);
 	}
 	
 	/**
 	 * For manually retracting solenoid 2.
 	 */
 	public void retractSolenoid2(){
-		solenoid2.set(DoubleSolenoid.Value.kReverse);
+		tuskSolenoid2.set(DoubleSolenoid.Value.kReverse);
 	}
 }
 
