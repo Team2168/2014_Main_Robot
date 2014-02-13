@@ -34,8 +34,8 @@ public class MoveForwardXDistance extends CommandBase{
 	protected void execute() {
 		//TODO set the margin of error
 		
-		double rightSpeed = 0.5;
-		double leftSpeed = 0.5;
+		double rightSpeed = 0.25;
+		double leftSpeed = 0.25;
 		double currentDistance = drivetrain.getAveragedEncoderDistance();
 
 		//precalculate the steering adjustment value
@@ -78,7 +78,11 @@ public class MoveForwardXDistance extends CommandBase{
 //				" Angle = " + drivetrain.getGyroAngle() + 
 //				" Distance = " + currentDistance +
 //				" 'angle' =" + angle);
+		
+		//System.out.println(drivetrain.getRightTicks() + " " + drivetrain.getAveragedEncoderDistance());
 	}
+	
+	
 
 	protected void interrupted() {
 		drivetrain.drive(0, 0);

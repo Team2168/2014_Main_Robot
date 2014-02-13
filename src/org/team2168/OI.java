@@ -83,8 +83,8 @@ public class OI {
 	public OI() {
 		// DRIVER CONTROLLER BUTTON MAP ////////////////////////
 		//TODO: remove this assignment, was for testing commands
-		driveButtonA.whenPressed(new RotateDrivetrain(90));
-		driveButtonB.whenPressed(new RotateDrivetrain(-90));
+		driveButtonA.whenPressed(new RotateDrivetrain(20));
+		driveButtonB.whenPressed(new RotateDrivetrain(-45));
 		driveButtonY.whenPressed(new MoveForwardXDistance(160));
 		driveButtonX.whenPressed(new MoveForwardXDistance(-160));
 		

@@ -1,8 +1,11 @@
 package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
+import org.team2168.PIDController.Sensors.AverageEncoder;
 import org.team2168.commands.DrivetrainWithJoystick;
 import org.team2168.utils.FalconGyro;
+
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Encoder;
@@ -19,8 +22,9 @@ public class Drivetrain extends Subsystem {
     private static Talon leftMotor, leftMotor2;
     private static FalconGyro gyro;
     //private static Gyro gyro;
-    private static Encoder driveTrainEncoderLeft;
-    private static Encoder driveTrainEncoderRight;
+    //private static Encoder driveTrainEncoderLeft;
+    //private static Encoder driveTrainEncoderRight;
+    private static AverageEncoder driveTrainEncoderLeft, driveTrainEncoderRight;
     private double lastLeftSpeed = 0.0;
     private double lastRightSpeed = 0.0;
 
@@ -39,17 +43,35 @@ public class Drivetrain extends Subsystem {
     	
     	//converts ticks to distance in inches
     	double distancePerTick =
-    			(RobotMap.wheelDiameterDrivetrain.getDouble() * Math.PI) * 
-    			(RobotMap.drivetrainGearRatio.getDouble()) /
+    			((RobotMap.wheelDiameterDrivetrain.getDouble() * Math.PI) * 
+    			(RobotMap.drivetrainGearRatio.getDouble())) /
     			RobotMap.ticksPerRevolutionDrivetrain.getDouble();
     	
-    	driveTrainEncoderRight = new Encoder(RobotMap.driveTrainEncoderRightA.getInt(),
-    			RobotMap.driveTrainEncoderRightB.getInt());
-    	driveTrainEncoderRight.setDistancePerPulse(distancePerTick);
+//    	driveTrainEncoderRight = new Encoder(RobotMap.driveTrainEncoderRightA.getInt(),
+//    			RobotMap.driveTrainEncoderRightB.getInt(),false , EncodingType.k4X);
+//    	driveTrainEncoderRight.setDistancePerPulse(distancePerTick);
+//    	driveTrainEncoderRight.start();
+//    	driveTrainEncoderLeft = new Encoder(RobotMap.driveTrainEncoderLeftA.getInt(),
+//    			RobotMap.driveTrainEncoderLeftB.getInt(), false, EncodingType.k4X);
+//    	driveTrainEncoderLeft.setDistancePerPulse(distancePerTick);
+//    	driveTrainEncoderLeft.start();
+    	
+    	driveTrainEncoderRight = new AverageEncoder(RobotMap.driveTrainEncoderRightA.getInt(),
+    			RobotMap.driveTrainEncoderRightB.getInt(), RobotMap.driveEncoderPulsePerRot,
+    			RobotMap.driveEncoderDistPerTick, RobotMap.rightDriveTrainEncoderReverse,
+    			RobotMap.driveEncodingType, RobotMap.driveSpeedReturnType,
+    			RobotMap.drivePosReturnType, RobotMap.driveAvgEncoderVal);
+    	driveTrainEncoderRight.setMaxPeriod(RobotMap.driveEncoderMinPeriod);//min period before reported stopped
+    	driveTrainEncoderRight.setMinRate(RobotMap.driveEncoderMinRate);//min rate before reported stopped
     	driveTrainEncoderRight.start();
-    	driveTrainEncoderLeft = new Encoder(RobotMap.driveTrainEncoderLeftA.getInt(),
-    			RobotMap.driveTrainEncoderLeftB.getInt());
-    	driveTrainEncoderLeft.setDistancePerPulse(distancePerTick);
+    	
+    	driveTrainEncoderLeft = new AverageEncoder(RobotMap.driveTrainEncoderLeftA.getInt(),
+    			RobotMap.driveTrainEncoderLeftB.getInt(), RobotMap.driveEncoderPulsePerRot,
+    			RobotMap.driveEncoderDistPerTick, RobotMap.leftDriveTrainEncoderReverse,
+    			RobotMap.driveEncodingType, RobotMap.driveSpeedReturnType,
+    			RobotMap.drivePosReturnType, RobotMap.driveAvgEncoderVal);
+    	driveTrainEncoderLeft.setMaxPeriod(RobotMap.driveEncoderMinPeriod);//min period before reported stopped
+    	driveTrainEncoderLeft.setMinRate(RobotMap.driveEncoderMinRate);//min rate before reported stopped
     	driveTrainEncoderLeft.start();
     }
     
@@ -109,7 +131,7 @@ public class Drivetrain extends Subsystem {
      */
     public double getRightEncoderDistance()
     {
-    	return -driveTrainEncoderRight.getDistance();
+    	return driveTrainEncoderRight.getDistance();
     }
     
     /**
@@ -231,5 +253,10 @@ public class Drivetrain extends Subsystem {
 			}
 		}
 		return speed;
+	}
+	
+	public static double getRightTicks(){
+		return driveTrainEncoderRight.get();
+		
 	}
 }
