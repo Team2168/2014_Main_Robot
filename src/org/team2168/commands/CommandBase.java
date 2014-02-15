@@ -17,7 +17,7 @@ public abstract class CommandBase extends Command {
     // Create a single static instance of all of your subsystems
     public static Drivetrain drivetrain = Drivetrain.getInstance();
     public static IntakePosition intakePosition = IntakePosition.getInstance();
-    public static Intake intakeRollers = Intake.getInstance();
+    public static IntakeRollers intakeRollers = IntakeRollers.getInstance();
     public static CatapultTusks catapultTusks = CatapultTusks.getInstance();
     public static CatapultWinch catapultWinch = CatapultWinch.getInstance();
     public static Flashlight flashlight = Flashlight.getInstance();
