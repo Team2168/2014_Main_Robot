@@ -46,12 +46,16 @@ public class CatapultWinch extends Subsystem {
     }
     
     /**
-     * This method sets the motor to move the catapult to the set position.
-     * A positive value will drive the winch downward.
+     * This method drives the catapult winch motors. A positive value will
+     * drive the winch downward.
      * 
-     * @param winchSpeed 1.0 to -1.0
+     * @param winchSpeed 0.0 to 1.0
      */
     public void setCatapult(double winchSpeed){
+    	//Only allow the winch to drive in one direction.
+    	if (winchSpeed < 0.0) {
+    		winchSpeed = 0.0;
+    	}
     	winchMotor.set(winchSpeed);
     }
     /**
