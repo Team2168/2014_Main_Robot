@@ -29,6 +29,7 @@ public class Robot extends IterativeRobot {
 	private double lastAngle;
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
 	private Compressor compressor;
+	private boolean matchStarted = false;
 
 	TCPCameraSensor cam = new TCPCameraSensor(1111, 1000);
 
@@ -78,7 +79,7 @@ public class Robot extends IterativeRobot {
 		double curAngle = CommandBase.drivetrain.getGyroAngle();
 		if (gyroDriftDetector
 				.update(Math.abs(curAngle - lastAngle) > (.75 / 50.0))
-				&& gyroReinits < 3) {
+				&& gyroReinits < 3 && !matchStarted) {
 			gyroReinits++;
 			System.out.println("!!! Sensed drift, about to auto-reinit gyro ("
 					+ gyroReinits + ")");
@@ -101,6 +102,8 @@ public class Robot extends IterativeRobot {
 		
 		//No compressor for auto mode, lower battery load
 		//compressor.start();
+
+		matchStarted = true;
 	}
 
 	/**
