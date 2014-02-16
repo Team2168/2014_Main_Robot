@@ -56,7 +56,7 @@ public class TCPCameraSensor {
 	public TCPCameraSensor(int port, long requestPeriod) {
 		this.requestPeriod = requestPeriod;
 
-		// initialize data messageOut
+		// initialize data messageOut 
 		dataReceived = new String[4];
 		dataReceived[0] = "0";
 		dataReceived[1] = "0";
