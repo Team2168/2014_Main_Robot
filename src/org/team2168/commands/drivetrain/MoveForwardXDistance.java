@@ -1,4 +1,6 @@
-package org.team2168.commands;
+package org.team2168.commands.drivetrain;
+
+import org.team2168.commands.CommandBase;
 
 public class MoveForwardXDistance extends CommandBase{
 	private double distance;

@@ -1,5 +1,7 @@
 
-package org.team2168.commands;
+package org.team2168.commands.catapult;
+
+import org.team2168.commands.CommandBase;
 
 /**
  *
