@@ -65,7 +65,7 @@ public class CatapultWinch extends Subsystem {
     	winchSolenoid.set(DoubleSolenoid.Value.kForward);
     }
     /**
-     * This method releases the dog gear on the catapult.
+     * This method releases (FIRES) the dog gear on the catapult.
      */
     public void openDogGear(){
     	winchSolenoid.set(DoubleSolenoid.Value.kReverse);
