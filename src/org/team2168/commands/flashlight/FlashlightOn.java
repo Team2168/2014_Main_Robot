@@ -1,4 +1,6 @@
-package org.team2168.commands;
+package org.team2168.commands.flashlight;
+
+import org.team2168.commands.CommandBase;
 
 /**
  * Turn the flashlight on.

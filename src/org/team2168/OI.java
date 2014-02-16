@@ -1,8 +1,10 @@
 package org.team2168;
 
-import org.team2168.commands.MoveForwardXDistance;
-import org.team2168.commands.RotateDrivetrain;
-
+import org.team2168.commands.*;
+import org.team2168.commands.drivetrain.*;
+import org.team2168.commands.catapult.*;
+import org.team2168.commands.intake.*;
+import org.team2168.commands.flashlight.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.DigitalIOButton;

@@ -2,7 +2,7 @@ package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
 import org.team2168.PIDController.Sensors.AverageEncoder;
-import org.team2168.commands.DrivetrainWithJoystick;
+import org.team2168.commands.drivetrain.DrivetrainWithJoystick;
 import org.team2168.utils.FalconGyro;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
