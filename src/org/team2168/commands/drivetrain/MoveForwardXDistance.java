@@ -37,8 +37,6 @@ public class MoveForwardXDistance extends CommandBase{
 	protected void execute() {
 		//TODO set the margin of error
 		
-		double slowSpeed = 1;
-		
 		double rightSpeed = 0.25;
 		double leftSpeed = 0.25;
 		double currentDistance = drivetrain.getAveragedEncoderDistance();
@@ -85,10 +83,10 @@ public class MoveForwardXDistance extends CommandBase{
 			finished = true; 
 		} else if(currentDistance < endDistance) {
 			//Drive forward 
-			drivetrain.drive(slowSpeed*rightSpeed, slowSpeed*leftSpeed);
+			drivetrain.drive(rightSpeed, leftSpeed);
 		} else {
 			//Drive backwards
-			drivetrain.drive(slowSpeed*-rightSpeed, slowSpeed*-leftSpeed);
+			drivetrain.drive(-rightSpeed, -leftSpeed);
 		}
 //		System.out.println("Right Speed: " + rightSpeed + 
 //				" Left Speed: " + leftSpeed + 
