@@ -1,6 +1,7 @@
 package org.team2168.commands.drivetrain;
 
 import org.team2168.commands.CommandBase;
+import org.team2168.OI;
 
 public class MoveForwardXDistance extends CommandBase{
 	private double distance;
@@ -36,12 +37,26 @@ public class MoveForwardXDistance extends CommandBase{
 	protected void execute() {
 		//TODO set the margin of error
 		
+		double slowSpeed = 1;
+		
 		double rightSpeed = 0.25;
 		double leftSpeed = 0.25;
 		double currentDistance = drivetrain.getAveragedEncoderDistance();
 
 		//precalculate the steering adjustment value
 		double steeringAdjust = ((-1.0/45.0) * Math.abs(drivetrain.getGyroAngle() - angle));
+		
+		//if we are 1/20 away from target, start slowing down
+		if (drivingForward && currentDistance >= (endDistance - (endDistance/20)) ||
+				(!drivingForward && currentDistance <= (endDistance - (endDistance/20)))) {
+			//gradually go from rightSpeed down to zero, as distance increases
+			rightSpeed = (endDistance - currentDistance)/(endDistance/20);
+			leftSpeed = (endDistance - currentDistance)/(endDistance/20);
+			//don't drive slower than minimum speed
+			if (rightSpeed < OI.minDriveSpeed) {
+				rightSpeed = leftSpeed = OI.minDriveSpeed;
+			}
+		}
 		
 		//make the left/right motors go less fast, to correct angle
 		//if the current angle is less than the angle we want to be at, by more than 0.2 degrees
@@ -70,10 +85,10 @@ public class MoveForwardXDistance extends CommandBase{
 			finished = true; 
 		} else if(currentDistance < endDistance) {
 			//Drive forward 
-			drivetrain.drive(rightSpeed, leftSpeed);
+			drivetrain.drive(slowSpeed*rightSpeed, slowSpeed*leftSpeed);
 		} else {
 			//Drive backwards
-			drivetrain.drive(-rightSpeed, -leftSpeed);
+			drivetrain.drive(slowSpeed*-rightSpeed, slowSpeed*-leftSpeed);
 		}
 //		System.out.println("Right Speed: " + rightSpeed + 
 //				" Left Speed: " + leftSpeed + 
