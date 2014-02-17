@@ -44,12 +44,12 @@ public class MoveForwardXDistance extends CommandBase{
 		//precalculate the steering adjustment value
 		double steeringAdjust = ((-1.0/45.0) * Math.abs(drivetrain.getGyroAngle() - angle));
 		
-		//if we are 1/20 away from target, start slowing down
-		if (drivingForward && currentDistance >= (endDistance - (endDistance/20)) ||
-				(!drivingForward && currentDistance <= (endDistance - (endDistance/20)))) {
+		//if we are 1/20 of the total distance away from target, start slowing down
+		if (drivingForward && currentDistance >= (endDistance - (distance/20)) ||
+				(!drivingForward && currentDistance <= (endDistance - (distance/20)))) {
 			//gradually go from rightSpeed down to zero, as distance increases
-			rightSpeed = (endDistance - currentDistance)/(endDistance/20);
-			leftSpeed = (endDistance - currentDistance)/(endDistance/20);
+			rightSpeed = (endDistance - currentDistance)/(distance/20);
+			leftSpeed = (endDistance - currentDistance)/(distance/20);
 			//don't drive slower than minimum speed
 			if (rightSpeed < OI.minDriveSpeed) {
 				rightSpeed = leftSpeed = OI.minDriveSpeed;

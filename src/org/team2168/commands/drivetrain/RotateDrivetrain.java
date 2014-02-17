@@ -1,5 +1,6 @@
 package org.team2168.commands.drivetrain;
 
+import org.team2168.OI;
 import org.team2168.commands.CommandBase;
 
 public class RotateDrivetrain extends CommandBase{
@@ -29,8 +30,20 @@ public class RotateDrivetrain extends CommandBase{
 	}
 
 	protected void execute() {
+		double slowSpeed = 1;
+		
 		double currentAngle = drivetrain.getGyroAngle();
 		System.out.println("End Angle: " + endAngle + " Current Angle: " + currentAngle);
+		
+		//if we are 1/20 of the total distance away from target angle, start slowing down
+		if (currentAngle < endAngle && currentAngle >= (endAngle - 15) ||
+				currentAngle > endAngle && currentAngle <= (endAngle - 15)) {
+			slowSpeed = (endAngle - currentAngle)/15;
+			//set slowSpeed so that robot never drives slower than minimum speed
+			if (slowSpeed*0.2 < OI.minDriveSpeed) {
+				slowSpeed = OI.minDriveSpeed/0.2;
+			}
+		}
 		
 		if (endAngle < startAngle && currentAngle < endAngle ||
 				endAngle > startAngle && currentAngle > endAngle) 
@@ -39,17 +52,18 @@ public class RotateDrivetrain extends CommandBase{
 			drivetrain.drive(0,0);
 			finished = true;
 		}
+		
 		else if(currentAngle < endAngle)
 		{
 			//Turn to the right
-			drivetrain.driveRight(-0.2);
-			drivetrain.driveLeft(0.2);
+			drivetrain.driveRight(slowSpeed*-0.2);
+			drivetrain.driveLeft(slowSpeed*0.2);
 		} 
 		else 
 		{
 			//Turn to the left
-			drivetrain.driveRight(0.2);
-			drivetrain.driveLeft(-0.2);
+			drivetrain.driveRight(slowSpeed*0.2);
+			drivetrain.driveLeft(slowSpeed*-0.2);
 		}
 	}
 
