@@ -8,7 +8,6 @@ package org.team2168.utils;
 /*----------------------------------------------------------------------------*/
 
 import edu.wpi.first.wpilibj.AccumulatorResult;
-import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.SensorBase;
 import edu.wpi.first.wpilibj.Timer;
@@ -28,72 +27,37 @@ import edu.wpi.first.wpilibj.util.BoundaryException;
  * determine the default offset. This is subtracted from each sample to
  * determine the heading.
  * 
- * Modified to make initGyro public, ala cheezygyro. This allows a the robot to
- * re-zero the gyro if it was drifting before the match started. This could
- * happen if the robot was being moved around shortly after power on (during the
- * first gyro init).
+ * Modified to allow external calls in to initialize the gyro, ala cheezygyro.
+ * This allows a the robot to re-zero the gyro if it was drifting before the
+ * match has started. This could happen if the robot was being moved around
+ * shortly after power on (during the first gyro init).
+ * 
+ * Also modified to prevent this class from blocking execution while
+ * initializing the gyro.
  */
 public class FalconGyro extends SensorBase implements PIDSource, ISensor,
-		LiveWindowSendable {
+		LiveWindowSendable, Runnable {
 
 	static final int kOversampleBits = 10;
 	static final int kAverageBits = 0;
 	static final double kSamplesPerSecond = 50.0;
 	static final double kCalibrationSampleTime = 5.0;
 	static final double kDefaultVoltsPerDegreePerSecond = 0.007;
-	AnalogChannel m_analog;
+	FalconAnalogChannel m_analog;
 	double m_voltsPerDegreePerSecond;
 	double m_offset;
 	int m_center;
 	boolean m_channelAllocated;
 	AccumulatorResult result;
 	private PIDSourceParameter m_pidSource;
-
-	/**
-	 * Initialize the gyro. Calibrate the gyro by running for a number of
-	 * samples and computing the center value for this part. Then use the center
-	 * value as the Accumulator center value for subsequent measurements. It's
-	 * important to make sure that the robot is not moving while the centering
-	 * calculations are in progress, this is typically done when the robot is
-	 * first turned on while it's sitting at rest before the competition starts.
-	 */
-	public void initGyro() {
-		result = new AccumulatorResult();
-		if (m_analog == null) {
-			System.out.println("Null m_analog");
-		}
-		m_voltsPerDegreePerSecond = kDefaultVoltsPerDegreePerSecond;
-		m_analog.setAverageBits(kAverageBits);
-		m_analog.setOversampleBits(kOversampleBits);
-		double sampleRate = kSamplesPerSecond
-				* (1 << (kAverageBits + kOversampleBits));
-		m_analog.getModule().setSampleRate(sampleRate);
-
-		Timer.delay(1.0);
-		m_analog.initAccumulator();
-
-		Timer.delay(kCalibrationSampleTime);
-
-		m_analog.getAccumulatorOutput(result);
-
-		m_center = (int) ((double) result.value / (double) result.count + .5);
-
-		m_offset = ((double) result.value / (double) result.count)
-				- (double) m_center;
-
-		m_analog.setAccumulatorCenter(m_center);
-
-		m_analog.setAccumulatorDeadband(0); // /< TODO: compute / parameterize
-											// this
-		m_analog.resetAccumulator();
-
-		setPIDSourceParameter(PIDSourceParameter.kAngle);
-
-		UsageReporting.report(UsageReporting.kResourceType_Gyro,
-				m_analog.getChannel(), m_analog.getModuleNumber() - 1);
-		LiveWindow.addSensor("Gyro", m_analog.getModuleNumber(),
-				m_analog.getChannel(), this);
-	}
+	private long sleepTime = 0;
+	private long updatePeriod = 20; // ms
+	private boolean reInit = false, lastReInit = false;
+	private int initState = 0;
+	private boolean calibratedOnce = false;
+	private double lastTime = 0.0;
+	private static boolean matchStarted = false;
+	private int accumulatorCenter = 0;
 
 	/**
 	 * Gyro constructor given a slot and a channel. .
@@ -104,9 +68,9 @@ public class FalconGyro extends SensorBase implements PIDSource, ISensor,
 	 *            The analog channel the gyro is connected to.
 	 */
 	public FalconGyro(int slot, int channel) {
-		m_analog = new AnalogChannel(slot, channel);
+		m_analog = new FalconAnalogChannel(slot, channel);
 		m_channelAllocated = true;
-		initGyro();
+		setInit(true);
 	}
 
 	/**
@@ -118,9 +82,9 @@ public class FalconGyro extends SensorBase implements PIDSource, ISensor,
 	 *            The analog channel the gyro is connected to.
 	 */
 	public FalconGyro(int channel) {
-		m_analog = new AnalogChannel(channel);
+		m_analog = new FalconAnalogChannel(channel);
 		m_channelAllocated = true;
-		initGyro();
+		setInit(true);
 	}
 
 	/**
@@ -131,14 +95,14 @@ public class FalconGyro extends SensorBase implements PIDSource, ISensor,
 	 * @param channel
 	 *            The AnalogChannel object that the gyro is connected to.
 	 */
-	public FalconGyro(AnalogChannel channel) {
+	public FalconGyro(FalconAnalogChannel channel) {
 		m_analog = channel;
 		if (m_analog == null) {
 			System.err
 					.println("Analog channel supplied to Gyro constructor is null");
 		} else {
 			m_channelAllocated = false;
-			initGyro();
+			setInit(true);
 		}
 	}
 
@@ -253,7 +217,182 @@ public class FalconGyro extends SensorBase implements PIDSource, ISensor,
 		}
 	}
 
-	/*
+	/**
+	 * Let the gyro code know when the match has started. This information is
+	 * used to prematurely cancel gyro initialization sequences so that auto
+	 * mode and field communications are not affected.
+	 * 
+	 * @param started
+	 *            true if the match has started.
+	 */
+	public static synchronized void setMatchStarted(boolean started) {
+		matchStarted = started;
+	}
+
+	/**
+	 * Get the state of the match. See setMatchStarted();
+	 * 
+	 * @return true if the match has started
+	 */
+	private static synchronized boolean isMatchStarted() {
+		return matchStarted;
+	}
+
+	/**
+	 * Calibrate the gyro by sampling its analog output for a period of time to
+	 * calculate the zero rate value for subsequent measurements.
+	 */
+	public void init() {
+		// Call thread safe method to start gyro initialization
+		setInit(true);
+	}
+
+	/**
+	 * Thread safe method for modifying the state of the reInit value
+	 * 
+	 * @param initVal
+	 *            true to start initializing the gyro.
+	 */
+	private synchronized void setInit(boolean initVal) {
+		reInit = initVal;
+	}
+
+	/**
+	 * Status of gyro initialization process.
+	 * 
+	 * @return true if actively initializing the gyro.
+	 */
+	public synchronized boolean isInitializing() {
+		return reInit;
+	}
+
+	/**
+	 * A separate thread to run the gyro initialization code in. This is to
+	 * prevent the gyro from blocking execution of the main robot code.
+	 * 
+	 * Threading initGyro allows gyro calibration to take place preceeding a
+	 * match, without having to worry about the gyro init breaking field
+	 * communications or eating precious time in auto mode.
+	 */
+	public void run() {
+		while (true) {
+			if (isMatchStarted() && !isInitializing()) {
+				// If the match has started, and we're not actively calibrating
+				// the gyro, sleep for a long time.
+				sleepTime = 5000;
+			} else if (isInitializing()) {
+				// We're actively recalibrating the gyro. Frequently update this
+				// thread to check that a match hasn't started.
+				sleepTime = updatePeriod / 3;
+
+				if (!lastReInit) {
+					// First time through, start calibration sequence
+					initState = 0;
+
+					// Store out the accumulatorCenter in the event we need to
+					// cancel the cal process.
+					accumulatorCenter = m_analog.getAccumulatorCenter();
+				}
+
+				if (isMatchStarted()) {
+					// The match has started. Cancel calibration process.
+					initState = 999; // skip over state machine.
+					setInit(false);
+
+					// Restore previous accumulatorCenter
+					m_analog.setAccumulatorCenter(accumulatorCenter);
+
+					// TODO: see if we can use the partially accumulated data
+					// instead of just canceling the operation completely
+					// TODO: verify gyro can still be read while accumulator
+					// is active.
+				}
+
+				// Run through gyro calibration state machine
+				switch (initState) {
+				case 0:
+					result = new AccumulatorResult();
+					if (m_analog == null) {
+						System.out.println("Null m_analog");
+					}
+					m_voltsPerDegreePerSecond = kDefaultVoltsPerDegreePerSecond;
+					m_analog.setAverageBits(kAverageBits);
+					m_analog.setOversampleBits(kOversampleBits);
+					double sampleRate = kSamplesPerSecond
+							* (1 << (kAverageBits + kOversampleBits));
+					m_analog.getModule().setSampleRate(sampleRate);
+
+					lastTime = Timer.getFPGATimestamp();
+					initState++;
+					break;
+				case 1:
+					// Stock code waits one second. Not really sure why...
+					// TODO: see if we can get rid of this delay
+					if ((Timer.getFPGATimestamp() - lastTime) >= 1.0) {
+						// we've waited one second, proceed to next step
+						// Start accumulating to determine rate gyro
+						// returns when not moving.
+						m_analog.initAccumulator();
+						lastTime = Timer.getFPGATimestamp();
+						initState++;
+					}
+					break;
+				case 2:
+					// Delay for accumulator period
+					if ((Timer.getFPGATimestamp() - lastTime) >= kCalibrationSampleTime) {
+						initState++;
+					} else {
+						break;
+					}
+				case 3:
+					m_analog.getAccumulatorOutput(result);
+					m_center = (int) ((double) result.value
+							/ (double) result.count + .5);
+					m_offset = ((double) result.value / (double) result.count)
+							- (double) m_center;
+					m_analog.setAccumulatorCenter(m_center);
+					// TODO: compute / parameterize this
+					m_analog.setAccumulatorDeadband(0);
+
+					m_analog.resetAccumulator();
+					setPIDSourceParameter(PIDSourceParameter.kAngle);
+					if (!calibratedOnce) {
+						UsageReporting.report(
+								UsageReporting.kResourceType_Gyro,
+								m_analog.getChannel(),
+								m_analog.getModuleNumber() - 1);
+						LiveWindow.addSensor("Gyro",
+								m_analog.getModuleNumber(),
+								m_analog.getChannel(), this);
+						calibratedOnce = true;
+					}
+					// Done calibrating the gyro
+					setInit(false);
+					break;
+				default: // We should only get here if the cal. is canceled!
+					break;
+				}
+
+			} else {
+				// The match hasn't started yet...
+				// Periodically check to see if we need to calibrate the gyro.
+				sleepTime = updatePeriod;
+			}
+
+			// Update state variable(s)
+			lastReInit = isInitializing();
+
+			// Sleep until next time.
+			try {
+				Thread.sleep(sleepTime);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
 	 * Live Window code, only does anything if live window is activated.
 	 */
 	public String getSmartDashboardType() {

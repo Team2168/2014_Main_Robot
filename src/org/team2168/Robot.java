@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team2168.commands.CommandBase;
 import org.team2168.utils.Debouncer;
+import org.team2168.utils.FalconGyro;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,10 +30,9 @@ public class Robot extends IterativeRobot {
 	private double lastAngle;
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
 	private Compressor compressor;
-	private boolean matchStarted = false;
+	private static boolean matchStarted = false;
 
 	TCPCameraSensor cam = new TCPCameraSensor(1111, 1000);
-
 	
 	Command autonomousCommand;
 
@@ -104,6 +104,7 @@ public class Robot extends IterativeRobot {
 		//compressor.start();
 
 		matchStarted = true;
+		FalconGyro.setMatchStarted(matchStarted);
 	}
 
 	/**
