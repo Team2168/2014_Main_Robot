@@ -41,9 +41,12 @@ public class RobotMap extends ConstantsBase {
 			new Constant("driveTrainEncoderLeftA",3);
 	public static final Constant driveTrainEncoderLeftB =
 			new Constant("driveTrainEncoderLeftB",4);
+	public static final Constant winchEncoderA = 
+			new Constant("winchEncoderA", 5);
+	public static final Constant winchEncoderB = 
+			new Constant("winchEncoderB", 6);
 	public static final Constant winchLimitSwitch = 
 			new Constant("winchLimitSwitch",5);
-	
 	public static final Constant pressureSwitch =
 			new Constant("pressureSwitch", 14);
 	
@@ -72,7 +75,8 @@ public class RobotMap extends ConstantsBase {
 	//Analog Input Channels///////////////////////////////////////////
 	public static final Constant gyroPort = new Constant("gyroPort", 1);
 	public static final Constant ballSensorPort = new Constant("ballSensorPort", 2);
-
+	public static final Constant potentiometerPort = new Constant("potentiometerPort", 3);
+	
 	/****************************************************************
      *                    Drivetrain Parameters                     *
      ****************************************************************/
@@ -102,7 +106,20 @@ public class RobotMap extends ConstantsBase {
      *                      Catapult Parameters                     *
      ****************************************************************/
 	//public static final Constant wheelRadius = new Constant("wheelRadius", 2);
+	 public static final Constant wheelDiameterWinch = 
+			new Constant("wheelDiameterWinch", 2);
 	
+	private static final int winchPulsePerRotation = 256; //encoder ticks per rotation
+	private static final double winchGearRatio = 1/1; //ratio between wheel over encoder
+	private static final double winchStrapThickness = 3/32; //thickness of the strap that winds the winch up
+	public static final int winchEncoderPulsePerRot = (int) (drivePulsePerRotation*driveGearRatio); //pulse per rotation * gear ratio
+	public static final double winchEncoderDistPerTick = (Math.PI * wheelDiameterWinch.getDouble())/winchEncoderPulsePerRot;
+	public static final CounterBase.EncodingType winchEncodingType = CounterBase.EncodingType.k4X; //count rising and falling edges on both channels
+	public static final AverageEncoder.PositionReturnType winchPosReturnType = AverageEncoder.PositionReturnType.INCH;
+	public static final AverageEncoder.SpeedReturnType winchSpeedReturnType = AverageEncoder.SpeedReturnType.RPM;
+	public static final int winchEncoderMinRate = 10; 
+	public static final int winchEncoderMinPeriod = 10;
+	public static final int winchAvgEncoderVal = 5;
 	static {
 		// Set any overridden constants from the file on startup.
 		readConstantsFromFile();
