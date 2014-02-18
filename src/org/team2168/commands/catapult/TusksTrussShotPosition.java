@@ -27,4 +27,5 @@ public class TusksTrussShotPosition extends CommandBase {
 
 	protected void end() {
 	}
+	
 }

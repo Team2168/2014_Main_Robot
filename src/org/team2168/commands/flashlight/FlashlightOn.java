@@ -2,6 +2,7 @@ package org.team2168.commands.flashlight;
 
 import org.team2168.commands.CommandBase;
 
+
 /**
  * Turn the flashlight on.
  * 
@@ -10,6 +11,8 @@ import org.team2168.commands.CommandBase;
  */
 public class FlashlightOn extends CommandBase {
 
+	long currenttime;
+	
     public FlashlightOn() {
     	requires(flashlight);
     }
@@ -24,6 +27,7 @@ public class FlashlightOn extends CommandBase {
      * Called repeatedly when this Command is scheduled to run
      */
     protected void execute() {
+    	currenttime = System.currentTimeMillis();
     	flashlight.turnOn();
     }
 
@@ -32,6 +36,9 @@ public class FlashlightOn extends CommandBase {
      * It will repeatedly set the state of the spike relay output.
      */
     protected boolean isFinished() {
+    	if(System.currentTimeMillis() - currenttime >= 30000){
+    		return true;
+    	}
         return false;
     }
 
@@ -39,6 +46,7 @@ public class FlashlightOn extends CommandBase {
      * Called once after isFinished returns true
      */
     protected void end() {
+    	flashlight.turnOff();
     }
 
     /**

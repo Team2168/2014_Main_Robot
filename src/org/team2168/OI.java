@@ -67,6 +67,19 @@ public class OI {
 			driveButtonLeftStick = new JoystickButton(baseDriver, 9),
 			driveButtonRightStick = new JoystickButton(baseDriver, 10);
 	
+	public Button operatorButtonA = new JoystickButton(operator, 1),
+			operatorButtonB = new JoystickButton(operator, 2),
+			operatorButtonX = new JoystickButton(operator, 3),
+			operatorButtonY = new JoystickButton(operator, 4),
+			operatorButtonLeftBumper = new JoystickButton(operator, 5),
+			operatorButtonRightBumper = new JoystickButton(operator, 6),
+			operatorButtonReset = new JoystickButton(operator, 7),
+			operatorButtonStart = new JoystickButton(operator, 8),
+			operatorButtonLeftStick = new JoystickButton(operator, 9),
+			operatorButtonRightStick = new JoystickButton(operator, 10),
+			operatorButtonRightTrigger = new JoystickButton(operator, 11),
+			operatorButtonLeftTrigger = new JoystickButton(operator, 12);
+	
 	// minSpeed needs to be tweaked based on the particular drivetrain.
 	// It is the speed at which the drivetrain barely starts moving
 	public static final double minDriveSpeed = 0.11;
@@ -85,12 +98,26 @@ public class OI {
 	public OI() {
 		// DRIVER CONTROLLER BUTTON MAP ////////////////////////
 		//TODO: remove this assignment, was for testing commands
-		driveButtonA.whenPressed(new RotateDrivetrain(20));
-		driveButtonB.whenPressed(new RotateDrivetrain(-45));
-		driveButtonY.whenPressed(new MoveForwardXDistance(160));
-		driveButtonX.whenPressed(new MoveForwardXDistance(-160));
+		driveButtonRightBumper.whenPressed(new FlashlightOn());
 		
 		// OPERATOR CONTROLLER BUTTON MAP //////////////////////
+		operatorButtonX.whenPressed(new TusksTrussShotPosition());
+		operatorButtonY.whenPressed(new TusksShortShotPosition());
+		operatorButtonB.whenPressed(new TusksLongShotPosition());
+		
+		operatorButtonA.whenPressed(new OpenWinchDogGear());
+		operatorButtonA.whenReleased(new WindWinch(1));
+		
+		operatorButtonRightBumper.whenPressed(new IntakeLower());
+		operatorButtonRightTrigger.whenPressed(new IntakeRun(-1));
+		operatorButtonRightTrigger.whenReleased(new IntakeRun(0));
+		
+		operatorButtonLeftTrigger.whenPressed(new IntakeRun(1));
+		operatorButtonRightTrigger.whenReleased(new IntakeRun(0));
+		operatorButtonLeftBumper.whenPressed(new IntakeRaise());
+		
+		
+		
 		
 	}
 
