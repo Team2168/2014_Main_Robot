@@ -10,9 +10,22 @@ public class RotateDrivetrain extends CommandBase{
 	
 	public RotateDrivetrain (double angle){
 		requires(drivetrain);
-		//drivetrain.resetGyro(); //resetting gyro doesn't seem to work 100% of
-		// the time, revisit. Until then just use current angle,
-		// and drive to offset.
+		
+		double after_reset = 0;
+		boolean reset = false;
+		
+		while(!reset)
+		{
+			drivetrain.resetGyro();
+			after_reset = drivetrain.getGyroAngle();
+			
+			if(after_reset > -1 && after_reset < 1)
+			{
+				reset = true;
+			}
+			
+		}
+		
 		commandedAngle = angle;
 	}
 

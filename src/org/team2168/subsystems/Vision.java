@@ -1,7 +1,10 @@
 package org.team2168.subsystems;
 
+
+import org.team2168.RobotMap;
 import org.team2168.PIDController.Sensors.TCPCameraSensor;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Vision extends Subsystem{
@@ -9,14 +12,13 @@ public class Vision extends Subsystem{
 	TCPCameraSensor cam = new TCPCameraSensor(1111, 1000);
 	private volatile String[] dataReceived;
 	private static Vision instance = null;
+	private static Servo vision_servo;
 	
 	public Vision()
 	{
-		
-		
+		vision_servo = new Servo(RobotMap.visionservo.getInt());
 		cam.start();
 	}
-	
 	
 	
 	protected void initDefaultCommand() {
@@ -24,6 +26,11 @@ public class Vision extends Subsystem{
 		
 	}
 
+	public void setAngle(double angle)
+	{
+		vision_servo.setAngle(angle);
+	}
+	
 	public static Vision getInstance() {
 		if (instance == null) {
 			instance = new Vision();

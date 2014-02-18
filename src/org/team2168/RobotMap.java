@@ -31,6 +31,7 @@ public class RobotMap extends ConstantsBase {
 			new Constant("winchDriveMotor", 5);
 	public static final Constant intakeMotor =
 			new Constant("intakeMotor", 6);
+	public static final Constant visionservo = new Constant("visionservo", 7);
 	
 	//DIO Channels////////////////////////////////////////////////////
 	public static final Constant driveTrainEncoderRightA =

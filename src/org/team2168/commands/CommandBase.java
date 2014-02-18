@@ -22,7 +22,7 @@ public abstract class CommandBase extends Command {
     public static CatapultWinch catapultWinch = CatapultWinch.getInstance();
     public static Flashlight flashlight = Flashlight.getInstance();
     public static Vision vision = Vision.getInstance();
-
+    
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
         // will), constructing it during the construction of CommandBase (from
