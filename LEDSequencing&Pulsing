@@ -1,15 +1,33 @@
-    #include "LPD8806.h"
-    #include "SPI.h"
-    
     //*****************************************************************************/
+    //*****************************************************************************/
+    // Title: Arduino LED Synchronization Breathing and Pulsation Code
     // Author: Brandon Spirito
     // Date: 2/18/2014
     // Revision: 1
-    // 
-    // 
     //
+    // Description: This code uses LPD8806-based RGB LED Modules in a strip with a main 
+    // objective to provides the driver, shooter, and other team members or friendlies 
+    // with visual cues to easily identify articulation movements and other various 
+    // components on our 2168 competition robot.
+    //
+    //
+    // 
     //*****************************************************************************/
-
+    //*****************************************************************************/
+    
+    #include "LPD8806.h"
+    #include "SPI.h"
+    
+    
+    // Two LED strips with 8 LEDs per each strip located on the Intake Arm at the rear 
+    // of the robot.
+    //**These LED strips will be used to tell the driver when the Intake arm is down and 
+    // ready to receive a ball.
+    //**They will also be used to tell the driver when the intake arm is up.
+    
+    // 
+    
+    
     // Choose which 2 pins you will use for output.
     // Can be any valid output pins.
     int dataPin = 2;   
@@ -27,7 +45,7 @@
     int stripLength = 8; // Number of RGB LEDs in strand
     LPD8806 strip = LPD8806(stripLength);
 
-    // Breathe Table 
+    // Brightness Table 
     uint8_t LED_Breathe_Table[]  = {  202, 211, 220, 228, 236, 242, 247, 251, 254, 255, 255, 254, 251, 247, 242, 236,
                                       228, 220, 211, 202, 192, 182, 172, 161, 151, 141, 131, 121, 112, 103,  95,  87,  
                                        80,  73,  66, 60,  55,  50,  45,  41,  38,  34,  31,  28,  26,  24,  22,  20,  
@@ -55,8 +73,7 @@
       }
       
       // LED shifting
-      for (cycle=0; cycle < 2; cycle++) {
-        
+      for (cycle=0; cycle < 2; cycle++) {     // 200, 2, 20
         sequencedBreathe(LED_Breathe_Table, BREATHE_TABLE_SIZE, BREATHE_UPDATE, 160, 2, 170);
       }
     }
