@@ -32,6 +32,19 @@ public class CatapultWinch extends Subsystem {
 		winchInputSwitch = new DigitalInput(RobotMap.winchLimitSwitch.getInt());
 		winchSolenoid = new MomentaryDoubleSolenoid(
 				RobotMap.winchExtPort.getInt(),RobotMap.winchRetPort.getInt());
+		winchEncoder = new AverageEncoder(
+				RobotMap.winchEncoderA.getInt(),
+				RobotMap.winchEncoderB.getInt(),
+				RobotMap.winchEncoderPulsePerRot,
+				RobotMap.winchEncoderDistPerTick,
+				RobotMap.winchEncoderReverse,
+				RobotMap.winchEncodingType, RobotMap.winchSpeedReturnType,
+				RobotMap.drivePosReturnType, RobotMap.driveAvgEncoderVal);
+		// Set min period and rate before reported stopped
+			winchEncoder.setMaxPeriod(RobotMap.winchEncoderMinPeriod);
+			winchEncoder.setMinRate(RobotMap.winchEncoderMinRate);
+			winchEncoder.start();
+
 	}
 	
 	/**
@@ -88,12 +101,11 @@ public class CatapultWinch extends Subsystem {
     
     /**
      * Gets the speed of the winch
-     * @param speed
-     * @return
+     * @param speed in rpm
+     * @return speed of winch in rpm
      */
-    public double getWinchSpeed(double speed){
-    	//TODO create equation to calculate speed
-    	return speed;
+    public double getWinchSpeed(){
+    	return winchEncoder.getRate();
     }
     
    /**
@@ -117,13 +129,6 @@ public class CatapultWinch extends Subsystem {
      */
     public double getWinchPotentiometerVoltage(){
     	return winchPotentiometer.getVoltage();
-    }
-    
-    /**
-     * Resets the angle of the potentiometer
-     */
-    public void resetWinchPotentiometer(){
-    	winchPotentiometer.resetAccumulator();
     }
     
 	/**

@@ -41,12 +41,12 @@ public class RobotMap extends ConstantsBase {
 			new Constant("driveTrainEncoderLeftA",3);
 	public static final Constant driveTrainEncoderLeftB =
 			new Constant("driveTrainEncoderLeftB",4);
-	public static final Constant winchEncoderA = 
-			new Constant("winchEncoderA", 5);
-	public static final Constant winchEncoderB = 
-			new Constant("winchEncoderB", 6);
 	public static final Constant winchLimitSwitch = 
 			new Constant("winchLimitSwitch",5);
+	public static final Constant winchEncoderA = 
+			new Constant("winchEncoderA", 6);
+	public static final Constant winchEncoderB = 
+			new Constant("winchEncoderB", 7);
 	public static final Constant pressureSwitch =
 			new Constant("pressureSwitch", 14);
 	
@@ -108,6 +108,10 @@ public class RobotMap extends ConstantsBase {
 	//public static final Constant wheelRadius = new Constant("wheelRadius", 2);
 	 public static final Constant wheelDiameterWinch = 
 			new Constant("wheelDiameterWinch", 2);
+	 public static final Constant catapultWinchUp =
+			new Constant("catapultWinchUp", 4);
+	 public static final Constant catapultWinchDown =
+				new Constant("catapultWinchDown", 1);
 	
 	private static final int winchPulsePerRotation = 256; //encoder ticks per rotation
 	private static final double winchGearRatio = 1/1; //ratio between wheel over encoder
@@ -117,9 +121,11 @@ public class RobotMap extends ConstantsBase {
 	public static final CounterBase.EncodingType winchEncodingType = CounterBase.EncodingType.k4X; //count rising and falling edges on both channels
 	public static final AverageEncoder.PositionReturnType winchPosReturnType = AverageEncoder.PositionReturnType.INCH;
 	public static final AverageEncoder.SpeedReturnType winchSpeedReturnType = AverageEncoder.SpeedReturnType.RPM;
-	public static final int winchEncoderMinRate = 10; 
+	public static final double winchEncoderMinRate = 0.13; 
 	public static final int winchEncoderMinPeriod = 10;
+	public static final boolean winchEncoderReverse = true;
 	public static final int winchAvgEncoderVal = 5;
+	
 	static {
 		// Set any overridden constants from the file on startup.
 		readConstantsFromFile();
