@@ -22,7 +22,7 @@ public class CatapultWinch extends Subsystem {
 	private static MomentaryDoubleSolenoid winchSolenoid;
 	private static AverageEncoder winchEncoder;
 	private static AnalogChannel winchPotentiometer;
-	private static AnalogChannel ballSensorVoltage;
+	private static AnalogChannel ballSensor;
 
 	/**
 	 * A private constructor to prevent multiple instances from being created.
@@ -32,6 +32,9 @@ public class CatapultWinch extends Subsystem {
 		winchInputSwitch = new DigitalInput(RobotMap.winchLimitSwitch.getInt());
 		winchSolenoid = new MomentaryDoubleSolenoid(
 				RobotMap.winchExtPort.getInt(),RobotMap.winchRetPort.getInt());
+		ballSensor = new AnalogChannel(RobotMap.ballSensorPort.getInt());
+		winchPotentiometer =
+				new AnalogChannel(RobotMap.potentiometerPort.getInt());
 		winchEncoder = new AverageEncoder(
 				RobotMap.winchEncoderA.getInt(),
 				RobotMap.winchEncoderB.getInt(),
@@ -39,12 +42,8 @@ public class CatapultWinch extends Subsystem {
 				RobotMap.winchEncoderDistPerTick,
 				RobotMap.winchEncoderReverse,
 				RobotMap.winchEncodingType, RobotMap.winchSpeedReturnType,
-				RobotMap.drivePosReturnType, RobotMap.driveAvgEncoderVal);
-		// Set min period and rate before reported stopped
-			winchEncoder.setMaxPeriod(RobotMap.winchEncoderMinPeriod);
-			winchEncoder.setMinRate(RobotMap.winchEncoderMinRate);
-			winchEncoder.start();
-
+				RobotMap.winchPosReturnType, RobotMap.winchAvgEncoderVal);
+		winchEncoder.start();
 	}
 	
 	/**
@@ -100,9 +99,8 @@ public class CatapultWinch extends Subsystem {
     }
     
     /**
-     * Gets the speed of the winch
-     * @param speed in rpm
-     * @return speed of winch in rpm
+     * Gets the speed of the winch.
+     * @return speed of winch in RPM
      */
     public double getWinchSpeed(){
     	return winchEncoder.getRate();
@@ -136,7 +134,7 @@ public class CatapultWinch extends Subsystem {
 	 * @return The voltage read from the ball sensor. 0.0 to 5.0
 	 */
 	public double getBallSensorVoltage() {
-		return ballSensorVoltage.getVoltage();
+		return ballSensor.getVoltage();
 	}
 
 }

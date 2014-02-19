@@ -74,8 +74,10 @@ public class RobotMap extends ConstantsBase {
 	
 	//Analog Input Channels///////////////////////////////////////////
 	public static final Constant gyroPort = new Constant("gyroPort", 1);
-	public static final Constant ballSensorPort = new Constant("ballSensorPort", 2);
-	public static final Constant potentiometerPort = new Constant("potentiometerPort", 3);
+	public static final Constant ballSensorPort =
+			new Constant("ballSensorPort", 2);
+	public static final Constant potentiometerPort =
+			new Constant("potentiometerPort", 3);
 	
 	/****************************************************************
      *                    Drivetrain Parameters                     *
@@ -107,16 +109,16 @@ public class RobotMap extends ConstantsBase {
      ****************************************************************/
 	//public static final Constant wheelRadius = new Constant("wheelRadius", 2);
 	 public static final Constant wheelDiameterWinch = 
-			new Constant("wheelDiameterWinch", 2);
-	 public static final Constant catapultWinchUp =
-			new Constant("catapultWinchUp", 4);
+			 new Constant("wheelDiameterWinch", 2);
+	 public static final Constant catapultWinchUp =	
+			 new Constant("catapultWinchUp", 4.0);
 	 public static final Constant catapultWinchDown =
-				new Constant("catapultWinchDown", 1);
+			 new Constant("catapultWinchDown", 1.0);
 	
 	private static final int winchPulsePerRotation = 256; //encoder ticks per rotation
-	private static final double winchGearRatio = 1/1; //ratio between wheel over encoder
-	private static final double winchStrapThickness = 3/32; //thickness of the strap that winds the winch up
-	public static final int winchEncoderPulsePerRot = (int) (drivePulsePerRotation*driveGearRatio); //pulse per rotation * gear ratio
+	private static final double winchGearRatio = 1.0/1.0; //ratio between wheel over encoder
+	private static final double winchStrapThickness = 3.0/32.0; //thickness of the strap that winds the winch up
+	public static final int winchEncoderPulsePerRot = (int) (winchPulsePerRotation*winchGearRatio); //pulse per rotation * gear ratio
 	public static final double winchEncoderDistPerTick = (Math.PI * wheelDiameterWinch.getDouble())/winchEncoderPulsePerRot;
 	public static final CounterBase.EncodingType winchEncodingType = CounterBase.EncodingType.k4X; //count rising and falling edges on both channels
 	public static final AverageEncoder.PositionReturnType winchPosReturnType = AverageEncoder.PositionReturnType.INCH;
