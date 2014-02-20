@@ -21,16 +21,11 @@ public class RobotMap extends ConstantsBase {
     //PWM Channels////////////////////////////////////////////////////
 	public static final Constant rightDriveMotor = 
 			new Constant("rightDriveMotor", 1);
-	public static final Constant rightDriveMotor2 = 
-			new Constant("rightDriveMotor2", 2);
 	public static final Constant leftDriveMotor =
-			new Constant("leftDriveMotor", 3);
-	public static final Constant leftDriveMotor2 =
-			new Constant("leftDriveMotor2", 4);
-	public static final Constant winchDriveMotor = 
-			new Constant("winchDriveMotor", 5);
-	public static final Constant intakeMotor =
-			new Constant("intakeMotor", 6);
+			new Constant("leftDriveMotor", 2);
+	public static final Constant winchMotor = new Constant("winchMotor", 3);
+	public static final Constant intakeMotor = new Constant("intakeMotor", 4);
+	public static final Constant visionServo = new Constant("visionServo", 10);
 	
 	//DIO Channels////////////////////////////////////////////////////
 	public static final Constant driveTrainEncoderRightA =
@@ -107,7 +102,6 @@ public class RobotMap extends ConstantsBase {
 	/****************************************************************
      *                      Catapult Parameters                     *
      ****************************************************************/
-	//public static final Constant wheelRadius = new Constant("wheelRadius", 2);
 	 public static final Constant wheelDiameterWinch = 
 			 new Constant("wheelDiameterWinch", 2);
 	 public static final Constant catapultWinchUp =	
@@ -127,12 +121,20 @@ public class RobotMap extends ConstantsBase {
 	public static final int winchEncoderMinPeriod = 10;
 	public static final boolean winchEncoderReverse = true;
 	public static final int winchAvgEncoderVal = 5;
-	
+
+	/****************************************************************
+     *                  Operator Interface Parameters               *
+     ****************************************************************/
+	public static final Constant minDriveSpeed =
+			new Constant("minDriveSpeed", 0.11);
+	public static final Constant flashlightOnTime =
+			new Constant("flashlightOnTime", 5.0);
+
 	static {
 		// Set any overridden constants from the file on startup.
 		readConstantsFromFile();
 	}
-
+	
 	/**
 	 * Prevent instantiation of this class, as it should only be used
 	 * statically.

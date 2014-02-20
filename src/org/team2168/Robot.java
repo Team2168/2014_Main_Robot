@@ -47,8 +47,6 @@ public class Robot extends IterativeRobot {
 
 		// Initialize all subsystems
 		CommandBase.init();
-		
-		cam.start();
 
 		//Console Message so we know robot finished loading
 		System.out.println("****Robot Done Loading****");

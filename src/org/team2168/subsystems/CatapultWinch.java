@@ -28,7 +28,7 @@ public class CatapultWinch extends Subsystem {
 	 * A private constructor to prevent multiple instances from being created.
 	 */
 	private CatapultWinch(){
-		winchMotor = new Talon(RobotMap.winchDriveMotor.getInt());
+		winchMotor = new Talon(RobotMap.winchMotor.getInt());
 		winchInputSwitch = new DigitalInput(RobotMap.winchLimitSwitch.getInt());
 		winchSolenoid = new MomentaryDoubleSolenoid(
 				RobotMap.winchExtPort.getInt(),RobotMap.winchRetPort.getInt());

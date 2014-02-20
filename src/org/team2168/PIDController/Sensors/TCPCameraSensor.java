@@ -28,9 +28,9 @@ public class TCPCameraSensor {
 	private StringBuffer sb = new StringBuffer();
 	private volatile boolean sendEnable;
 	private volatile boolean recvEnable;
-	
+
 	private DriverStation ds;
-	
+
 	// A TCP Socket Connection
 	private ServerSocketConnection conn = null;
 
@@ -69,7 +69,6 @@ public class TCPCameraSensor {
 
 		ds = DriverStation.getInstance();
 
-
 	}
 
 	public void start() {
@@ -78,33 +77,32 @@ public class TCPCameraSensor {
 			public void run() {
 
 				try {
-					
+
 					// Opens a socket to listen for incoming connections
 					try {
-						conn = (ServerSocketConnection) Connector.open(addressIn);
-
+						conn = (ServerSocketConnection) Connector
+								.open(addressIn);
 
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					
 
-					
 					// wait for a client to connect, this blocks until a connect
 					// is made
-					System.out.println("Listening on: " + conn.getLocalAddress()
-							+ " on port: " + conn.getLocalPort());
+					System.out.println("Listening on: "
+							+ conn.getLocalAddress() + " on port: "
+							+ conn.getLocalPort());
 					sc = conn.acceptAndOpen();
 					System.out.println("Client Connected");
-					
-					// make this true if you want to send data to the beaglebone as well
+
+					// make this true if you want to send data to the beaglebone
+					// as well
 					recvEnable = true;
 
 					listener();
 					sender();
 
 				} catch (IOException e) {
-					
 
 				}
 			}
@@ -132,11 +130,14 @@ public class TCPCameraSensor {
 						else {
 							// print data received to the screen
 
-
 							// split data into array
 							dataReceived = Util.split(sb.toString(), ","); // splits
-							
-							System.out.println("Match Start: " + dataReceived[0]+", " + "Hot: " + dataReceived[1]+", " + "dist: " + dataReceived[2]+", " + "Count: " + dataReceived[3]);
+
+							System.out.println("Match Start: "
+									+ dataReceived[0] + ", " + "Hot: "
+									+ dataReceived[1] + ", " + "dist: "
+									+ dataReceived[2] + ", " + "Count: "
+									+ dataReceived[3]);
 
 							// create new buffer
 							sb = new StringBuffer();
@@ -152,7 +153,6 @@ public class TCPCameraSensor {
 		);
 
 		t1.start();
-
 	}
 
 	private void sender() {
@@ -164,44 +164,40 @@ public class TCPCameraSensor {
 				try {
 					os = sc.openOutputStream();
 
-					while (recvEnable) 
-					{							
-						//we want to send if match has started to camera
+					while (recvEnable) {
+						// we want to send if match has started to camera
 						int matchStart = 0;
-						
-						if(ds.isEnabled())
+
+						if (ds.isEnabled())
 							matchStart = 1;
-						
-						
-							messageOut = String.valueOf(matchStart) + " " + count + " \n";
-							
-							System.out.println("Sending Match Start: "+ messageOut); 
 
-							buf = messageOut.getBytes("US_ASCII");
+						messageOut = String.valueOf(matchStart) + " " + count
+								+ " \n";
 
-							count++;
-							
-							try {
-								os.write(buf);
-							} catch (IOException e) {
-								// e.printStackTrace();
-								System.out.println("Appears Client Closed "
-										+ "the Connection");
+						System.out
+								.println("Sending Match Start: " + messageOut);
 
-								stopThreads();
-								
-								//close streams
-								os.close();
-								sc.close();
-								conn.close();
-								
+						buf = messageOut.getBytes("US_ASCII");
 
+						count++;
 
-								//restart server
-								start();
-								
-					
-						
+						try {
+							os.write(buf);
+						} catch (IOException e) {
+							// e.printStackTrace();
+							System.out.println("Appears Client Closed "
+									+ "the Connection");
+
+							stopThreads();
+
+							// close streams
+							os.close();
+							sc.close();
+							conn.close();
+
+							// restart server
+							start();
+
 						}
 
 						try {
@@ -220,14 +216,10 @@ public class TCPCameraSensor {
 
 		);
 		t2.start();
-
 	}
 
-
-private void stopThreads()
-{
-	sendEnable = false;
-	recvEnable = false;
-}
-
+	private void stopThreads() {
+		sendEnable = false;
+		recvEnable = false;
+	}
 }
