@@ -137,5 +137,13 @@ public class CatapultWinch extends Subsystem {
 		return ballSensor.getVoltage();
 	}
 
+	/**
+	 * Check if ball is present on the catapult.
+	 * @return true if present
+	 */
+	public boolean isBallPresent() {
+		//TODO: replace with comparison to ball sensor voltage
+		return false;
+	}
 }
 
