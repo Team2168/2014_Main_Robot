@@ -97,12 +97,21 @@ public class RobotMap extends ConstantsBase {
      *                      Catapult Parameters                     *
      ****************************************************************/
 	//public static final Constant wheelRadius = new Constant("wheelRadius", 2);
-	
+
+
+	/****************************************************************
+     *                  Operator Interface Parameters               *
+     ****************************************************************/
+	public static final Constant minDriveSpeed =
+			new Constant("minDriveSpeed", 0.11);
+	public static final Constant flashlightOnTime =
+			new Constant("flashlightOnTime", 5.0);
+
 	static {
 		// Set any overridden constants from the file on startup.
 		readConstantsFromFile();
 	}
-
+	
 	/**
 	 * Prevent instantiation of this class, as it should only be used
 	 * statically.

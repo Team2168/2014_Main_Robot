@@ -82,23 +82,22 @@ public class OI {
 	
 	// minSpeed needs to be tweaked based on the particular drivetrain.
 	// It is the speed at which the drivetrain barely starts moving
-	public static final double minDriveSpeed = 0.11;
 	static double joystickScale[][] = {
 		/* Joystick Input, Scaled Output */
 		{ 1.00, 1.00 },
 		{ 0.90, 0.68 },
-		{ 0.06, minDriveSpeed },
+		{ 0.06, RobotMap.minDriveSpeed.getDouble() },
 		{ 0.06, 0.00 },
 		{ 0.00, 0.00 },
 		{ -0.06, 0.00 },
-		{ -0.06, -minDriveSpeed },
+		{ -0.06, -RobotMap.minDriveSpeed.getDouble() },
 		{ -0.90, -0.68 },
 		{ -1.00, -1.00 } };
 
 	public OI() {
 		// DRIVER CONTROLLER BUTTON MAP ////////////////////////
-		//TODO: remove this assignment, was for testing commands
-		driveButtonRightBumper.whenPressed(new FlashlightOn());
+		driveButtonRightBumper.whenPressed(
+				new FlashlightOn(RobotMap.flashlightOnTime.getDouble()));
 		
 		// OPERATOR CONTROLLER BUTTON MAP //////////////////////
 		operatorButtonX.whenPressed(new TusksTrussShotPosition());
@@ -115,10 +114,6 @@ public class OI {
 		operatorButtonLeftTrigger.whenPressed(new IntakeRun(1));
 		operatorButtonRightTrigger.whenReleased(new IntakeRun(0));
 		operatorButtonLeftBumper.whenPressed(new IntakeRaise());
-		
-		
-		
-		
 	}
 
 	/**
@@ -166,7 +161,7 @@ public class OI {
 	 * @return The adjusted value.
 	 */
 	private double falconClaw(double inputSpeed, double brake) {
-		return ((1 - ((-minDriveSpeed + 1) * Math.abs(brake))) * inputSpeed);
+		return ((1 - ((-RobotMap.minDriveSpeed.getDouble() + 1) * Math.abs(brake))) * inputSpeed);
 	}
 
 	/**
