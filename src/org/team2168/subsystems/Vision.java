@@ -6,18 +6,36 @@ import org.team2168.PIDController.Sensors.TCPCameraSensor;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Vision extends Subsystem {
 
-	TCPCameraSensor cam = new TCPCameraSensor(1111, 1000);
+public class Vision extends Subsystem{
+	
+	TCPCameraSensor cam;
+
 	private volatile String[] dataReceived;
 	private static Vision instance = null;
+
 	private static Servo vision_servo;
 
-	public Vision() {
+	
+	/**
+	 * Default constructor for vision target. TCP Listens on Port 1111;
+	 */
+	public Vision()
+	{
+		cam = new TCPCameraSensor(1111, 1000);
 		vision_servo = new Servo(RobotMap.visionServo.getInt());
+		//initialize data variable
+		dataReceived = new String[cam.getMessageLength()];
+		
+		for(int i =0; i<cam.getMessageLength(); i++)
+			dataReceived[i] = "0";
+		
+
 		cam.start();
 	}
-
+	/**
+	 * @return singleton
+	 */
 	public static Vision getInstance() {
 		if (instance == null) {
 			instance = new Vision();
@@ -25,12 +43,69 @@ public class Vision extends Subsystem {
 		return instance;
 	}
 
+
+
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * 
+	 * @param angle sets servo to proper angle
+	 */
 	public void setAngle(double angle) {
 		vision_servo.setAngle(angle);
 	}
 
+
+	/**
+	 * @return true when the beaglebone reports it know the match has started, false otherwise
+	 */
+	public boolean isMatchStart()
+	{
+		return cam.isMatchStart();	
+	}
+	
+	/**
+	 * 
+	 * @return true if the beaglebone detected a left hot target after match start
+	 */
+	public boolean isLeftHot()
+	{
+		if (cam.isMatchStart() && (cam.LeftOrRightHot() == -1))
+			return true;
+		else 
+			return false;
+		
+	}
+	
+	/**
+	 * 
+	 * @return true if the beaglebone detected a right hot target after match start
+	 */
+	public boolean isRightHot()
+	{
+		if (cam.isMatchStart() && (cam.LeftOrRightHot() == 1))
+			return true;
+		else 
+			return false;
+				
+	}
+	
+	/**
+	 * 
+	 * @return true if the beaglebone sees a hot target in its current view.  This ignores match start.
+	 */
+	public boolean isHotinView()
+	{
+		return cam.isHotInView();
+				
+	}
+	
+	
+	
+	public double getDistance()
+	{
+		return cam.getDitance();
+	}
 }
