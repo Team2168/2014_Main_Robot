@@ -1,7 +1,6 @@
 package org.team2168.commands.catapult;
 
 import org.team2168.commands.CommandBase;
-import org.team2168.subsystems.IntakePosition;
 
 /**
  * 
