@@ -59,6 +59,7 @@ public class IntakePosition extends Subsystem {
      * @return true if the intake is completely lowered.
      */
     public boolean isIntakeDown() {
+    	//TODO: verify that we return TRUE when the switch is pressed
     	return intakeSensor.get();
     }
 }
