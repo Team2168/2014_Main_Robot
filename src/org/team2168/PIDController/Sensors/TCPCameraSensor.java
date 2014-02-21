@@ -46,6 +46,8 @@ public class TCPCameraSensor {
 	private String addressIn;
 
 	private long requestPeriod;
+	
+	private int size;
 
 	/**
 	 * 
@@ -56,12 +58,15 @@ public class TCPCameraSensor {
 	public TCPCameraSensor(int port, long requestPeriod) {
 		this.requestPeriod = requestPeriod;
 
+		size = 5;
+		
 		// initialize data messageOut 
-		dataReceived = new String[4];
+		dataReceived = new String[size];
 		dataReceived[0] = "0";
 		dataReceived[1] = "0";
 		dataReceived[2] = "0";
 		dataReceived[3] = "0";
+		dataReceived[4] = "0";
 
 		// setup socket to listen on
 		this.port = port;
@@ -136,7 +141,7 @@ public class TCPCameraSensor {
 							// split data into array
 							dataReceived = Util.split(sb.toString(), ","); // splits
 							
-							System.out.println("Match Start: " + dataReceived[0]+", " + "Hot: " + dataReceived[1]+", " + "dist: " + dataReceived[2]+", " + "Count: " + dataReceived[3]);
+							System.out.println("Match Start: " + dataReceived[0]+", " + "Hot: " + dataReceived[1]+", " + "LorR: " + dataReceived[2]+", " + "dist: " + dataReceived[3]+", " + "Count: " + dataReceived[4]);
 
 							// create new buffer
 							sb = new StringBuffer();
@@ -228,6 +233,54 @@ private void stopThreads()
 {
 	sendEnable = false;
 	recvEnable = false;
+}
+
+public int getMessageLength()
+{
+	
+	return size;
+}
+
+public String[] getMessage()
+{
+
+	return dataReceived;
+}
+
+//These are specific to the game, modify for each year
+public boolean isMatchStart()
+{
+
+	int message = Integer.valueOf(dataReceived[0]).intValue();
+	
+	if (message == 1)
+		return true;
+	else
+		return false;
+	
+	
+}
+
+public boolean isHotInView()
+{
+	int message = Integer.valueOf(dataReceived[1]).intValue();
+	
+	if (message == 1)
+		return true;
+	else
+		return false;
+}
+
+public int LeftOrRightHot()
+{
+	return Integer.valueOf(dataReceived[2]).intValue();
+}
+
+
+public double getDitance()
+{
+	return Double.valueOf(dataReceived[3]).doubleValue();
+	
 }
 
 }

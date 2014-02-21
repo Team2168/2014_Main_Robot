@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
 	private Compressor compressor;
 
-	TCPCameraSensor cam = new TCPCameraSensor(1111, 1000);
+
 
 	
 	Command autonomousCommand;
