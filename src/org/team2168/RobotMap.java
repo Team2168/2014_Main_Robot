@@ -42,6 +42,8 @@ public class RobotMap extends ConstantsBase {
 			new Constant("winchEncoderA", 6);
 	public static final Constant winchEncoderB = 
 			new Constant("winchEncoderB", 7);
+	public static final Constant intakeSensor =
+			new Constant("intakeSensor", 8);
 	public static final Constant pressureSwitch =
 			new Constant("pressureSwitch", 14);
 	
