@@ -2,11 +2,16 @@
     //*****************************************************************************/
     // Title: Arduino LED Synchronization Breathing and Pulsation Code
     // Author: Brandon Spirito
-    // Date: 2/18/2014
-    // Revision: 1
+    // Date Created: 2/18/2014
+    // 
+    //*****************************************************************************/
+    // Revision: 1 
+    // Date: 2/20/2014
+    //
+    //*****************************************************************************/
     //
     // Description: This code uses LPD8806-based RGB LED Modules in a strip with a main 
-    // objective to provides the driver, shooter, and other team members/friendlies 
+    // objective to provide the driver, shooter, and other team members/friendlies 
     // with visual cues to easily identify articulation movements and other various 
     // components on our 2168 competition robot.
     //
@@ -25,26 +30,42 @@
     // ready to receive a ball.
     //**They will also be used to tell the driver when the intake arm is up.
     
-    // Generic Bold Colors for reference:
-    // strip.setPixelColor(q, strip.Color(127, 127, 127)); // White
-    // strip.setPixelColor(q, strip.Color(127,   0,   0)); // Red
-    // strip.setPixelColor(q, strip.Color(127, 127,   0)); // Yellow
-    // strip.setPixelColor(q, strip.Color(  0, 127,   0)); // Green
-    // strip.setPixelColor(q, strip.Color(  0, 127, 127)); // Cyan
-    // strip.setPixelColor(q, strip.Color(  0,   0, 127)); // Blue
-    // strip.setPixelColor(q, strip.Color(127,   0, 127)); // Violet 
-    
     // Number of LEDs in a strand on both sides of intake arm.
     // Note* there will be two of these wired in parallel to give a ball feed look.
-    int IntakeStripLength = 8;    //   [>> >> >> >>] && [<< << << <<]
-   
-    // Choose 2 pins for output; Can be any valid output pins:
-    int dataPin = 2;   
-    int clockPin = 3;
+    int IntakeStripLength = 8;      // Number of LEDs * 2 along the rear on the intake arm  
+                                    // will use two in parallel for 'feed me' effect.
+                                    // [>> >> >> >>] && [<< << << <<]
+    int DrivetrainRightLength = 16; // Number of LEDs along the right of the drivetrain
+    int DrivetrainLeftLength  = 16; // Number of LEDs along the left of the drivetrain
+    int ShooterRightLength    = 14; // Number of LEDs along the left of the shooter
+    int ShooterLeftLength     = 14; // Number of LEDs along the right of the shooter
+    int FrontLength           = 16; // Number of LEDs along the front 
+    
+    // Choose output pins
+    int dataPin1 = 11; // intake arm
+    int dataPin2 = 10; // drivetrain right
+    int dataPin3 =  9; // drivetrain left 
+    int dataPin4 =  8; // shooter right
+    int dataPin5 =  7; // shooter left
+    int dataPin6 =  6; // Front 
+    
+    // Choose clock pin
+    int clockPin = 3;  // shared clock
 
     // First parameter is the number of LEDs in the strand.
     // Next two parameters are SPI data and clock pins.
-    LPD8806 strip = LPD8806(IntakeStripLength, dataPin, clockPin);
+    
+    // Set strip "programming objects" which represent various LED strips.
+    // Ths tells the 'strip' object that it is gong to be controlling the LEDs,
+    // which are connected to 'dataPin' and 'clockPin'.
+    LPD8806 strip1 = LPD8806(IntakeStripLength,     dataPin1, clockPin);
+    LPD8806 strip2 = LPD8806(DrivetrainRightLength, dataPin2, clockPin);
+    LPD8806 strip3 = LPD8806(DrivetrainLeftLength,  dataPin3, clockPin);
+    LPD8806 strip4 = LPD8806(ShooterRightLength,    dataPin4, clockPin);
+    LPD8806 strip5 = LPD8806(ShooterLeftLength,     dataPin5, clockPin);
+    LPD8806 strip6 = LPD8806(FrontLength,           dataPin6, clockPin);
+    
+    // LPD8806 strip = LPD8806(IntakeStripLength) for default pins 11 and 13
     
     // Initalize Colors
     int targetR = 0,
@@ -72,53 +93,109 @@
     
     void setup() {
       // Start up the LED strip
-      strip.begin();
-     
-      // Turn on LEDs (check integrity using all colors - i.e. rainbow)
-      for(int q = 0; q < strip.numPixels(); q++) {
-      strip.setPixelColor(i, Wheel( ((i * 384 / strip.numPixels()) + j) % 384) );  
-      //strip.setPixelColor(q, strip.Color(0,127,0));
+      strip1.begin();
+      
+      int i, j;
+    
+      rainbowCycle(1); // Makes it go through the cycle fairly fast.
+      
+      //*****************************************************************************/
+      // Start Up - Run Once
+      // Turn on Intake Arm LEDs (check integrity using all colors - i.e. rainbow)
+      //*****************************************************************************/
+      for(int q = 0; q < strip1.numPixels(); q++) {
+      strip1.setPixelColor(i, Wheel( ((i * 384 / strip1.numPixels()) + j) % 384) );  
+      //strip1.setPixelColor(q, strip1.Color(0,127,0));
       }
       
-      strip.show();
-      delay(1000);
-
-      // Turn off LEDs (clearing the colors)
-      for(int q = 0; q < strip.numPixels(); q++) {
-        strip.setPixelColor(q, strip.Color(0,0,0));
+      strip1.show(); // perform show function on first strip only.
+      delay(200);
+      
+      for(int q = 0; q < strip1.numPixels(); q++) {
+      strip1.setPixelColor(q, strip1.Color(127, 127, 127)); // White
       }
-      strip.show();  
-
-    void loop() {
+      strip1.show(); // perform show function on first strip only.
+      delay(200);
+      
+      for(int q = 0; q < strip1.numPixels(); q++) {
+      strip1.setPixelColor(q, strip1.Color(127,   0,   0)); // Red
+      }
+      strip1.show(); // perform show function on first strip only.
+      delay(200);
+      
+      for(int q = 0; q < strip1.numPixels(); q++) {
+      strip1.setPixelColor(q, strip1.Color(127, 127,   0)); // Yellow
+      }
+      strip1.show(); // perform show function on first strip only.
+      delay(200);
+      
+      for(int q = 0; q < strip1.numPixels(); q++) {
+      strip1.setPixelColor(q, strip1.Color(  0, 127,   0)); // Green
+      }
+      strip1.show(); // perform show function on first strip only.
+      delay(200);
+      
+      for(int q = 0; q < strip1.numPixels(); q++) {
+      strip1.setPixelColor(q, strip1.Color(  0, 127, 127)); // Cyan
+      }
+      strip1.show(); // perform show function on first strip only.
+      delay(200);
+      
+      for(int q = 0; q < strip1.numPixels(); q++) {
+      strip1.setPixelColor(q, strip1.Color(  0,   0, 127)); // Blue
+      }
+      strip1.show(); // perform show function on first strip only.
+      delay(200);
+      
+      for(int q = 0; q < strip1.numPixels(); q++) {
+      strip1.setPixelColor(q, strip1.Color(127,   0, 127)); // Violet
+      } 
+      strip1.show(); // perform show function on first strip only.
+      delay(200);
+      }
+      //*****************************************************************************/
+      
+   void loop() {
+      
+      //*****************************************************************************/
+      // Intake Arm 'Feed Me' Loop
+      //*****************************************************************************/
+      // Turn off Intake Arm LEDs (clearing the colors)
+      for(int q = 0; q < strip1.numPixels(); q++) {
+        strip1.setPixelColor(q, strip1.Color(0,0,0));
+      }
+      strip1.show(); // perform show function on first strip only.
+      
       int cycle;
+   
       // LED pulsation
       for (cycle=0; cycle < 1; cycle++) {
         uniformBreathe(LED_Breathe_Table, BREATHE_TABLE_SIZE, BREATHE_UPDATE, 2, 2, 200);
       }
       
       // LED shifting 
-      for (cycle=0; cycle < 2; cycle++) {     // 200, 2, 20
-        sequencedBreathe(LED_Breathe_Table, BREATHE_TABLE_SIZE, BREATHE_UPDATE, 160, 2, 170);
+      for (cycle=0; cycle < 2; cycle++) {     // 200, 2, 20  //160,2,170
+        sequencedBreathe(LED_Breathe_Table, BREATHE_TABLE_SIZE, BREATHE_UPDATE, 200, 2, 20);
       }
-    }
-    // Makes it go through the cycle fairly fast.
-    rainbowCycle(0); 
+      //*****************************************************************************/  
+   }
    
    //*****************************************************************************/
    // Rainbow wheel - equal distribution along chain
    //*****************************************************************************/
    void rainbowCycle(uint8_t wait) {
      uint16_t i, j;
+     
           
      for (j=0; j < 384 * 5; j++) {     // 5 cycles of all 384 colors in the wheel
-       for (i=0; i < strip.numPixels(); i++) {
+       for (i=0; i < strip1.numPixels(); i++) {
          // tricky math! we use each pixel as a fraction of the full 384-color wheel
          // (thats the i / strip.numPixels() part)
          // Then add in j which makes the colors go around per pixel
          // the % 384 is to make the wheel cycle around
-         strip.setPixelColor(i, Wheel( ((i * 384 / strip.numPixels()) + j) % 384) );
+         strip1.setPixelColor(i, Wheel( ((i * 384 / strip1.numPixels()) + j) % 384) );
        }  
-       strip.show();   // write all the pixels out
+       strip1.show();   // write all the pixels out
        delay(wait);
      }
    }
@@ -135,13 +212,13 @@
       uint8_t breatheBlu;
      
       for (breatheIndex = 0; breatheIndex < breatheTableSize; breatheIndex++) {
-        for (i=0; i < strip.numPixels(); i++) {
+        for (i=0; i < strip1.numPixels(); i++) {
           breatheRed = (r * breatheTable[breatheIndex]) / 256;
           breatheGrn = (g * breatheTable[breatheIndex]) / 256;
           breatheBlu = (b * breatheTable[breatheIndex]) / 256;
-          strip.setPixelColor(i, breatheRed, breatheGrn, breatheBlu);
+          strip1.setPixelColor(i, breatheRed, breatheGrn, breatheBlu);
         }
-        strip.show();   // write all the pixels out
+        strip1.show();   // write all the pixels out
         delay(updatePeriod);
       }
     }
@@ -156,15 +233,45 @@
       uint8_t sequenceIndex;
      
       for (breatheIndex = 0; breatheIndex < breatheTableSize; breatheIndex++) {
-        for (i=0; i < strip.numPixels(); i++) {
+        for (i=0; i < strip1.numPixels(); i++) {
           sequenceIndex = (breatheIndex + (i*4)) % breatheTableSize;
           breatheRed = (r * breatheTable[sequenceIndex]) / 256;
           breatheGrn = (g * breatheTable[sequenceIndex]) / 256;
           breatheBlu = (b * breatheTable[sequenceIndex]) / 256;
-          strip.setPixelColor(i, breatheRed, breatheGrn, breatheBlu);
+          strip1.setPixelColor(i, breatheRed, breatheGrn, breatheBlu);
         }
-        strip.show();   // write all the pixels out
+        strip1.show();   // write all the pixels out
         delay(updatePeriod);
       }
+    }
+    
+    
+    //*****************************************************************************/
+    // Helper Functions
+    //*****************************************************************************/
+    //Input a value 0 to 384 to get a color value.
+    //The colours are a transition r - g -b - back to r
+    uint32_t Wheel(uint16_t WheelPos)
+    {
+      byte r, g, b;
+      switch(WheelPos / 128)
+      {
+        case 0:
+          r = 127 - WheelPos % 128;   //Red down
+          g = WheelPos % 128;      // Green up
+          b = 0;                  //blue off
+          break; 
+        case 1:
+          g = 127 - WheelPos % 128;  //green down
+          b = WheelPos % 128;      //blue up
+          r = 0;                  //red off
+          break; 
+        case 2:
+          b = 127 - WheelPos % 128;  //blue down 
+          r = WheelPos % 128;      //red up
+          g = 0;                  //green off
+          break; 
+      }
+      return(strip1.Color(r,g,b));
     }
     //*****************************************************************************/
