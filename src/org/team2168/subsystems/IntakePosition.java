@@ -40,17 +40,23 @@ public class IntakePosition extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
+    /**
+     * Raise the intake.
+     */
     public void intakeUp() {
     	actuator.set(DoubleSolenoid.Value.kForward);
     }
     
+    /**
+     * Lower the intake.
+     */
     public void intakeDown() {
     	actuator.set(DoubleSolenoid.Value.kReverse);
     }
     
     /**
      * Find whether or not the intake is up or down
-     * @return boolean
+     * @return true if the intake is completely lowered.
      */
     public boolean isIntakeDown() {
     	return intakeSensor.get();
