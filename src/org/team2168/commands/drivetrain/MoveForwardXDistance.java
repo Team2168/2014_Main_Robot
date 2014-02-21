@@ -2,6 +2,7 @@ package org.team2168.commands.drivetrain;
 
 import org.team2168.commands.CommandBase;
 import org.team2168.OI;
+import org.team2168.RobotMap;
 
 public class MoveForwardXDistance extends CommandBase{
 	private double distance;
@@ -51,8 +52,8 @@ public class MoveForwardXDistance extends CommandBase{
 			rightSpeed = (endDistance - currentDistance)/(distance/20);
 			leftSpeed = (endDistance - currentDistance)/(distance/20);
 			//don't drive slower than minimum speed
-			if (rightSpeed < OI.minDriveSpeed) {
-				rightSpeed = leftSpeed = OI.minDriveSpeed;
+			if (rightSpeed < RobotMap.minDriveSpeed.getDouble()) {
+				rightSpeed = leftSpeed = RobotMap.minDriveSpeed.getDouble();
 			}
 		}
 		

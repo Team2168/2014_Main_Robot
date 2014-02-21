@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * The drivetrain subsystem
  */
 public class Drivetrain extends Subsystem {
 	private static Drivetrain instance = null;
 	private static final boolean INVERT_LEFT = true;
 	private static final boolean INVERT_RIGHT = false;
-	private static Talon rightMotor, rightMotor2;
-	private static Talon leftMotor, leftMotor2;
+	private static Talon rightMotor;
+	private static Talon leftMotor;
 	private static FalconGyro gyro;
 	private static AverageEncoder driveTrainEncoderLeft,
 			driveTrainEncoderRight;
@@ -28,8 +28,6 @@ public class Drivetrain extends Subsystem {
 	private Drivetrain() {
 		rightMotor = new Talon(RobotMap.rightDriveMotor.getInt());
 		leftMotor = new Talon(RobotMap.leftDriveMotor.getInt());
-		rightMotor2 = new Talon(RobotMap.rightDriveMotor2.getInt());
-		leftMotor2 = new Talon(RobotMap.leftDriveMotor2.getInt());
 		gyro = new FalconGyro(RobotMap.gyroPort.getInt());
 		gyro.setSensitivity(0.0070);
 
@@ -84,7 +82,6 @@ public class Drivetrain extends Subsystem {
 				RobotMap.driveRateLimit.getDouble());
 
 		leftMotor.set(lastLeftSpeed);
-		leftMotor2.set(lastLeftSpeed);
 	}
 
 	public void driveRight(double speed) {
@@ -95,7 +92,6 @@ public class Drivetrain extends Subsystem {
 				RobotMap.driveRateLimit.getDouble());
 
 		rightMotor.set(lastRightSpeed);
-		rightMotor2.set(lastRightSpeed);
 	}
 
 	/**

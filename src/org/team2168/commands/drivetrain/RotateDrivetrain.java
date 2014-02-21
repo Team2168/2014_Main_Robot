@@ -1,32 +1,31 @@
 package org.team2168.commands.drivetrain;
 
 import org.team2168.OI;
+import org.team2168.RobotMap;
 import org.team2168.commands.CommandBase;
 
-public class RotateDrivetrain extends CommandBase{
+public class RotateDrivetrain extends CommandBase {
 	private double endAngle = 0.0;
 	private double startAngle = 0.0;
 	private double commandedAngle = 0.0;
 	private boolean finished = false;
-	
-	public RotateDrivetrain (double angle){
+
+	public RotateDrivetrain(double angle) {
 		requires(drivetrain);
-		//drivetrain.resetGyro(); //resetting gyro doesn't seem to work 100% of
-		// the time, revisit. Until then just use current angle,
-		// and drive to offset.
+
 		commandedAngle = angle;
 	}
 
 	protected void initialize() {
-		//System.out.println("init gyro. angle = " + endAngle);
+		// System.out.println("init gyro. angle = " + endAngle);
 		finished = false;
-		//drivetrain.resetGyro();
-		
+		// drivetrain.resetGyro();
+
 		drivetrain.drive(0, 0);
-		startAngle = drivetrain.getGyroAngle(); 
+		startAngle = drivetrain.getGyroAngle();
 		endAngle = startAngle + commandedAngle;
-		System.out.println("\n\nStarting rotate to " + commandedAngle + ". S: "
-		+ startAngle + "  e: " + endAngle);
+		// System.out.println("\n\nStarting rotate to " + commandedAngle +
+		// ". S: " + startAngle + "  e: " + endAngle);
 	}
 
 	protected void execute() {
@@ -40,8 +39,8 @@ public class RotateDrivetrain extends CommandBase{
 				currentAngle > endAngle && currentAngle <= (endAngle - 15)) {
 			slowSpeed = (endAngle - currentAngle)/15;
 			//set slowSpeed so that robot never drives slower than minimum speed
-			if (slowSpeed*0.2 < OI.minDriveSpeed) {
-				slowSpeed = OI.minDriveSpeed/0.2;
+			if (slowSpeed*0.2 < RobotMap.minDriveSpeed.getDouble()) {
+				slowSpeed = RobotMap.minDriveSpeed.getDouble()/0.2;
 			}
 		}
 		
@@ -74,7 +73,7 @@ public class RotateDrivetrain extends CommandBase{
 	protected boolean isFinished() {
 		return finished;
 	}
-	
+
 	protected void end() {
 		drivetrain.drive(0, 0);
 	}
