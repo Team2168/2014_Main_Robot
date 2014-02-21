@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *at the set position.
  */
 public class CatapultWinch extends Subsystem {
-	private static CatapultWinch instance = null;                
+	private static CatapultWinch instance = null;
 	private static Talon winchMotor;
 	private static DigitalInput winchInputSwitch;
 	private static MomentaryDoubleSolenoid winchSolenoid;
