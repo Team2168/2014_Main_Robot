@@ -1,6 +1,7 @@
 package org.team2168.commands.catapult;
 
 import org.team2168.commands.CommandBase;
+import org.team2168.subsystems.IntakePosition;
 
 /**
  * 
@@ -25,7 +26,7 @@ public class OpenWinchDogGear extends CommandBase {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		catapultWinch.openDogGear();
+			catapultWinch.openDogGear();
 	}
 
 	/**

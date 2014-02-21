@@ -4,6 +4,7 @@ package org.team2168.subsystems;
 import org.team2168.RobotMap;
 import org.team2168.utils.MomentaryDoubleSolenoid;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class IntakePosition extends Subsystem {
 	private static IntakePosition instance = null;
 	MomentaryDoubleSolenoid actuator;
+	private static DigitalInput intakeSensor;
 	
 	/**
 	 * A private constructor to prevent multiple instances from being created.
@@ -20,6 +22,7 @@ public class IntakePosition extends Subsystem {
 	private IntakePosition() {
 		actuator = new MomentaryDoubleSolenoid(RobotMap.intakeExtPort.getInt(),
 				RobotMap.intakeRetPort.getInt());
+		intakeSensor = new DigitalInput(RobotMap.intakeSensor.getInt());
 	}
 	
 	/**
@@ -43,6 +46,14 @@ public class IntakePosition extends Subsystem {
     
     public void intakeDown() {
     	actuator.set(DoubleSolenoid.Value.kReverse);
+    }
+    
+    /**
+     * Find whether or not the intake is up or down
+     * @return boolean
+     */
+    public boolean isIntakeDown() {
+    	return intakeSensor.get();
     }
 }
 
