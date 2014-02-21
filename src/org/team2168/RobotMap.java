@@ -131,6 +131,24 @@ public class RobotMap extends ConstantsBase {
 			new Constant("minDriveSpeed", 0.11);
 	public static final Constant flashlightOnTime =
 			new Constant("flashlightOnTime", 5.0);
+	
+	
+	
+	/****************************************************************
+     *                  Autonomous Parameters               *
+     ****************************************************************/
+	public static final Constant minRotationAngle =
+			new Constant("minRotationAngle", 20.0);
+	
+	
+	
+	
+	
+	/****************************************************************
+     *                  Networking Paramters                        *
+     ****************************************************************/
+
+	
 
 	static {
 		// Set any overridden constants from the file on startup.
