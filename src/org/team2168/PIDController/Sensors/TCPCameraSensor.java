@@ -141,7 +141,7 @@ public class TCPCameraSensor {
 							dataReceived = Util.split(sb.toString(), ","); // splits
 
 							
-							System.out.println("Match Start: " + dataReceived[0]+", " + "Hot: " + dataReceived[1]+", " + "LorR: " + dataReceived[2]+", " + "dist: " + dataReceived[3]+", " + "Count: " + dataReceived[4]);
+							System.out.println("Match Start: " + isMatchStart()+", " + "Hot: " + isHotInView()+", " + "LorR: " + LeftOrRightHot()+", " + "dist: " + getDitance()+", " + "Count: " + dataReceived[4]);
 
 
 							// create new buffer
