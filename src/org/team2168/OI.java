@@ -67,31 +67,53 @@ public class OI {
 			driveButtonLeftStick = new JoystickButton(baseDriver, 9),
 			driveButtonRightStick = new JoystickButton(baseDriver, 10);
 	
+	public Button operatorButtonA = new JoystickButton(operator, 1),
+			operatorButtonB = new JoystickButton(operator, 2),
+			operatorButtonX = new JoystickButton(operator, 3),
+			operatorButtonY = new JoystickButton(operator, 4),
+			operatorButtonLeftBumper = new JoystickButton(operator, 5),
+			operatorButtonRightBumper = new JoystickButton(operator, 6),
+			operatorButtonReset = new JoystickButton(operator, 7),
+			operatorButtonStart = new JoystickButton(operator, 8),
+			operatorButtonLeftStick = new JoystickButton(operator, 9),
+			operatorButtonRightStick = new JoystickButton(operator, 10),
+			operatorButtonRightTrigger = new JoystickButton(operator, 11),
+			operatorButtonLeftTrigger = new JoystickButton(operator, 12);
+	
 	// minSpeed needs to be tweaked based on the particular drivetrain.
 	// It is the speed at which the drivetrain barely starts moving
-	public static final double minDriveSpeed = 0.11;
 	static double joystickScale[][] = {
 		/* Joystick Input, Scaled Output */
 		{ 1.00, 1.00 },
 		{ 0.90, 0.68 },
-		{ 0.06, minDriveSpeed },
+		{ 0.06, RobotMap.minDriveSpeed.getDouble() },
 		{ 0.06, 0.00 },
 		{ 0.00, 0.00 },
 		{ -0.06, 0.00 },
-		{ -0.06, -minDriveSpeed },
+		{ -0.06, -RobotMap.minDriveSpeed.getDouble() },
 		{ -0.90, -0.68 },
 		{ -1.00, -1.00 } };
 
 	public OI() {
 		// DRIVER CONTROLLER BUTTON MAP ////////////////////////
-		//TODO: remove this assignment, was for testing commands
-		driveButtonA.whenPressed(new RotateDrivetrain(20));
-		driveButtonB.whenPressed(new RotateDrivetrain(-45));
-		driveButtonY.whenPressed(new MoveForwardXDistance(160));
-		driveButtonX.whenPressed(new MoveForwardXDistance(-160));
+		driveButtonRightBumper.whenPressed(
+				new FlashlightOn(RobotMap.flashlightOnTime.getDouble()));
 		
 		// OPERATOR CONTROLLER BUTTON MAP //////////////////////
+		operatorButtonX.whenPressed(new TusksTrussShotPosition());
+		operatorButtonY.whenPressed(new TusksShortShotPosition());
+		operatorButtonB.whenPressed(new TusksLongShotPosition());
 		
+		operatorButtonA.whenPressed(new OpenWinchDogGear());
+		operatorButtonA.whenReleased(new WindWinch(1));
+		
+		operatorButtonRightBumper.whenPressed(new IntakeLower());
+		operatorButtonRightTrigger.whenPressed(new IntakeRun(-1));
+		operatorButtonRightTrigger.whenReleased(new IntakeRun(0));
+		
+		operatorButtonLeftTrigger.whenPressed(new IntakeRun(1));
+		operatorButtonRightTrigger.whenReleased(new IntakeRun(0));
+		operatorButtonLeftBumper.whenPressed(new IntakeRaise());
 	}
 
 	/**
@@ -139,7 +161,7 @@ public class OI {
 	 * @return The adjusted value.
 	 */
 	private double falconClaw(double inputSpeed, double brake) {
-		return ((1 - ((-minDriveSpeed + 1) * Math.abs(brake))) * inputSpeed);
+		return ((1 - ((-RobotMap.minDriveSpeed.getDouble() + 1) * Math.abs(brake))) * inputSpeed);
 	}
 
 	/**
