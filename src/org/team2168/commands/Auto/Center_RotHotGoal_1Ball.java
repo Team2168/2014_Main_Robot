@@ -23,7 +23,9 @@ public Center_RotHotGoal_1Ball(double firstHotGoalTimeOut) {
 	//wait for hot goal, assume camera is facing right hot goal
 	addParallel(new TusksLongShotPosition());
 	addParallel(new IntakeLower());
-	addParallel(new WaitForRightHot(),firstHotGoalTimeOut);
+	
+	
+	addSequential(new WaitForRightHot(),firstHotGoalTimeOut);
 	
 	
 	//lets see if this works
@@ -31,7 +33,7 @@ public Center_RotHotGoal_1Ball(double firstHotGoalTimeOut) {
 	
 	
 	//Rotate DriveTrain = +/- min rotation angle
-	addSequential(new RotateDrivetrain(RobotMap.minRotationAngle.getDouble()*Vision.getInstance().getLeftOrRightHot()));
+	addSequential(new RotateDrivetrain(RobotMap.RotationAngleToHot.getDouble()*Vision.getInstance().getLeftOrRightHot()));
 	
 	//fire
 	//addSequential(new ShootSingleBall());

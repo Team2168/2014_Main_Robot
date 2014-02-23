@@ -1,5 +1,6 @@
 package org.team2168.commands.Vision;
 
+import org.team2168.RobotMap;
 import org.team2168.commands.CommandBase;
 import org.team2168.subsystems.Vision;
 
@@ -11,6 +12,7 @@ import org.team2168.subsystems.Vision;
 public class WaitForRightHot extends CommandBase {
 	
 	private boolean stop;
+
 	
 	
 	/**
@@ -18,13 +20,20 @@ public class WaitForRightHot extends CommandBase {
 	 */
 	public WaitForRightHot() {
     	requires(vision);
-    	stop = false;
+    	
     }
 
     /**
      * Called just before this Command runs the first time
      */
     protected void initialize() {
+    	
+
+    	stop = false;
+    	
+    	//assume leftside is hot
+    	Vision.getInstance().setLeftOrRightHot(-1);
+    	
     }
 
     /**
@@ -32,19 +41,24 @@ public class WaitForRightHot extends CommandBase {
      */
     protected void execute() {
     	
+    	
     	//if right is hot and we didnt time out
-    	if (Vision.getInstance().isRightHot() && !this.isTimedOut())
+    	if (Vision.getInstance().isRightHot() && (this.timeSinceInitialized() > RobotMap.CameraSteadyStateSecs.getDouble()))
     	{
-    		Vision.getInstance().setLeftOrRightHot(1);
-    		stop = true;
-    	}
-    	else if (this.isTimedOut())// we timed out, assume other side is hot
-    	{
-    		Vision.getInstance().setLeftOrRightHot(-1);
-    		stop = true;    		
+    		
+    			Vision.getInstance().setLeftOrRightHot(1);
+    			System.out.println("Right Hot");
+    			stop = true;
+    
     	}
     	else // keep on trying
     		stop = false;
+    	
+    	if(this.isTimedOut())
+    		System.out.println("Left Hot");
+    	
+    	
+    	
     
     	
     }
@@ -60,6 +74,7 @@ public class WaitForRightHot extends CommandBase {
      * Called once after isFinished returns true
      */
     protected void end() {
+
     }
 
     /**
@@ -67,5 +82,7 @@ public class WaitForRightHot extends CommandBase {
      * subsystems is scheduled to run
      */
     protected void interrupted() {
+    	
+
     }
 }
