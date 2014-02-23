@@ -141,7 +141,9 @@ public class TCPCameraSensor {
 							dataReceived = Util.split(sb.toString(), ","); // splits
 
 							
+
 							System.out.println("Match Start: " + isMatchStart()+", " + "Hot: " + isHotInView()+", " + "LorR: " + LeftOrRightHot()+", " + "dist: " + dataReceived[3]+", " + "Count: " + dataReceived[4]);
+
 
 
 							// create new buffer
@@ -273,7 +275,12 @@ public int LeftOrRightHot()
 
 public double getDitance()
 {
-	return Double.valueOf(dataReceived[3]).doubleValue();
+	double dist = Double.valueOf(dataReceived[3]).doubleValue();
+	
+	if (Double.isNaN(dist) || Double.isInfinite(0))
+		return 0.0;
+	else
+		return dist;
 	
 }
 
