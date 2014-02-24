@@ -59,12 +59,12 @@ public class RobotMap extends ConstantsBase {
 			new Constant("intakeExtPort", 1);
 	public static final Constant intakeRetPort = 
 			new Constant("intakeRetPort", 2);
-	public static final Constant catExtPort1 = new Constant("catExtPort1", 3);
-	public static final Constant catRetPort1 = new Constant("catRetPort1", 4);
-	public static final Constant catExtPort2 = new Constant("catExtPort2", 5);
-	public static final Constant catRetPort2 = new Constant("catRetPort2", 6);
-	public static final Constant winchExtPort = new Constant("winchExtPort", 7);
-	public static final Constant winchRetPort = new Constant("winchRetPort", 8);
+	public static final Constant winchExtPort = new Constant("winchExtPort", 3);
+	public static final Constant winchRetPort = new Constant("winchRetPort", 4);
+	public static final Constant catExtPort1 = new Constant("catExtPort1", 5);
+	public static final Constant catRetPort1 = new Constant("catRetPort1", 6);
+	public static final Constant catExtPort2 = new Constant("catExtPort2", 7);
+	public static final Constant catRetPort2 = new Constant("catRetPort2", 8);
 	
 	//Solenoid Channels(fourth slot on cRio)//////////////////////////
 	
