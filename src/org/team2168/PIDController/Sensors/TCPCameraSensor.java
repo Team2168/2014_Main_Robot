@@ -59,7 +59,7 @@ public class TCPCameraSensor {
 		this.requestPeriod = requestPeriod;
 
 
-		size = 5;
+		size = 6;
 		
 		// initialize data messageOut 
 		dataReceived = new String[size];
@@ -69,6 +69,7 @@ public class TCPCameraSensor {
 		dataReceived[2] = "0";
 		dataReceived[3] = "0";
 		dataReceived[4] = "0";
+		dataReceived[5] = "0";
 
 		// setup socket to listen on
 		this.port = port;
@@ -141,7 +142,9 @@ public class TCPCameraSensor {
 							dataReceived = Util.split(sb.toString(), ","); // splits
 
 							
-							System.out.println("Match Start: " + dataReceived[0]+", " + "Hot: " + dataReceived[1]+", " + "LorR: " + dataReceived[2]+", " + "dist: " + dataReceived[3]+", " + "Count: " + dataReceived[4]);
+
+							System.out.println("Match Start: " + isMatchStart()+", " + "Valid Frame: " + isValidFrame()+", " + "Hot: " + isHotInView()+", " + "LorR: " + LeftOrRightHot()+", " + "dist: " + dataReceived[4]+", " + "Count: " + dataReceived[5]);
+
 
 
 							// create new buffer
@@ -179,8 +182,7 @@ public class TCPCameraSensor {
 						messageOut = String.valueOf(matchStart) + " " + count
 								+ " \n";
 
-						System.out
-								.println("Sending Match Start: " + messageOut);
+						//System.out.println("Sending Match Start: " + messageOut);
 
 						buf = messageOut.getBytes("US_ASCII");
 
@@ -256,9 +258,22 @@ public boolean isMatchStart()
 	
 }
 
+public boolean isValidFrame()
+{
+
+	int message = Integer.valueOf(dataReceived[1]).intValue();
+	
+	if (message == 1)
+		return true;
+	else
+		return false;
+	
+	
+}
+
 public boolean isHotInView()
 {
-	int message = Integer.valueOf(dataReceived[1]).intValue();
+	int message = Integer.valueOf(dataReceived[2]).intValue();
 	
 	if (message == 1)
 		return true;
@@ -268,13 +283,29 @@ public boolean isHotInView()
 
 public int LeftOrRightHot()
 {
-	return Integer.valueOf(dataReceived[2]).intValue();
+	return Integer.valueOf(dataReceived[3]).intValue();
 }
 
 
 public double getDitance()
 {
-	return Double.valueOf(dataReceived[3]).doubleValue();
+	double dist = Double.valueOf(dataReceived[4]).doubleValue();
+	
+	if (Double.isNaN(dist) || Double.isInfinite(dist))
+		return 0.0;
+	else
+		return dist;
+	
+}
+
+public double getCount()
+{
+	int count = Integer.valueOf(dataReceived[5]).intValue();
+	
+	if (Double.isNaN(count) || Double.isInfinite(count))
+		return 0;
+	else
+		return count;
 	
 }
 

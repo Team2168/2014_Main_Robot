@@ -28,8 +28,8 @@ public class RotateDrivetrain extends CommandBase {
 
 	protected void execute() {
 		double currentAngle = drivetrain.getGyroAngle();
-		System.out.println("End Angle: " + endAngle + " Current Angle: "
-				+ currentAngle);
+//		System.out.println("End Angle: " + endAngle + " Current Angle: "
+//				+ currentAngle);
 
 		if (endAngle < startAngle && currentAngle < endAngle
 				|| endAngle > startAngle && currentAngle > endAngle) {

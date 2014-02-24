@@ -13,6 +13,8 @@ public class Vision extends Subsystem{
 
 	private volatile String[] dataReceived;
 	private static Vision instance = null;
+	
+	private int LeftOrRightHot;
 
 	private static Servo vision_servo;
 
@@ -22,7 +24,7 @@ public class Vision extends Subsystem{
 	 */
 	public Vision()
 	{
-		cam = new TCPCameraSensor(1111, 1000);
+		cam = new TCPCameraSensor(1111, 200);
 		vision_servo = new Servo(RobotMap.visionServo.getInt());
 		//initialize data variable
 		dataReceived = new String[cam.getMessageLength()];
@@ -30,6 +32,7 @@ public class Vision extends Subsystem{
 		for(int i =0; i<cam.getMessageLength(); i++)
 			dataReceived[i] = "0";
 		
+		LeftOrRightHot = 0;
 
 		cam.start();
 	}
@@ -102,7 +105,29 @@ public class Vision extends Subsystem{
 				
 	}
 	
+	public boolean isValidFrame()
+	{
+		return cam.isValidFrame();
+				
+	}
+/**
+ * 
+ * @param LorR make 1 for Right, -1 for left, 0 otherwise
+ */
+	public void setLeftOrRightHot(int LorR)
+	{
+		LeftOrRightHot = LorR;
+	}
 	
+	public int getLeftOrRightHot()
+	{
+		return LeftOrRightHot;
+	}
+	
+	public int getCamLeftOrRightHot()
+	{
+		return cam.LeftOrRightHot();
+	}
 	
 	public double getDistance()
 	{
