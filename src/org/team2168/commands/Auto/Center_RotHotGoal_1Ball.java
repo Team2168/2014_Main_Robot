@@ -1,7 +1,7 @@
 package org.team2168.commands.Auto;
 
 import org.team2168.RobotMap;
-import org.team2168.commands.Vision.WaitForRightHot;
+import org.team2168.commands.Vision.WaitForFirstHot;
 import org.team2168.commands.catapult.TusksLongShotPosition;
 import org.team2168.commands.drivetrain.RotateDrivetrain;
 import org.team2168.commands.intake.IntakeLower;
@@ -23,7 +23,7 @@ public class Center_RotHotGoal_1Ball extends CommandGroup {
 		addParallel(new TusksLongShotPosition());
 		addParallel(new IntakeLower());
 
-		addSequential(new WaitForRightHot(), firstHotGoalTimeOut);
+		addSequential(new WaitForFirstHot(), firstHotGoalTimeOut);
 
 		// lets see if this works
 		addSequential(new WaitForChildren());

@@ -1,25 +1,30 @@
 package org.team2168.commands.Vision;
 
+import org.team2168.RobotMap;
 import org.team2168.commands.CommandBase;
 import org.team2168.subsystems.Vision;
 
 /**
- * A command to 
- *
+ * A command waits for a valid frame and determines if the left or right goal is hot.
+ * This command returns immediately after received a valid frame from the camera.
+ * If the frame contains a hot goal, the command indicates that side is hot, if the
+ * frame containes no hot goals, the command indicates the other side is hot.
+ * 
  * @author Kevin
  */
-public class WaitForLeftHot extends CommandBase {
-	
+
+public class WaitForFirstHot extends CommandBase {
+
 	private boolean stop;
-	
-	
+
 	/**
 	 * Creates a new IntakeRaise command.
 	 */
-	public WaitForLeftHot() {
-    	requires(vision);
-    	stop = false;
-    }
+	public WaitForFirstHot() {
+		requires(vision);
+
+	}
+
 	/**
 	 * Called just before this Command runs the first time
 	 */
@@ -37,11 +42,11 @@ public class WaitForLeftHot extends CommandBase {
 	 */
 	protected void execute() {
 
-		// did we receive a valid frame and does it see a left target
-		if (Vision.getInstance().isValidFrame() && (Vision.getInstance().getCamLeftOrRightHot() == -1))
+		// did we receive a valid frame?
+		if (Vision.getInstance().isValidFrame())
 		{
 			
-			Vision.getInstance().setLeftOrRightHot(-1);
+			Vision.getInstance().setLeftOrRightHot(Vision.getInstance().getCamLeftOrRightHot());
 			System.out.println(Vision.getInstance().getLeftOrRightHot() + " (1 for right, -1 for left 0 for none)");
 			System.out.println("Took " + this.timeSinceInitialized() + " seconds");
 			stop = true;

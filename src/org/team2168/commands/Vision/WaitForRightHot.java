@@ -1,27 +1,25 @@
 package org.team2168.commands.Vision;
 
-import org.team2168.RobotMap;
 import org.team2168.commands.CommandBase;
 import org.team2168.subsystems.Vision;
 
 /**
- * A command to
- * 
+ * A command to 
+ *
  * @author Kevin
  */
-
 public class WaitForRightHot extends CommandBase {
-
+	
 	private boolean stop;
-
+	
+	
 	/**
 	 * Creates a new IntakeRaise command.
 	 */
 	public WaitForRightHot() {
-		requires(vision);
-
-	}
-
+    	requires(vision);
+    	stop = false;
+    }
 	/**
 	 * Called just before this Command runs the first time
 	 */
@@ -29,8 +27,8 @@ public class WaitForRightHot extends CommandBase {
 
 		stop = false;
 
-		// assume leftside is hot
-		Vision.getInstance().setLeftOrRightHot(-1);
+		// assume rightside is hot, just in case we timeout
+		Vision.getInstance().setLeftOrRightHot(1);
 
 	}
 
@@ -39,21 +37,18 @@ public class WaitForRightHot extends CommandBase {
 	 */
 	protected void execute() {
 
-		// if right is hot and we didnt time out
-		if (Vision.getInstance().isRightHot()
-				&& (this.timeSinceInitialized() > RobotMap.CameraSteadyStateSecs
-						.getDouble())) {
-
+		// did we receive a valid frame and does it see a left target
+		if (Vision.getInstance().isValidFrame() && (Vision.getInstance().getCamLeftOrRightHot() == 1))
+		{
+			
 			Vision.getInstance().setLeftOrRightHot(1);
-			System.out.println("Right Hot");
+			System.out.println(Vision.getInstance().getLeftOrRightHot() + " (1 for right, -1 for left 0 for none)");
+			System.out.println("Took " + this.timeSinceInitialized() + " seconds");
 			stop = true;
 
 		} else
 			// keep on trying
 			stop = false;
-
-		if (this.isTimedOut())
-			System.out.println("Left Hot");
 
 	}
 
