@@ -14,21 +14,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class CatapultTusks extends Subsystem {
 	private static CatapultTusks instance = null;
 	
-    // TUSK ACTUATOR!@#$%^&
+    // TUSK ACTUATOR OPERATION
 	//        --------------------------------
 	//  ------|------|     --||--------|     |
-	//        -u-------------//-----------//--
+	//        -//------------//-----------//--
 	//         C              B           A
 	//
 	// To achieve the three positions on this actuator the following states must
 	// be established. Truth table:
 	//
 	// POSITION      C           B          A                 NAME
-	//   Extended    Pressure    Vent       Vent              Long Range
-	//   Retracted   Vent        Pressure   Vent              Truss Shot
+	//   Extended    Vent        Pressure   Vent              Long Range
+	//   Retracted   Pressure    Vent       Vent              Truss Shot
 	//   Middle      Pressure    Vent       Pressure          Short Range
 	
-	//Actuato Ports B and C
+	//Actuator Ports B and C
 	private static MomentaryDoubleSolenoid tuskSolenoid1;
 	//Actuator Port A
 	private static MomentaryDoubleSolenoid tuskSolenoid2;
@@ -65,7 +65,7 @@ public class CatapultTusks extends Subsystem {
 	 * of the tusks.
 	 */
 	public void longRangeShot(){
-		tuskSolenoid1.set(DoubleSolenoid.Value.kForward);
+		tuskSolenoid1.set(DoubleSolenoid.Value.kReverse);
 		tuskSolenoid2.set(DoubleSolenoid.Value.kReverse);
 	}
 
@@ -74,7 +74,7 @@ public class CatapultTusks extends Subsystem {
 	 * the tusks.
 	 */
 	public void trussShot() {
-		tuskSolenoid1.set(DoubleSolenoid.Value.kReverse);
+		tuskSolenoid1.set(DoubleSolenoid.Value.kForward);
 		tuskSolenoid2.set(DoubleSolenoid.Value.kReverse);
 	}
 
