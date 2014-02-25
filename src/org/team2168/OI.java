@@ -1,6 +1,5 @@
 package org.team2168;
 
-import org.team2168.commands.*;
 import org.team2168.commands.drivetrain.*;
 import org.team2168.commands.catapult.*;
 import org.team2168.commands.intake.*;
@@ -10,7 +9,6 @@ import org.team2168.commands.flashlight.*;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.DigitalIOButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
@@ -54,6 +52,7 @@ public class OI {
 	// Create mapping for buttons on joystick
 	private Joystick baseDriver = new Joystick(1);
 	private Joystick operator   = new Joystick(2);
+	private Joystick testController   = new Joystick(3);
 	
 	public static final int rightJoyAxis = 5;
 	public static final int leftJoyAxis  = 2;
@@ -81,6 +80,18 @@ public class OI {
 			operatorButtonLeftStick = new JoystickButton(operator, 9),
 			operatorButtonRightStick = new JoystickButton(operator, 10);
 	
+	
+	public Button testControllerButtonA = new JoystickButton(testController, 1),
+			testControllerButtonB = new JoystickButton(testController, 2),
+			testControllerButtonX = new JoystickButton(testController, 3),
+			testControllerButtonY = new JoystickButton(testController, 4),
+			testControllerButtonLeftBumper = new JoystickButton(testController, 5),
+			testControllerButtonRightBumper = new JoystickButton(testController, 6),
+			testControllerButtonReset = new JoystickButton(testController, 7),
+			testControllerButtonStart = new JoystickButton(testController, 8),
+			testControllerButtonLeftStick = new JoystickButton(testController, 9),
+			testControllerButtonRightStick = new JoystickButton(testController, 10);
+	
 	// minSpeed needs to be tweaked based on the particular drivetrain.
 	// It is the speed at which the drivetrain barely starts moving
 	static double joystickScale[][] = {
@@ -102,41 +113,40 @@ public class OI {
 		
 		
 		
-//		// OPERATOR CONTROLLER BUTTON MAP //////////////////////
-//		operatorButtonX.whenPressed(new TusksTrussShotPosition());
-//		operatorButtonY.whenPressed(new TusksShortShotPosition());
-//		operatorButtonB.whenPressed(new TusksLongShotPosition());
-//		
-//		operatorButtonA.whenPressed(new OpenWinchDogGear());
-//		operatorButtonA.whenReleased(new WindWinch(1));
-//		
-//		operatorButtonRightBumper.whenPressed(new IntakeLower());
-//		operatorButtonRightTrigger.whenPressed(new IntakeRun(-1));
-//		operatorButtonRightTrigger.whenReleased(new IntakeRun(0));
-//		
-//		operatorButtonLeftTrigger.whenPressed(new IntakeRun(1));
-//		operatorButtonRightTrigger.whenReleased(new IntakeRun(0));
-//		operatorButtonLeftBumper.whenPressed(new IntakeRaise());
-//	
-		
-//		TEST BUTTONS
+		// OPERATOR CONTROLLER BUTTON MAP //////////////////////
 		operatorButtonX.whenPressed(new TusksTrussShotPosition());
 		operatorButtonY.whenPressed(new TusksShortShotPosition());
 		operatorButtonB.whenPressed(new TusksLongShotPosition());
 		
 		operatorButtonA.whenPressed(new ExtendWinchDogGear());
-		operatorButtonA.whenReleased(new RetractWinchMotor(1));
+		operatorButtonA.whenReleased(new RetractWinchMotor(0.5));
 		
-		//operatorButtonRightBumper.whenPressed(new IntakeLower());
-		//operatorButtonLeftBumper.whenPressed(new IntakeRaise());
+		//operatorButtonRightTrigger.whenPressed(new IntakeDown());
+		//operatorButtonLeftTrigger.whenPressed(new IntakeUp());
 		
-		operatorButtonRightBumper.whileHeld(new IntakeDriveMotor(-1));
-		operatorButtonLeftBumper.whileHeld(new IntakeDriveMotor(1));
+		operatorButtonRightBumper.whileHeld(new IntakeDriveMotor(-0.5));
+		operatorButtonLeftBumper.whileHeld(new IntakeDriveMotor(0.5));
+
+	
+		
+//		TEST BUTTONS
+		testControllerButtonX.whenPressed(new TusksTrussShotPosition());
+		testControllerButtonY.whenPressed(new TusksShortShotPosition());
+		testControllerButtonB.whenPressed(new TusksLongShotPosition());
+		
+		testControllerButtonA.whenPressed(new ExtendWinchDogGear());
+		testControllerButtonA.whenReleased(new RetractWinchMotor(0.5));
+		
+		//testControllerButtonRightBumper.whenPressed(new IntakeLower());
+		//testControllerButtonLeftBumper.whenPressed(new IntakeRaise());
+		
+		testControllerButtonRightBumper.whileHeld(new IntakeDriveMotor(-0.5));
+		testControllerButtonLeftBumper.whileHeld(new IntakeDriveMotor(0.5));
 			
-		operatorButtonStart.whenPressed(new RotateDrivetrain(-45));
-		operatorButtonReset.whenPressed(new RotateDrivetrain(45));
-		operatorButtonLeftStick.whenPressed(new AutoDriveXDistance(35));
-		operatorButtonRightStick.whenPressed(new AutoDriveXDistance(-35));
+		testControllerButtonStart.whenPressed(new RotateDrivetrain(-45));
+		testControllerButtonReset.whenPressed(new RotateDrivetrain(45));
+		testControllerButtonLeftStick.whenPressed(new AutoDriveXDistance(35));
+		testControllerButtonRightStick.whenPressed(new AutoDriveXDistance(-35));
 		
 	}
 
