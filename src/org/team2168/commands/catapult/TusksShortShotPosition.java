@@ -1,30 +1,22 @@
 package org.team2168.commands.catapult;
 
-import org.team2168.commands.CommandBase;
+import org.team2168.RobotMap;
 
-public class TusksShortShotPosition extends CommandBase {
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
-	/**
-	 * Prevents the tusks from trying to change all at the same time
-	 */
+/**
+ * A command to move the tusks to the intermediate position.
+ * First retract the 2nd stage of the cylinder, then extend to the intermediate
+ * position.
+ * 
+ * @author James
+ */
+public class TusksShortShotPosition extends CommandGroup {
 	public TusksShortShotPosition() {
-		requires(catapultTusks);
-	}
-
-	protected void initialize() {
-	}
-
-	protected void execute() {
-		catapultTusks.shortRangeShot();
-	}
-
-	protected void interrupted() {
-	}
-
-	protected boolean isFinished() {
-		return true;
-	}
-
-	protected void end() {
+		//Move the tusks to the extended position.
+		addSequential(new TusksShortShotPosition_Step1(
+				RobotMap.tuskIntermediatePositionDelay.getDouble()));
+		//Then back into the intermediate position. 
+		addSequential(new TusksShortShotPosition_Step2());
 	}
 }
