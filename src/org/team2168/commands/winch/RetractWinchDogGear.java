@@ -6,12 +6,12 @@ import org.team2168.commands.CommandBase;
  * 
  * @author KALIber10
  */
-public class CloseWinchDogGear extends CommandBase {
+public class RetractWinchDogGear extends CommandBase {
 
 	/**
 	 * Creates a new CloseWinchDogGear command.
 	 */
-	public CloseWinchDogGear() {
+	public RetractWinchDogGear() {
 		requires(catapultWinch);
 	}
 

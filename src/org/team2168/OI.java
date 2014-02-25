@@ -4,8 +4,8 @@ import org.team2168.commands.*;
 import org.team2168.commands.drivetrain.*;
 import org.team2168.commands.catapult.*;
 import org.team2168.commands.intake.*;
-import org.team2168.commands.winch.OpenWinchDogGear;
-import org.team2168.commands.winch.WindWinch;
+import org.team2168.commands.winch.ExtendWinchDogGear;
+import org.team2168.commands.winch.WinchDriveMotor;
 import org.team2168.commands.flashlight.*;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -124,19 +124,19 @@ public class OI {
 		operatorButtonY.whenPressed(new TusksShortShotPosition());
 		operatorButtonB.whenPressed(new TusksLongShotPosition());
 		
-		operatorButtonA.whenPressed(new OpenWinchDogGear());
-		operatorButtonA.whenReleased(new WindWinch(1));
+		operatorButtonA.whenPressed(new ExtendWinchDogGear());
+		operatorButtonA.whenReleased(new WinchDriveMotor(1));
 		
 		//operatorButtonRightBumper.whenPressed(new IntakeLower());
 		//operatorButtonLeftBumper.whenPressed(new IntakeRaise());
 		
-		operatorButtonRightBumper.whileHeld(new IntakeRun(-1));
-		operatorButtonLeftBumper.whileHeld(new IntakeRun(1));
+		operatorButtonRightBumper.whileHeld(new IntakeDriveMotor(-1));
+		operatorButtonLeftBumper.whileHeld(new IntakeDriveMotor(1));
 			
 		operatorButtonStart.whenPressed(new RotateDrivetrain(-45));
 		operatorButtonReset.whenPressed(new RotateDrivetrain(45));
-		operatorButtonLeftStick.whenPressed(new MoveForwardXDistance(35));
-		operatorButtonRightStick.whenPressed(new MoveForwardXDistance(-35));
+		operatorButtonLeftStick.whenPressed(new AutoDriveXDistance(35));
+		operatorButtonRightStick.whenPressed(new AutoDriveXDistance(-35));
 		
 	}
 

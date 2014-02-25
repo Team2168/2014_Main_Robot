@@ -8,7 +8,7 @@ import org.team2168.commands.CommandBase;
  *
  * @author James
  */
-public class IntakeRun extends CommandBase {
+public class IntakeDriveMotor extends CommandBase {
 	double speed = 0.0;
 	
 	/**
@@ -16,7 +16,7 @@ public class IntakeRun extends CommandBase {
 	 * @param speed the speed to run the intake motors at (1.0 to -1.0)
 	 *   positive rolls balls into the robot.
 	 */
-	public IntakeRun(double speed) {
+	public IntakeDriveMotor(double speed) {
     	requires(intakeRollers);
     	this.speed = speed;
     }
