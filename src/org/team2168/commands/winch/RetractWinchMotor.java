@@ -1,12 +1,12 @@
-package org.team2168.commands.catapult;
+package org.team2168.commands.winch;
 
 import org.team2168.commands.CommandBase;
 
-public class WindWinch extends CommandBase{
+public class RetractWinchMotor extends CommandBase{
 
 	double speed;
 	
-	public WindWinch(double speed) {
+	public RetractWinchMotor(double speed) {
 		requires(catapultWinch);
 		this.speed = speed;
 	}
@@ -16,19 +16,19 @@ public class WindWinch extends CommandBase{
 	}
 
 	protected void execute() {
-		catapultWinch.setCatapult(speed);
+		catapultWinch.driveWinch(speed);
 	}
 
 	protected boolean isFinished() {
-		return catapultWinch.isCatapultSet();
+		return catapultWinch.isCatapultRetracted();
 	}
 
 	protected void end() {
-		catapultWinch.setCatapult(0);
+		catapultWinch.driveWinch(0);;
 	}
 
 	protected void interrupted() {
-		catapultWinch.setCatapult(0);
+		catapultWinch.driveWinch(0);;
 	}
 
 }

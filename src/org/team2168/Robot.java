@@ -7,8 +7,6 @@
 
 package org.team2168;
 
-import org.team2168.PIDController.Sensors.TCPCameraSensor;
-import org.team2168.commands.ExampleCommand;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;

@@ -1,4 +1,4 @@
-package org.team2168.commands.catapult;
+package org.team2168.commands.winch;
 
 import org.team2168.commands.CommandBase;
 
@@ -6,12 +6,12 @@ import org.team2168.commands.CommandBase;
  * 
  * @author KALIber10
  */
-public class CloseWinchDogGear extends CommandBase {
+public class RetractWinchDogGear extends CommandBase {
 
 	/**
 	 * Creates a new CloseWinchDogGear command.
 	 */
-	public CloseWinchDogGear() {
+	public RetractWinchDogGear() {
 		requires(catapultWinch);
 	}
 
@@ -25,14 +25,14 @@ public class CloseWinchDogGear extends CommandBase {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		catapultWinch.closeDogGear();
+		catapultWinch.retractDogGear();
 	}
 
 	/**
 	 * Make this return true when this Command no longer needs to run execute()
 	 */
 	protected boolean isFinished() {
-		return true;
+		return catapultWinch.isDogGearRetracted();
 	}
 
 	/**

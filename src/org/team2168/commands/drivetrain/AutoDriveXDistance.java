@@ -2,7 +2,7 @@ package org.team2168.commands.drivetrain;
 
 import org.team2168.commands.CommandBase;
 
-public class MoveForwardXDistance extends CommandBase{
+public class AutoDriveXDistance extends CommandBase{
 	private double distance;
 	private double endDistance;
 	private boolean finished;
@@ -13,7 +13,7 @@ public class MoveForwardXDistance extends CommandBase{
 	 * Move the drivetrain forward the specified distance.
 	 * @param distance in inches
 	 */
-	public MoveForwardXDistance(double distance) {
+	public AutoDriveXDistance(double distance) {
 		requires(drivetrain);
 		this.distance = distance;
 	}

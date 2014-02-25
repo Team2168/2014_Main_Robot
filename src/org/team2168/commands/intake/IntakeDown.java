@@ -4,21 +4,16 @@ package org.team2168.commands.intake;
 import org.team2168.commands.CommandBase;
 
 /**
- * A command to run the intake motors at the specified speed.
+ * A command to lower the intake.
  *
  * @author James
  */
-public class IntakeRun extends CommandBase {
-	double speed = 0.0;
-	
+public class IntakeDown extends CommandBase {
 	/**
-	 * Creates a new RunIntake command.
-	 * @param speed the speed to run the intake motors at (1.0 to -1.0)
-	 *   positive rolls balls into the robot.
+	 * Creates a new IntakeLower command.
 	 */
-	public IntakeRun(double speed) {
-    	requires(intakeRollers);
-    	this.speed = speed;
+	public IntakeDown() {
+    	requires(intakePosition);
     }
 
     /**
@@ -31,14 +26,14 @@ public class IntakeRun extends CommandBase {
      * Called repeatedly when this Command is scheduled to run
      */
     protected void execute() {
-    	intakeRollers.intakeMotorControl(speed);
+    	intakePosition.intakeDown();
     }
 
     /**
      * Make this return true when this Command no longer needs to run execute()
      */
     protected boolean isFinished() {
-        return false;
+        return intakePosition.isIntakeDown();
     }
 
     /**

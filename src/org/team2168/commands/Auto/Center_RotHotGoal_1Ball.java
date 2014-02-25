@@ -4,7 +4,7 @@ import org.team2168.RobotMap;
 import org.team2168.commands.Vision.WaitForFirstHot;
 import org.team2168.commands.catapult.TusksLongShotPosition;
 import org.team2168.commands.drivetrain.RotateDrivetrain;
-import org.team2168.commands.intake.IntakeLower;
+import org.team2168.commands.intake.IntakeDown;
 import org.team2168.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -21,7 +21,7 @@ public class Center_RotHotGoal_1Ball extends CommandGroup {
 
 		// wait for hot goal, assume camera is facing right hot goal
 		addParallel(new TusksLongShotPosition());
-		addParallel(new IntakeLower());
+		addParallel(new IntakeDown());
 
 		addSequential(new WaitForFirstHot(), firstHotGoalTimeOut);
 

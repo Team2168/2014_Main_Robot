@@ -8,11 +8,11 @@ import org.team2168.commands.CommandBase;
  *
  * @author James
  */
-public class IntakeRaise extends CommandBase {
+public class IntakeUp extends CommandBase {
 	/**
 	 * Creates a new IntakeRaise command.
 	 */
-	public IntakeRaise() {
+	public IntakeUp() {
     	requires(intakePosition);
     }
 
@@ -33,7 +33,7 @@ public class IntakeRaise extends CommandBase {
      * Make this return true when this Command no longer needs to run execute()
      */
     protected boolean isFinished() {
-        return true;
+        return intakePosition.isIntakeUp();
     }
 
     /**

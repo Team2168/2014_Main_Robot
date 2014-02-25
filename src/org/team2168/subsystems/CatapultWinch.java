@@ -2,7 +2,7 @@ package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
 import org.team2168.PIDController.Sensors.AverageEncoder;
-import org.team2168.commands.catapult.WinchWithJoystick;
+import org.team2168.commands.winch.WinchWithJoystick;
 import org.team2168.utils.MomentaryDoubleSolenoid;
 
 import edu.wpi.first.wpilibj.AnalogChannel;
@@ -69,7 +69,7 @@ public class CatapultWinch extends Subsystem {
      * 
      * @param winchSpeed 0.0 to 1.0
      */
-    public void setCatapult(double winchSpeed){
+    public void driveWinch(double winchSpeed){
     	//Only allow the winch to drive in one direction.
     	if (winchSpeed < 0.0) {
     		winchSpeed = 0.0;
@@ -79,21 +79,30 @@ public class CatapultWinch extends Subsystem {
     /**
      * This method closes the dog gear to keep the catapult in place.
      */
-    public void closeDogGear(){
+    public void retractDogGear(){
     	winchSolenoid.set(DoubleSolenoid.Value.kForward);
     }
     /**
      * This method releases (FIRES) the dog gear on the catapult.
      */
-    public void openDogGear(){
+    public void extendDogGear(){
     	winchSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
+    
+    public boolean isDogGearExtended(){
+    	return winchSolenoid.get()==DoubleSolenoid.Value.kReverse;
+    }
+    
+    public boolean isDogGearRetracted(){
+    	return winchSolenoid.get()==DoubleSolenoid.Value.kForward;
+    } 
+    
     
     /**
      * This method checks if the catapult has reached the set position.
      * @return true when the winch is lowered all the way
      */
-    public boolean isCatapultSet(){
+    public boolean isCatapultRetracted(){
     	//TODO: Verify that the switch returns true when the switch is pressed.
        	return winchInputSwitch.get();
     }

@@ -1,5 +1,5 @@
 
-package org.team2168.commands.catapult;
+package org.team2168.commands.winch;
 
 import org.team2168.commands.CommandBase;
 
@@ -33,7 +33,7 @@ public class WinchWithJoystick extends CommandBase {
     		speed = 0.0;
     	}
     	
-    	catapultWinch.setCatapult(speed);
+    	catapultWinch.driveWinch(speed);
     }
 
     /**
