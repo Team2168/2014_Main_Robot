@@ -1,5 +1,5 @@
 
-package org.team2168.commands.catapult;
+package org.team2168.commands.winch;
 
 import org.team2168.commands.CommandBase;
 
