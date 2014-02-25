@@ -4,15 +4,15 @@ package org.team2168.commands.intake;
 import org.team2168.commands.CommandBase;
 
 /**
- * A command to raise the intake.
+ * A command to lower the intake.
  *
  * @author James
  */
-public class IntakeRaise extends CommandBase {
+public class IntakeDown extends CommandBase {
 	/**
-	 * Creates a new IntakeRaise command.
+	 * Creates a new IntakeLower command.
 	 */
-	public IntakeRaise() {
+	public IntakeDown() {
     	requires(intakePosition);
     }
 
@@ -26,14 +26,14 @@ public class IntakeRaise extends CommandBase {
      * Called repeatedly when this Command is scheduled to run
      */
     protected void execute() {
-    	intakePosition.intakeUp();
+    	intakePosition.intakeDown();
     }
 
     /**
      * Make this return true when this Command no longer needs to run execute()
      */
     protected boolean isFinished() {
-        return true;
+        return intakePosition.isIntakeDown();
     }
 
     /**
