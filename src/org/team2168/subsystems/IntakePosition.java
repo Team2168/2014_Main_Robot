@@ -46,6 +46,11 @@ public class IntakePosition extends Subsystem {
     public void intakeUp() {
     	actuator.set(DoubleSolenoid.Value.kForward);
     }
+
+    public boolean isIntakeUp() {
+    	return actuator.get() == DoubleSolenoid.Value.kForward;
+    }
+    
     
     /**
      * Lower the intake.
@@ -54,13 +59,15 @@ public class IntakePosition extends Subsystem {
     	actuator.set(DoubleSolenoid.Value.kReverse);
     }
     
+
+    
     /**
      * Find whether or not the intake is up or down
      * @return true if the intake is completely lowered.
      */
     public boolean isIntakeDown() {
     	//TODO: verify that we return TRUE when the switch is pressed
-    	return intakeSensor.get();
+    	return intakeSensor.get() && (actuator.get() == DoubleSolenoid.Value.kReverse);
     }
 }
 
