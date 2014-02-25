@@ -33,7 +33,7 @@ public class WinchWithJoystick extends CommandBase {
     		speed = 0.0;
     	}
     	
-    	catapultWinch.setCatapult(speed);
+    	catapultWinch.driveWinch(speed);
     }
 
     /**

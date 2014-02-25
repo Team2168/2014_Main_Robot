@@ -31,7 +31,7 @@ public class IntakeDriveMotor extends CommandBase {
      * Called repeatedly when this Command is scheduled to run
      */
     protected void execute() {
-    	intakeRollers.intakeMotorControl(speed);
+    	intakeRollers.driveIntake(speed);
     }
 
     /**
