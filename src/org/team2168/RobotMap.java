@@ -50,9 +50,9 @@ public class RobotMap extends ConstantsBase {
 	
 	//Relay Output Channels///////////////////////////////////////////
 	public static final Constant compressorRelay =
-			new Constant("compressorRelay", 1);
+			new Constant("compressorRelay", 2);
 	public static final Constant flashlightRelay =
-			new Constant("flashlightRelay", 2);
+			new Constant("flashlightRelay", 1);
 	
 	//Solenoid Channels(third slot on cRio)///////////////////////////
 	public static final Constant intakeExtPort = 
@@ -104,12 +104,14 @@ public class RobotMap extends ConstantsBase {
 	/****************************************************************
      *                      Catapult Parameters                     *
      ****************************************************************/
-	 public static final Constant wheelDiameterWinch = 
-			 new Constant("wheelDiameterWinch", 2);
-	 public static final Constant catapultWinchUp =	
-			 new Constant("catapultWinchUp", 4.0);
-	 public static final Constant catapultWinchDown =
-			 new Constant("catapultWinchDown", 1.0);
+	public static final Constant tuskIntermediatePositionDelay =
+			new Constant("tuskIntermediatePositionDelay", 0.1);
+	public static final Constant wheelDiameterWinch =
+			new Constant("wheelDiameterWinch", 2);
+	public static final Constant catapultWinchUp =
+			new Constant("catapultWinchUp", 4.0);
+	public static final Constant catapultWinchDown =
+			new Constant("catapultWinchDown", 1.0);
 	
 	private static final int winchPulsePerRotation = 256; //encoder ticks per rotation
 	private static final double winchGearRatio = 1.0/1.0; //ratio between wheel over encoder
