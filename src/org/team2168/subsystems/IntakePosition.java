@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class IntakePosition extends Subsystem {
 	private static IntakePosition instance = null;
 	MomentaryDoubleSolenoid actuator;
-	private static DigitalInput intakeSensor;
+	private static DigitalInput intakeLimitSwitch;
 	
 	/**
 	 * A private constructor to prevent multiple instances from being created.
@@ -22,7 +22,7 @@ public class IntakePosition extends Subsystem {
 	private IntakePosition() {
 		actuator = new MomentaryDoubleSolenoid(RobotMap.intakeExtPort.getInt(),
 				RobotMap.intakeRetPort.getInt());
-		intakeSensor = new DigitalInput(RobotMap.intakeSensor.getInt());
+		intakeLimitSwitch = new DigitalInput(RobotMap.intakeDownLimitSwitch.getInt());
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public class IntakePosition extends Subsystem {
      */
     public boolean isIntakeDown() {
     	//TODO: verify that we return TRUE when the switch is pressed
-    	return intakeSensor.get() && (actuator.get() == DoubleSolenoid.Value.kReverse);
+    	return intakeLimitSwitch.get() && (actuator.get() == DoubleSolenoid.Value.kReverse);
     }
 }
 

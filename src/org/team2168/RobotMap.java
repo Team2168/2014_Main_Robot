@@ -42,18 +42,18 @@ public class RobotMap extends ConstantsBase {
 			new Constant("winchEncoderA", 6);
 	public static final Constant winchEncoderB = 
 			new Constant("winchEncoderB", 7);
-	public static final Constant intakeSensor =
-			new Constant("intakeSensor", 8);
+	public static final Constant intakeDownLimitSwitch =
+			new Constant("intakeDownLimitSwitch", 8);
 	public static final Constant pressureSwitch =
 			new Constant("pressureSwitch", 14);
 	
 	
 	//Relay Output Channels///////////////////////////////////////////
-	public static final Constant compressorRelay =
-			new Constant("compressorRelay", 2);
 	public static final Constant flashlightRelay =
 			new Constant("flashlightRelay", 1);
-	
+	public static final Constant compressorRelay =
+			new Constant("compressorRelay", 2);
+
 	//Solenoid Channels(third slot on cRio)///////////////////////////
 	public static final Constant intakeExtPort = 
 			new Constant("intakeExtPort", 1);
