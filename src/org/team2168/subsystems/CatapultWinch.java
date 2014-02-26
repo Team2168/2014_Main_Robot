@@ -151,8 +151,15 @@ public class CatapultWinch extends Subsystem {
 	 * @return true if present
 	 */
 	public boolean isBallPresent() {
-		//TODO: replace with comparison to ball sensor voltage
-		return false;
+		//TODO: replace ballIsInVoltage with correct value for when the ball is in the robot
+		double ballIsInVoltage = 2;
+		
+			if (ballSensor.getVoltage() < ballIsInVoltage){
+				return false;
+			}
+			else {
+				return true;
+			}
 	}
 }
 
