@@ -27,8 +27,8 @@ public class WinchWithJoystick extends CommandBase {
     	double speed = oi.getOperatorLeftStick();
     	//We only want to drive the winch in one direction.
     	//Down on the stick will drive the winch down.
-    	if (speed < -0.05) {
-    		speed = -speed * 0.5;
+    	if (speed < -0.05 && !catapultWinch.isCatapultRetracted()) {
+    		speed = -speed;
     	} else {
     		speed = 0.0;
     	}
