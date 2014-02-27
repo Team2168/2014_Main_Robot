@@ -28,10 +28,8 @@ public class Robot extends IterativeRobot {
 	private double lastAngle;
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
 	private Compressor compressor;
+	private static boolean matchStarted = false;
 
-
-
-	
 	Command autonomousCommand;
 
 	/**
@@ -49,8 +47,6 @@ public class Robot extends IterativeRobot {
 
 		//Console Message so we know robot finished loading
 		System.out.println("****Robot Done Loading****");
-
-
 	}
 
 	/**
@@ -75,7 +71,7 @@ public class Robot extends IterativeRobot {
 		double curAngle = CommandBase.drivetrain.getGyroAngle();
 		if (gyroDriftDetector
 				.update(Math.abs(curAngle - lastAngle) > (.75 / 50.0))
-				&& gyroReinits < 3) {
+				&& gyroReinits < 3 && !matchStarted) {
 			gyroReinits++;
 			System.out.println("!!! Sensed drift, about to auto-reinit gyro ("
 					+ gyroReinits + ")");
@@ -95,6 +91,9 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().enable();
 		// schedule the autonomous command (example)
 		autonomousCommand.start();
+
+		//prevent gyro from initializing between auto and teleop
+		matchStarted = true;
 		
 		//No compressor for auto mode, lower battery load
 		//compressor.start();
