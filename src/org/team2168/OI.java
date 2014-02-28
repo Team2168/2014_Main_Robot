@@ -7,6 +7,7 @@ import org.team2168.commands.winch.ExtendWinchDogGear;
 import org.team2168.commands.winch.RetractWinchDogGear;
 import org.team2168.commands.winch.RetractWinchMotor;
 import org.team2168.commands.flashlight.*;
+import org.team2168.utils.JoystickAnalogButton;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -60,38 +61,40 @@ public class OI {
 	public static final int triggerAxis  = 3;
 
 	public Button driveButtonA = new JoystickButton(baseDriver, 1),
-			driveButtonB = new JoystickButton(baseDriver, 2),
-			driveButtonX = new JoystickButton(baseDriver, 3),
-			driveButtonY = new JoystickButton(baseDriver, 4),
-			driveButtonLeftBumper = new JoystickButton(baseDriver, 5),
-			driveButtonRightBumper = new JoystickButton(baseDriver, 6),
-			driveButtonReset = new JoystickButton(baseDriver, 7),
-			driveButtonStart = new JoystickButton(baseDriver, 8),
-			driveButtonLeftStick = new JoystickButton(baseDriver, 9),
-			driveButtonRightStick = new JoystickButton(baseDriver, 10);
+		      driveButtonB = new JoystickButton(baseDriver, 2),
+		      driveButtonX = new JoystickButton(baseDriver, 3),
+		      driveButtonY = new JoystickButton(baseDriver, 4),
+		      driveButtonLeftBumper = new JoystickButton(baseDriver, 5),
+		      driveButtonRightBumper = new JoystickButton(baseDriver, 6),
+		      driveButtonReset = new JoystickButton(baseDriver, 7),
+		      driveButtonStart = new JoystickButton(baseDriver, 8),
+		      driveButtonLeftStick = new JoystickButton(baseDriver, 9),
+		      driveButtonRightStick = new JoystickButton(baseDriver, 10);
 	
 	public Button operatorButtonA = new JoystickButton(operator, 1),
-			operatorButtonB = new JoystickButton(operator, 2),
-			operatorButtonX = new JoystickButton(operator, 3),
-			operatorButtonY = new JoystickButton(operator, 4),
-			operatorButtonLeftBumper = new JoystickButton(operator, 5),
-			operatorButtonRightBumper = new JoystickButton(operator, 6),
-			operatorButtonReset = new JoystickButton(operator, 7),
-			operatorButtonStart = new JoystickButton(operator, 8),
-			operatorButtonLeftStick = new JoystickButton(operator, 9),
-			operatorButtonRightStick = new JoystickButton(operator, 10);
-	
+		      operatorButtonB = new JoystickButton(operator, 2),
+		      operatorButtonX = new JoystickButton(operator, 3),
+		      operatorButtonY = new JoystickButton(operator, 4),
+		      operatorButtonLeftBumper = new JoystickButton(operator, 5),
+		      operatorButtonRightBumper = new JoystickButton(operator, 6),
+		      operatorButtonReset = new JoystickButton(operator, 7),
+		      operatorButtonStart = new JoystickButton(operator, 8),
+		      operatorButtonLeftStick = new JoystickButton(operator, 9),
+		      operatorButtonRightStick = new JoystickButton(operator, 10);
+	//TODO: verify left trigger creates negative value. 
+	public JoystickAnalogButton operatorButtonLeftTrigger = new JoystickAnalogButton(operator, triggerAxis, -0.5),
+				    operatorButtonRightTrigger = new JoystickAnalogButton(operator, triggerAxis, 0.5);
 	
 	public Button testControllerButtonA = new JoystickButton(testController, 1),
-			testControllerButtonB = new JoystickButton(testController, 2),
-			testControllerButtonX = new JoystickButton(testController, 3),
-			testControllerButtonY = new JoystickButton(testController, 4),
-			testControllerButtonLeftBumper = new JoystickButton(testController, 5),
-			testControllerButtonRightBumper = new JoystickButton(testController, 6),
-			testControllerButtonReset = new JoystickButton(testController, 7),
-			testControllerButtonStart = new JoystickButton(testController, 8),
-			testControllerButtonLeftStick = new JoystickButton(testController, 9),
-			testControllerButtonRightStick = new JoystickButton(testController, 10);
+		      testControllerButtonB = new JoystickButton(testController, 2),
+		      testControllerButtonX = new JoystickButton(testController, 3),
+		      testControllerButtonY = new JoystickButton(testController, 4),
+		      testControllerButtonLeftBumper = new JoystickButton(testController, 5),
+		      testControllerButtonRightBumper = new JoystickButton(testController, 6),
+		      testControllerButtonReset = new JoystickButton(testController, 7),
+		      testControllerButtonStart = new JoystickButton(testController, 8),
+		      testControllerButtonLeftStick = new JoystickButton(testController, 9),
+		      testControllerButtonRightStick = new JoystickButton(testController, 10);
 	
 	// minSpeed needs to be tweaked based on the particular drivetrain.
 	// It is the speed at which the drivetrain barely starts moving
@@ -121,19 +124,17 @@ public class OI {
 		
 		//operatorButtonA.whenPressed(new Fire());
 
-		
 		operatorButtonRightBumper.whenPressed(new IntakeDown());
 		operatorButtonLeftBumper.whenPressed(new IntakeUp());
+		operatorButtonRightTrigger.whileHeld(new IntakeDriveMotor(0.5));
+		operatorButtonLeftTrigger.whileHeld(new IntakeDriveMotor(-0.5));
 		
 		operatorButtonStart.whenPressed(new ExtendWinchDogGear());
 		operatorButtonReset.whenPressed(new RetractWinchDogGear());
-		
-		//operatorButtonRightBumper.whileHeld(new IntakeDriveMotor(-0.5));
-		//operatorButtonLeftBumper.whileHeld(new IntakeDriveMotor(0.5));
 
 	
 		
-//		TEST BUTTONS
+		// TEST CONTROLLER BUTTON MAP //////////////////////////
 		testControllerButtonX.whenPressed(new TusksTrussShotPosition());
 		testControllerButtonY.whenPressed(new TusksShortShotPosition());
 		testControllerButtonB.whenPressed(new TusksLongShotPosition());
