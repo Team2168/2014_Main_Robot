@@ -2,6 +2,8 @@ package org.team2168.commands.catapult;
 
 import org.team2168.commands.CommandBase;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+
 /**
  * The first step in the move sequence to the intermediate tusk position.
  * @author James
@@ -21,7 +23,8 @@ public class TusksShortShotPosition_Step1 extends CommandBase {
 	}
 
 	protected void execute() {
-		catapultTusks.longRangeShot();
+		catapultTusks.setSolenoid1(DoubleSolenoid.Value.kReverse);
+		catapultTusks.setSolenoid2(DoubleSolenoid.Value.kForward);
 	}
 
 	protected void interrupted() {

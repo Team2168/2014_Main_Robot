@@ -83,8 +83,16 @@ public class CatapultTusks extends Subsystem {
 	 * the tusks.
 	 */
 	public void shortRangeShot(){
-		tuskSolenoid1.set(DoubleSolenoid.Value.kReverse);
+		tuskSolenoid1.set(DoubleSolenoid.Value.kForward);
 		tuskSolenoid2.set(DoubleSolenoid.Value.kForward);
+	}
+	
+	public void setSolenoid1(DoubleSolenoid.Value state) {
+		tuskSolenoid1.set(state);
+	}
+	
+	public void setSolenoid2(DoubleSolenoid.Value state) {
+		tuskSolenoid2.set(state);
 	}
 }
 

@@ -4,6 +4,7 @@ import org.team2168.commands.drivetrain.*;
 import org.team2168.commands.catapult.*;
 import org.team2168.commands.intake.*;
 import org.team2168.commands.winch.ExtendWinchDogGear;
+import org.team2168.commands.winch.RetractWinchDogGear;
 import org.team2168.commands.winch.RetractWinchMotor;
 import org.team2168.commands.flashlight.*;
 
@@ -118,14 +119,17 @@ public class OI {
 		operatorButtonY.whenPressed(new TusksShortShotPosition());
 		operatorButtonB.whenPressed(new TusksLongShotPosition());
 		
-		operatorButtonA.whenPressed(new ExtendWinchDogGear());
-		operatorButtonA.whenReleased(new RetractWinchMotor(0.5));
+		//operatorButtonA.whenPressed(new Fire());
+
 		
-		//operatorButtonRightTrigger.whenPressed(new IntakeDown());
-		//operatorButtonLeftTrigger.whenPressed(new IntakeUp());
+		operatorButtonRightBumper.whenPressed(new IntakeDown());
+		operatorButtonLeftBumper.whenPressed(new IntakeUp());
 		
-		operatorButtonRightBumper.whileHeld(new IntakeDriveMotor(-0.5));
-		operatorButtonLeftBumper.whileHeld(new IntakeDriveMotor(0.5));
+		operatorButtonStart.whenPressed(new ExtendWinchDogGear());
+		operatorButtonReset.whenPressed(new RetractWinchDogGear());
+		
+		//operatorButtonRightBumper.whileHeld(new IntakeDriveMotor(-0.5));
+		//operatorButtonLeftBumper.whileHeld(new IntakeDriveMotor(0.5));
 
 	
 		
@@ -143,10 +147,10 @@ public class OI {
 		testControllerButtonRightBumper.whileHeld(new IntakeDriveMotor(-0.5));
 		testControllerButtonLeftBumper.whileHeld(new IntakeDriveMotor(0.5));
 			
-		testControllerButtonStart.whenPressed(new RotateDrivetrain(-45));
-		testControllerButtonReset.whenPressed(new RotateDrivetrain(45));
-		testControllerButtonLeftStick.whenPressed(new AutoDriveXDistance(35));
-		testControllerButtonRightStick.whenPressed(new AutoDriveXDistance(-35));
+		testControllerButtonStart.whenPressed(new ExtendWinchDogGear());
+		testControllerButtonReset.whenPressed(new RetractWinchDogGear());
+		testControllerButtonLeftStick.whenPressed(new AutoDriveXDistance(60));
+		testControllerButtonRightStick.whenPressed(new AutoDriveXDistance(-60));
 		
 	}
 
