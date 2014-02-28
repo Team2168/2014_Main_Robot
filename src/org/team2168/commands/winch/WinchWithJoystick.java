@@ -24,7 +24,7 @@ public class WinchWithJoystick extends CommandBase {
      */
     protected void execute() {
     	//TODO: Test this! Set a valid operating speed range.
-    	double speed = oi.getOperatorLeftStick();
+    	double speed = oi.getOperatorLeftStick() + oi.testController.getLeftStickRaw_Y();
     	//We only want to drive the winch in one direction.
     	//Down on the stick will drive the winch down.
     	if (speed < -0.05 && !catapultWinch.isCatapultRetracted()) {
