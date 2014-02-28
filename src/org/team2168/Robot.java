@@ -14,6 +14,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team2168.commands.CommandBase;
 import org.team2168.commands.Auto.Center_RotHotGoal_1Ball;
+import org.team2168.subsystems.CatapultWinch;
+import org.team2168.subsystems.Drivetrain;
+import org.team2168.subsystems.IntakePosition;
+import org.team2168.utils.ConsolePrinter;
 import org.team2168.utils.Debouncer;
 
 /**
@@ -29,6 +33,8 @@ public class Robot extends IterativeRobot {
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
 	private Compressor compressor;
 	private static boolean matchStarted = false;
+	
+	ConsolePrinter printer;
 
 	Command autonomousCommand;
 
@@ -41,6 +47,8 @@ public class Robot extends IterativeRobot {
 
 		compressor = new Compressor(RobotMap.pressureSwitch.getInt(),
 				RobotMap.compressorRelay.getInt());
+		
+		printer = new ConsolePrinter(200);
 
 		// Initialize all subsystems
 		CommandBase.init();
@@ -53,6 +61,9 @@ public class Robot extends IterativeRobot {
 	 * This method is run once each time the robot is disabled.
 	 */
 	public void disabledInit() {
+		
+		CatapultWinch.getInstance().resetWinchEncoder();
+		Drivetrain.getInstance().resetEncoders();
 
 
 	}
@@ -73,8 +84,7 @@ public class Robot extends IterativeRobot {
 				.update(Math.abs(curAngle - lastAngle) > (.75 / 50.0))
 				&& gyroReinits < 3 && !matchStarted) {
 			gyroReinits++;
-			System.out.println("!!! Sensed drift, about to auto-reinit gyro ("
-					+ gyroReinits + ")");
+			System.out.println("!!! Sensed drift, about to auto-reinit gyro ("+ gyroReinits + ")");
 			CommandBase.drivetrain.reinitGyro();
 			CommandBase.drivetrain.resetGyro();
 			gyroDriftDetector.reset();
@@ -117,6 +127,8 @@ public class Robot extends IterativeRobot {
 		autonomousCommand.cancel();
 		Scheduler.getInstance().enable();
 		
+		printer.startThread();
+		
 		compressor.start();
 	}
 
@@ -125,6 +137,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+	
 	}
 
 	/**

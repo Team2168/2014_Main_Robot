@@ -114,14 +114,14 @@ public class CatapultWinch extends Subsystem {
     public double getWinchSpeed(){
     	return winchEncoder.getRate();
     }
-    
-   /**
-    * Get the raw value of the encoder
-    * @return current amount of raw ticks on encoder
-    */
-    public int getWinchEncoderRaw(){
-    	return winchEncoder.getRaw();
-    }
+	/**
+	 * Gets the distance the left encoder has turned
+	 * 
+	 * @return distance in inches
+	 */
+	public double getWinchEncoderDistance() {
+		return winchEncoder.getDistance();
+	}
     
     /**
      * Reset winch encoder

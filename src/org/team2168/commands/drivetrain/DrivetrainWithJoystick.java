@@ -23,12 +23,7 @@ public class DrivetrainWithJoystick extends CommandBase {
     	//TODO: one of these will need to be negated
     	drivetrain.drive(oi.getBaseDriverRightStick(),
     			oi.getBaseDriverLeftStick());
-    	
-    	System.out.println("Left Encoder: "  + Drivetrain.getInstance().getLeftEncoderDistance());
-    	System.out.println("Right Encoder: "  + Drivetrain.getInstance().getRightEncoderDistance());
-    	System.out.println("GYRO Angle: "  + Drivetrain.getInstance().getGyroAngle());
-    	System.out.println("");
-    	
+    
     
     }
 

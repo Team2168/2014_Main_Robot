@@ -69,5 +69,9 @@ public class IntakePosition extends Subsystem {
     	//TODO: verify that we return TRUE when the switch is pressed
     	return intakeLimitSwitch.get() && (actuator.get() == DoubleSolenoid.Value.kReverse);
     }
+    
+    public boolean getIntakeLimitSwitch(){
+    	return intakeLimitSwitch.get();
+}
 }
 
