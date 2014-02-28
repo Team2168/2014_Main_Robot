@@ -7,6 +7,7 @@ import org.team2168.commands.winch.ExtendWinchDogGear;
 import org.team2168.commands.winch.RetractWinchDogGear;
 import org.team2168.commands.winch.RetractWinchMotor;
 import org.team2168.commands.flashlight.*;
+import org.team2168.gamepads.f310;
 import org.team2168.utils.JoystickAnalogButton;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -54,7 +55,7 @@ public class OI {
 	// Create mapping for buttons on joystick
 	private Joystick baseDriver = new Joystick(1);
 	private Joystick operator   = new Joystick(2);
-	private Joystick testController   = new Joystick(3);
+	private f310 testController   = new f310(3);
 	
 	public static final int rightJoyAxis = 5;
 	public static final int leftJoyAxis  = 2;
@@ -85,16 +86,7 @@ public class OI {
 	public JoystickAnalogButton operatorButtonLeftTrigger = new JoystickAnalogButton(operator, triggerAxis, -0.5),
 				    operatorButtonRightTrigger = new JoystickAnalogButton(operator, triggerAxis, 0.5);
 	
-	public Button testControllerButtonA = new JoystickButton(testController, 1),
-		      testControllerButtonB = new JoystickButton(testController, 2),
-		      testControllerButtonX = new JoystickButton(testController, 3),
-		      testControllerButtonY = new JoystickButton(testController, 4),
-		      testControllerButtonLeftBumper = new JoystickButton(testController, 5),
-		      testControllerButtonRightBumper = new JoystickButton(testController, 6),
-		      testControllerButtonReset = new JoystickButton(testController, 7),
-		      testControllerButtonStart = new JoystickButton(testController, 8),
-		      testControllerButtonLeftStick = new JoystickButton(testController, 9),
-		      testControllerButtonRightStick = new JoystickButton(testController, 10);
+
 	
 	// minSpeed needs to be tweaked based on the particular drivetrain.
 	// It is the speed at which the drivetrain barely starts moving
@@ -135,23 +127,22 @@ public class OI {
 	
 		
 		// TEST CONTROLLER BUTTON MAP //////////////////////////
-		testControllerButtonX.whenPressed(new TusksTrussShotPosition());
-		testControllerButtonY.whenPressed(new TusksShortShotPosition());
-		testControllerButtonB.whenPressed(new TusksLongShotPosition());
+		testController.ButtonX().whenPressed(new TusksTrussShotPosition());
+		testController.ButtonY().whenPressed(new TusksShortShotPosition());
+		testController.ButtonB().whenPressed(new TusksLongShotPosition());
 		
-		testControllerButtonA.whenPressed(new ExtendWinchDogGear());
-		testControllerButtonA.whenReleased(new RetractWinchMotor(0.5));
+		testController.ButtonStart().whenPressed(new ExtendWinchDogGear());
+		testController.ButtonBack().whenPressed(new RetractWinchDogGear());
 		
-		//testControllerButtonRightBumper.whenPressed(new IntakeLower());
-		//testControllerButtonLeftBumper.whenPressed(new IntakeRaise());
+		testController.ButtonRightBumper().whenPressed(new IntakeDown());
+		testController.ButtonLeftBumper().whenPressed(new IntakeUp());
 		
-		testControllerButtonRightBumper.whileHeld(new IntakeDriveMotor(-0.5));
-		testControllerButtonLeftBumper.whileHeld(new IntakeDriveMotor(0.5));
+		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(-0.5));
+		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(0.5));
 			
-		testControllerButtonStart.whenPressed(new ExtendWinchDogGear());
-		testControllerButtonReset.whenPressed(new RetractWinchDogGear());
-		testControllerButtonLeftStick.whenPressed(new AutoDriveXDistance(60));
-		testControllerButtonRightStick.whenPressed(new AutoDriveXDistance(-60));
+
+		testController.ButtonLeftStick().whenPressed(new AutoDriveXDistance(60));
+		testController.ButtonRightStick().whenPressed(new AutoDriveXDistance(-60));
 		
 	}
 
