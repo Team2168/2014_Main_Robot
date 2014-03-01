@@ -1,13 +1,13 @@
-package org.team2168.commands.catapult;
+package org.team2168.commands.tusks;
 
 import org.team2168.commands.CommandBase;
 
-public class TusksLongShotPosition extends CommandBase {
+public class TusksTrussShotPosition extends CommandBase {
 
 	/**
 	 * Prevents the tusks from trying to change all at the same time
 	 */
-	public TusksLongShotPosition() {
+	public TusksTrussShotPosition() {
 		requires(catapultTusks);
 	}
 
@@ -15,7 +15,7 @@ public class TusksLongShotPosition extends CommandBase {
 	}
 
 	protected void execute() {
-		catapultTusks.longRangeShot();
+		catapultTusks.trussShot();
 	}
 
 	protected void interrupted() {
@@ -27,4 +27,5 @@ public class TusksLongShotPosition extends CommandBase {
 
 	protected void end() {
 	}
+	
 }

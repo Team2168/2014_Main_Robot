@@ -70,8 +70,16 @@ public class IntakePosition extends Subsystem {
     	return intakeLimitSwitch.get() && (actuator.get() == DoubleSolenoid.Value.kReverse);
     }
     
-    public boolean getIntakeLimitSwitch(){
-    	return intakeLimitSwitch.get();
+    /**
+     * Get the state of the intake limit switch.
+     * @return true if the limit switch is pressed
+     */
+    public boolean getIntakeLimitSwitch() {
+    	//NOTE the digital inputs are TRUE when floating, so we need to negate
+    	//  the returned value.
+    	//Conductors should be hooked up to the normally open (NO) and
+    	//  common (C) connections on the limit switch.
+    	return !intakeLimitSwitch.get();
 }
 }
 

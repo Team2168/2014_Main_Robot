@@ -33,15 +33,16 @@ public class ConsolePrinter {
 		if(RobotMap.debug.getInt() == 1)
 		{
 			
-    	System.out.println("Left Encoder: "  + Drivetrain.getInstance().getLeftEncoderDistance());
-    	System.out.println("Right Encoder: "  + Drivetrain.getInstance().getRightEncoderDistance());
-    	System.out.println("GYRO Angle: "  + Drivetrain.getInstance().getGyroAngle());
-    	System.out.println();
-    	System.out.println("Winch Distance: " + CatapultWinch.getInstance().getWinchEncoderDistance());
-    	System.out.println("Winch Speed : " + CatapultWinch.getInstance().getWinchSpeed());
-    	System.out.println();
-		System.out.println("Winch Limit :" + CatapultWinch.getInstance().isCatapultRetracted());
-		System.out.println("Pot Voltage :" + CatapultWinch.getInstance().getWinchPotentiometerVoltage());
+//    	System.out.println("Left Encoder: "  + Drivetrain.getInstance().getLeftEncoderDistance());
+//    	System.out.println("Right Encoder: "  + Drivetrain.getInstance().getRightEncoderDistance());
+//    	System.out.println("GYRO Angle: "  + Drivetrain.getInstance().getGyroAngle());
+//    	System.out.println();
+//    	System.out.println("Winch Distance: " + CatapultWinch.getInstance().getWinchEncoderDistance());
+//    	System.out.println("Winch Speed : " + CatapultWinch.getInstance().getWinchSpeed());
+//    	System.out.println();
+//		System.out.println("Winch Limit :" + CatapultWinch.getInstance().isCatapultRetracted());
+//		System.out.println("Pot Voltage :" + CatapultWinch.getInstance().getWinchPotentiometerVoltage());
+//		System.out.println("Catapult Angle: " + CatapultWinch.getInstance().getCatapultAngle());
 		
     	SmartDashboard.putNumber("Left Encoder Distance",Drivetrain.getInstance().getLeftEncoderDistance());
     	SmartDashboard.putNumber("Right Encoder Distance:",Drivetrain.getInstance().getRightEncoderDistance());
@@ -51,30 +52,17 @@ public class ConsolePrinter {
 		SmartDashboard.putBoolean("Winch Limit:", CatapultWinch.getInstance().isCatapultRetracted());
 		SmartDashboard.putBoolean("Intake Limit:", IntakePosition.getInstance().getIntakeLimitSwitch());
 		SmartDashboard.putNumber("Pot Voltage:", CatapultWinch.getInstance().getWinchPotentiometerVoltage());	
+		SmartDashboard.putNumber("Catapult Angle", CatapultWinch.getInstance().getCatapultAngle());
 		
 		
 		}
-		
-		
-		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	private class ConsolePrintTask extends TimerTask {
 		private ConsolePrinter console;
 
 		private ConsolePrintTask(ConsolePrinter printer) {
-
 			if (printer == null) {
 				throw new NullPointerException("printer was null");
 			}
@@ -82,12 +70,10 @@ public class ConsolePrinter {
 		}
 
 		/**
-		 * called periodically in its own thread
+		 * Called periodically in its own thread
 		 */
-
 		public void run() {
 			console.print();
-
 		}
 	}
 	

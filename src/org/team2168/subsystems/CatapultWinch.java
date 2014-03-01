@@ -4,12 +4,14 @@ import org.team2168.RobotMap;
 import org.team2168.PIDController.Sensors.AverageEncoder;
 import org.team2168.commands.winch.WinchWithJoystick;
 import org.team2168.utils.MomentaryDoubleSolenoid;
+import org.team2168.utils.Util;
 
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *This subsystem moves the catapult to the set position and detects if it is 
@@ -103,8 +105,11 @@ public class CatapultWinch extends Subsystem {
      * @return true when the winch is lowered all the way
      */
     public boolean isCatapultRetracted(){
-    	//TODO: Verify that the switch returns true when the switch is pressed.
-       	return winchInputSwitch.get();
+    	//NOTE the digital inputs are TRUE when floating, so we need to negate
+    	//  the returned value.
+    	//Conductors should be hooked up to the normally open (NO) and
+    	//  common (C) connections on the limit switch.
+       	return !winchInputSwitch.get();
     }
     
     /**
@@ -146,6 +151,16 @@ public class CatapultWinch extends Subsystem {
 		return ballSensor.getVoltage();
 	}
 
+	public double getCatapultAngle() {
+		double m = Util.slope(RobotMap.catapultLowerVoltage.getDouble(),
+                              RobotMap.catapultLowerAngle.getDouble(),
+                              RobotMap.catapultRaiseVoltage.getDouble(),
+                              RobotMap.catapultRaiseAngle.getDouble());
+		double b = Util.intercept(m, RobotMap.catapultLowerVoltage.getDouble(),
+                                  RobotMap.catapultLowerAngle.getDouble());
+		return m * getWinchPotentiometerVoltage() + b;
+	}
+	
 	/**
 	 * Check if ball is present on the catapult.
 	 * @return true if present
