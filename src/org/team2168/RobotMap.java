@@ -94,9 +94,9 @@ public class RobotMap extends ConstantsBase {
 			new Constant("driveRateLimit", 0.15);
 	
 	public static final Constant rotateDriveKP = 
-			new Constant("rotateDriveKP", 0.004);
+			new Constant("rotateDriveKP", 0.06);
 	public static final Constant rotateDriveMaxSpeed = 
-			new Constant("rotateDriveMaxSpeed", 0.5);
+			new Constant("rotateDriveMaxSpeed", 0.8);
 
 	
 	private static final int drivePulsePerRotation = 256; //encoder ticks per rotation
@@ -162,7 +162,7 @@ public class RobotMap extends ConstantsBase {
      *                  Operator Interface Parameters               *
      ****************************************************************/
 	public static final Constant minDriveSpeed =
-			new Constant("minDriveSpeed", 0.11);
+			new Constant("minDriveSpeed", 0.2);
 	public static final Constant flashlightOnTime =
 			new Constant("flashlightOnTime", 5.0);
 
@@ -179,7 +179,7 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant autoDriveDistance = 
 	new Constant("autoDriveDistance", 10);	
 	public static final Constant rotateDriveAngle = 
-	new Constant("rotateDriveAngle", 20);	
+	new Constant("rotateDriveAngle", 15);	
 
 
 	/****************************************************************
