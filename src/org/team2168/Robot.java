@@ -18,6 +18,7 @@ import org.team2168.subsystems.CatapultWinch;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.IntakePosition;
 import org.team2168.utils.ConsolePrinter;
+import org.team2168.utils.ConstantsBase;
 import org.team2168.utils.Debouncer;
 
 /**
@@ -65,6 +66,8 @@ public class Robot extends IterativeRobot {
 		CatapultWinch.getInstance().resetWinchEncoder();
 		Drivetrain.getInstance().resetEncoders();
 
+		
+		ConstantsBase.readConstantsFromFile();
 
 	}
 

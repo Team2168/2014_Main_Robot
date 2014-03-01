@@ -2,6 +2,7 @@ package org.team2168.utils;
 
 import java.util.TimerTask;
 
+import org.team2168.RobotMap;
 import org.team2168.subsystems.CatapultWinch;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.IntakePosition;
@@ -27,7 +28,8 @@ public class ConsolePrinter {
 	public void print()
 	{
 		
-		
+		if(RobotMap.debug.getInt() == 1)
+		{
     	System.out.println("Left Encoder: "  + Drivetrain.getInstance().getLeftEncoderDistance());
     	System.out.println("Right Encoder: "  + Drivetrain.getInstance().getRightEncoderDistance());
     	System.out.println("GYRO Angle: "  + Drivetrain.getInstance().getGyroAngle());
@@ -37,7 +39,7 @@ public class ConsolePrinter {
     	System.out.println();
 		System.out.println("Winch Limit :" + CatapultWinch.getInstance().isCatapultRetracted());
 		System.out.println("Pot Voltage :" + CatapultWinch.getInstance().getWinchPotentiometerVoltage());
-		
+		}
 		
 		
 		

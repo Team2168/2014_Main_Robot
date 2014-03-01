@@ -15,6 +15,11 @@ import edu.wpi.first.wpilibj.CounterBase;
  * modifications.
  */
 public class RobotMap extends ConstantsBase {
+	
+	public static final Constant debug = 
+			new Constant("debug", 0);
+	
+	
 	/****************************************************************
      *                       CRIO MAP                               *
      ****************************************************************/        
@@ -87,6 +92,13 @@ public class RobotMap extends ConstantsBase {
 			new Constant("drivetrainGearRatio",(24.0/27.0));
 	public static final Constant driveRateLimit = 
 			new Constant("driveRateLimit", 0.15);
+	
+	public static final Constant rotateDriveKP = 
+			new Constant("rotateDriveKP", 0.004);
+	public static final Constant rotateDriveMaxSpeed = 
+			new Constant("rotateDriveMaxSpeed", 0.5);
+	public static final Constant rotateDriveAngle = 
+	new Constant("rotateDriveAngle", 20);	
 	
 	private static final int drivePulsePerRotation = 256; //encoder ticks per rotation
 	private static final double driveGearRatio = 24.0/27.0; //ratio between wheel over encoder

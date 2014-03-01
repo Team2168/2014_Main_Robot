@@ -142,11 +142,11 @@ public class OI {
 		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(0.5));
 			
 
-		testController.ButtonLeftStick().whenPressed(new AutoDriveXDistance(60));
-		testController.ButtonRightStick().whenPressed(new AutoDriveXDistance(-60));
+		testController.ButtonLeftStick().whenPressed(new RotateDrivetrain(RobotMap.rotateDriveAngle.getDouble()));
+		testController.ButtonRightStick().whenPressed(new RotateDrivetrain(-RobotMap.rotateDriveAngle.getDouble()));
 		
 	}
-
+	
 	/**
 	 * Get the left joystick y-axis value. Positive is pushing up on the stick.
 	 * 
