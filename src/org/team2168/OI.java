@@ -77,10 +77,9 @@ public class OI {
 		// TEST CONTROLLER BUTTON MAP //////////////////////////
 		testController.ButtonX().whenPressed(new TusksTrussShotPosition());
 		testController.ButtonY().whenPressed(new TusksShortShotPosition());
-		//testController.ButtonB().whenPressed(new TusksLongShotPosition());
+		testController.ButtonB().whenPressed(new TusksLongShotPosition());
 		testController.ButtonA().whenPressed(new FireAndReload());
-		testController.ButtonB().whenPressed(new Fire());
-		
+
 		testController.ButtonStart().whenPressed(new ExtendWinchDogGear());
 		testController.ButtonBack().whenPressed(new RetractWinchDogGear());
 		
