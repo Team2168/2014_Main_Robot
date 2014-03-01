@@ -53,77 +53,31 @@ public class OI {
 	// button.whenReleased(new ExampleCommand());
 
 	// Create mapping for buttons on joystick
-	private Joystick baseDriver = new Joystick(1);
-	private Joystick operator   = new Joystick(2);
+	private f310 driver = new f310(1);
+	private f310 operator   = new f310(2);
 	public f310 testController   = new f310(3);
 
 	
-	public static final int rightJoyAxis = 5;
-	public static final int leftJoyAxis  = 2;
-	public static final int triggerAxis  = 3;
-
-	public Button driveButtonA = new JoystickButton(baseDriver, 1),
-		      driveButtonB = new JoystickButton(baseDriver, 2),
-		      driveButtonX = new JoystickButton(baseDriver, 3),
-		      driveButtonY = new JoystickButton(baseDriver, 4),
-		      driveButtonLeftBumper = new JoystickButton(baseDriver, 5),
-		      driveButtonRightBumper = new JoystickButton(baseDriver, 6),
-		      driveButtonReset = new JoystickButton(baseDriver, 7),
-		      driveButtonStart = new JoystickButton(baseDriver, 8),
-		      driveButtonLeftStick = new JoystickButton(baseDriver, 9),
-		      driveButtonRightStick = new JoystickButton(baseDriver, 10);
-	
-	public Button operatorButtonA = new JoystickButton(operator, 1),
-		      operatorButtonB = new JoystickButton(operator, 2),
-		      operatorButtonX = new JoystickButton(operator, 3),
-		      operatorButtonY = new JoystickButton(operator, 4),
-		      operatorButtonLeftBumper = new JoystickButton(operator, 5),
-		      operatorButtonRightBumper = new JoystickButton(operator, 6),
-		      operatorButtonReset = new JoystickButton(operator, 7),
-		      operatorButtonStart = new JoystickButton(operator, 8),
-		      operatorButtonLeftStick = new JoystickButton(operator, 9),
-		      operatorButtonRightStick = new JoystickButton(operator, 10);
-	//TODO: verify left trigger creates negative value. 
-	public JoystickAnalogButton operatorButtonLeftTrigger = new JoystickAnalogButton(operator, triggerAxis, -0.5),
-				    operatorButtonRightTrigger = new JoystickAnalogButton(operator, triggerAxis, 0.5);
-	
-
-	
-	// minSpeed needs to be tweaked based on the particular drivetrain.
-	// It is the speed at which the drivetrain barely starts moving
-	static double joystickScale[][] = {
-		/* Joystick Input, Scaled Output */
-		{ 1.00, 1.00 },
-		{ 0.90, 0.68 },
-		{ 0.06, RobotMap.minDriveSpeed.getDouble() },
-		{ 0.06, 0.00 },
-		{ 0.00, 0.00 },
-		{ -0.06, 0.00 },
-		{ -0.06, -RobotMap.minDriveSpeed.getDouble() },
-		{ -0.90, -0.68 },
-		{ -1.00, -1.00 } };
-
 	public OI() {
 		// DRIVER CONTROLLER BUTTON MAP ////////////////////////
-		driveButtonRightBumper.whenPressed(
-				new FlashlightOn(RobotMap.flashlightOnTime.getDouble()));
+		driver.ButtonRightBumper().whenPressed(new FlashlightOn(RobotMap.flashlightOnTime.getDouble()));
 		
 		
 		
 		// OPERATOR CONTROLLER BUTTON MAP //////////////////////
-		operatorButtonX.whenPressed(new TusksTrussShotPosition());
-		operatorButtonY.whenPressed(new TusksShortShotPosition());
-		operatorButtonB.whenPressed(new TusksLongShotPosition());
+		operator.ButtonX().whenPressed(new TusksTrussShotPosition());
+		operator.ButtonY().whenPressed(new TusksShortShotPosition());
+		operator.ButtonB().whenPressed(new TusksLongShotPosition());
 		
 		//operatorButtonA.whenPressed(new Fire());
 
-		operatorButtonRightBumper.whenPressed(new IntakeDown());
-		operatorButtonLeftBumper.whenPressed(new IntakeUp());
-		operatorButtonRightTrigger.whileHeld(new IntakeDriveMotor(0.5));
-		operatorButtonLeftTrigger.whileHeld(new IntakeDriveMotor(-0.5));
+		operator.ButtonRightBumper().whenPressed(new IntakeDown());
+		operator.ButtonLeftBumper().whenPressed(new IntakeUp());
+		operator.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(0.5));
+		operator.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-0.5));
 		
-		operatorButtonStart.whenPressed(new ExtendWinchDogGear());
-		operatorButtonReset.whenPressed(new RetractWinchDogGear());
+		operator.ButtonStart().whenPressed(new ExtendWinchDogGear());
+		operator.ButtonBack().whenPressed(new RetractWinchDogGear());
 
 	
 		
@@ -140,7 +94,11 @@ public class OI {
 		
 		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(-0.5));
 		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(0.5));
-			
+
+
+		testController.ButtonLeftStick().whenPressed(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
+		testController.ButtonRightStick().whenPressed(new AutoDriveXDistance(-RobotMap.autoDriveDistance.getDouble()));
+
 
 		testController.ButtonLeftStick().whenPressed(new RotateDrivetrain(RobotMap.rotateDriveAngle.getDouble()));
 		testController.ButtonRightStick().whenPressed(new RotateDrivetrain(-RobotMap.rotateDriveAngle.getDouble()));
@@ -153,7 +111,7 @@ public class OI {
 	 * @return the base driver's left joystick value (1.0 to -1.0)
 	 */
 	public double getBaseDriverLeftStick() {
-		return interpolate(-(baseDriver.getRawAxis(leftJoyAxis)));
+		return interpolate(-(driver.getLeftStickRaw_Y()));
 	}
 	
 	/**
@@ -162,7 +120,7 @@ public class OI {
 	 * @return the base driver's right joystick value (1.0 to -1.0)
 	 */
 	public double getBaseDriverRightStick() {
-		return interpolate(-(baseDriver.getRawAxis(rightJoyAxis)));
+		return interpolate(-(driver.getRightStickRaw_Y()));
 	}
 	
 	/**
@@ -171,7 +129,7 @@ public class OI {
 	 * @return the operator's left joystick value (1.0 to -1.0)
 	 */
 	public double getOperatorLeftStick() {
-		return -operator.getRawAxis(leftJoyAxis);
+		return -operator.getLeftStickRaw_Y();
 	}
 	
 	/**
@@ -180,8 +138,22 @@ public class OI {
 	 * @return the operator's right joystick value (1.0 to -1.0)
 	 */
 	public double getOperatorRightStick() {
-		return -operator.getRawAxis(rightJoyAxis);
+		return -operator.getRightStickRaw_Y();
 	}
+	
+	// minSpeed needs to be tweaked based on the particular drivetrain.
+	// It is the speed at which the drivetrain barely starts moving
+	static double joystickScale[][] = {
+		/* Joystick Input, Scaled Output */
+		{ 1.00, 1.00 },
+		{ 0.90, 0.68 },
+		{ 0.06, RobotMap.minDriveSpeed.getDouble() },
+		{ 0.06, 0.00 },
+		{ 0.00, 0.00 },
+		{ -0.06, 0.00 },
+		{ -0.06, -RobotMap.minDriveSpeed.getDouble() },
+		{ -0.90, -0.68 },
+		{ -1.00, -1.00 } };
 	
 	/**
 	 * Electronic braking - aka "Falcon Claw"
