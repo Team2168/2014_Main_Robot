@@ -155,7 +155,7 @@ public class RobotMap extends ConstantsBase {
      *                       Intake Parameters                      *
      ****************************************************************/
 	public static final Constant intakeLowerTimeout =
-			new Constant("intakeLowerTimeout", 1.5);
+			new Constant("intakeLowerTimeout", 2.5);
 
 
 	/****************************************************************
