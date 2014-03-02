@@ -166,8 +166,8 @@ public class Winch extends Subsystem {
 	 * @return true if present
 	 */
 	public boolean isBallPresent() {
-		//TODO: replace with comparison to ball sensor voltage
-		return false;
+		return (ballSensor.getVoltage()
+				>= RobotMap.catapultBallPresentVoltage.getDouble());
 	}
 }
 

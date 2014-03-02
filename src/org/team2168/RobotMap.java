@@ -136,6 +136,9 @@ public class RobotMap extends ConstantsBase {
 			new Constant("catapultLowerVoltage", 3.83);
 	public static final Constant catapultWaitUntilFiredAngle =
 			new Constant("catapultWaitUntilFiredAngle", 30.0);
+	//TODO: Determine appropriate threshold voltage value for ball presence
+	public static final Constant catapultBallPresentVoltage =
+			new Constant("catapultBallPresentVoltage", 2.0);
 	
 	private static final int winchPulsePerRotation = 256; //encoder ticks per rotation
 	private static final double winchGearRatio = 1.0/1.0; //ratio between wheel over encoder
