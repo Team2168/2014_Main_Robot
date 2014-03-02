@@ -17,8 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *This subsystem moves the catapult to the set position and detects if it is 
  *at the set position.
  */
-public class CatapultWinch extends Subsystem {
-	private static CatapultWinch instance = null;
+public class Winch extends Subsystem {
+	private static Winch instance = null;
 	private static Talon winchMotor;
 	private static DigitalInput winchInputSwitch;
 	private static MomentaryDoubleSolenoid winchSolenoid;
@@ -29,7 +29,7 @@ public class CatapultWinch extends Subsystem {
 	/**
 	 * A private constructor to prevent multiple instances from being created.
 	 */
-	private CatapultWinch(){
+	private Winch(){
 		winchMotor = new Talon(RobotMap.winchMotor.getInt());
 		winchInputSwitch = new DigitalInput(RobotMap.winchLimitSwitch.getInt());
 		winchSolenoid = new MomentaryDoubleSolenoid(
@@ -51,9 +51,9 @@ public class CatapultWinch extends Subsystem {
 	/**
 	 * @return the instance of this subsystem.
 	 */
-	public static CatapultWinch getInstance() {
+	public static Winch getInstance() {
 		if (instance == null) {
-			instance = new CatapultWinch();
+			instance = new Winch();
 		}
 		return instance;
 	}

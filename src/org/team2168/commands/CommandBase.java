@@ -18,8 +18,8 @@ public abstract class CommandBase extends Command {
     public static Drivetrain drivetrain = Drivetrain.getInstance();
     public static IntakePosition intakePosition = IntakePosition.getInstance();
     public static IntakeRollers intakeRollers = IntakeRollers.getInstance();
-    public static CatapultTusks catapultTusks = CatapultTusks.getInstance();
-    public static CatapultWinch catapultWinch = CatapultWinch.getInstance();
+    public static Tusks catapultTusks = Tusks.getInstance();
+    public static Winch catapultWinch = Winch.getInstance();
     public static Flashlight flashlight = Flashlight.getInstance();
     public static Vision vision = Vision.getInstance();
     

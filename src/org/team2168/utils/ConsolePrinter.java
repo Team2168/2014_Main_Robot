@@ -3,7 +3,7 @@ package org.team2168.utils;
 import java.util.TimerTask;
 
 import org.team2168.RobotMap;
-import org.team2168.subsystems.CatapultWinch;
+import org.team2168.subsystems.Winch;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.IntakePosition;
 
@@ -47,12 +47,12 @@ public class ConsolePrinter {
     	SmartDashboard.putNumber("Left Encoder Distance",Drivetrain.getInstance().getLeftEncoderDistance());
     	SmartDashboard.putNumber("Right Encoder Distance:",Drivetrain.getInstance().getRightEncoderDistance());
     	SmartDashboard.putNumber("GYRO Angle:", Drivetrain.getInstance().getGyroAngle());
-    	SmartDashboard.putNumber("Winch Distance:",CatapultWinch.getInstance().getWinchEncoderDistance());
-    	SmartDashboard.putNumber("Winch Speed:",CatapultWinch.getInstance().getWinchSpeed());
-		SmartDashboard.putBoolean("Winch Limit:", CatapultWinch.getInstance().isCatapultRetracted());
+    	SmartDashboard.putNumber("Winch Distance:",Winch.getInstance().getWinchEncoderDistance());
+    	SmartDashboard.putNumber("Winch Speed:",Winch.getInstance().getWinchSpeed());
+		SmartDashboard.putBoolean("Winch Limit:", Winch.getInstance().isCatapultRetracted());
 		SmartDashboard.putBoolean("Intake Limit:", IntakePosition.getInstance().getIntakeLimitSwitch());
-		SmartDashboard.putNumber("Pot Voltage:", CatapultWinch.getInstance().getWinchPotentiometerVoltage());	
-		SmartDashboard.putNumber("Catapult Angle", CatapultWinch.getInstance().getCatapultAngle());
+		SmartDashboard.putNumber("Pot Voltage:", Winch.getInstance().getWinchPotentiometerVoltage());	
+		SmartDashboard.putNumber("Catapult Angle", Winch.getInstance().getCatapultAngle());
 		
 		
 		}
