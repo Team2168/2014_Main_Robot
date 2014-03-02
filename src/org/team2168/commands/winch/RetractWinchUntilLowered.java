@@ -2,11 +2,11 @@ package org.team2168.commands.winch;
 
 import org.team2168.commands.CommandBase;
 
-public class RetractWinchMotor extends CommandBase{
+public class RetractWinchUntilLowered extends CommandBase{
 
 	double speed;
 	
-	public RetractWinchMotor(double speed) {
+	public RetractWinchUntilLowered(double speed) {
 		requires(catapultWinch);
 		this.speed = speed;
 	}

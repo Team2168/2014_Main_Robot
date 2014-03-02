@@ -1,7 +1,8 @@
-package org.team2168.PIDController.Controller;
+package org.team2168.PIDController.controller;
 
 import java.util.TimerTask;
-import org.team2168.PIDController.Sensors.PIDSensorInterface;
+
+import org.team2168.PIDController.sensors.PIDSensorInterface;
 import org.team2168.utils.TCPMessageInterface;
 
 /**

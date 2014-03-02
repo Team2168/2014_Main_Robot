@@ -1,0 +1,5 @@
+rotateDriveAngle=15.0
+rotateDriveKP=0.06
+rotateDriveMaxSpeed=0.8
+minDriveSpeed=0.2
+debug=1

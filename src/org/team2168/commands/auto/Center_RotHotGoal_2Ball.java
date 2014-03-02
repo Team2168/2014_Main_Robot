@@ -1,4 +1,4 @@
-package org.team2168.commands.Auto;
+package org.team2168.commands.auto;
 
 
 import edu.wpi.first.wpilibj.command.CommandGroup;

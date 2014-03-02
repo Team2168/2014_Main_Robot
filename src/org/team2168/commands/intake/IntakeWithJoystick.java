@@ -11,7 +11,7 @@ public class IntakeWithJoystick extends CommandBase{
 	}
 
 	protected void execute() {
-		intakeRollers.driveIntake(oi.getOperatorRightStick());
+		intakeRollers.driveIntake(oi.getOperatorRightStick() + oi.testController.getRightStickRaw_Y());
 	}
 
 	protected boolean isFinished() {

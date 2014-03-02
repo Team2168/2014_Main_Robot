@@ -1,6 +1,6 @@
 package org.team2168;
 
-import org.team2168.PIDController.Sensors.AverageEncoder;
+import org.team2168.PIDController.sensors.AverageEncoder;
 import org.team2168.utils.ConstantsBase;
 
 import edu.wpi.first.wpilibj.CounterBase;
@@ -15,6 +15,11 @@ import edu.wpi.first.wpilibj.CounterBase;
  * modifications.
  */
 public class RobotMap extends ConstantsBase {
+	
+	public static final Constant debug = 
+			new Constant("debug", 0);
+	
+	
 	/****************************************************************
      *                       CRIO MAP                               *
      ****************************************************************/        
@@ -42,18 +47,18 @@ public class RobotMap extends ConstantsBase {
 			new Constant("winchEncoderA", 6);
 	public static final Constant winchEncoderB = 
 			new Constant("winchEncoderB", 7);
-	public static final Constant intakeSensor =
-			new Constant("intakeSensor", 8);
+	public static final Constant intakeDownLimitSwitch =
+			new Constant("intakeDownLimitSwitch", 8);
 	public static final Constant pressureSwitch =
 			new Constant("pressureSwitch", 14);
 	
 	
 	//Relay Output Channels///////////////////////////////////////////
-	public static final Constant compressorRelay =
-			new Constant("compressorRelay", 2);
 	public static final Constant flashlightRelay =
 			new Constant("flashlightRelay", 1);
-	
+	public static final Constant compressorRelay =
+			new Constant("compressorRelay", 2);
+
 	//Solenoid Channels(third slot on cRio)///////////////////////////
 	public static final Constant intakeExtPort = 
 			new Constant("intakeExtPort", 1);
@@ -88,6 +93,12 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant driveRateLimit = 
 			new Constant("driveRateLimit", 0.15);
 	
+	public static final Constant rotateDriveKP = 
+			new Constant("rotateDriveKP", 0.06);
+	public static final Constant rotateDriveMaxSpeed = 
+			new Constant("rotateDriveMaxSpeed", 0.8);
+
+	
 	private static final int drivePulsePerRotation = 256; //encoder ticks per rotation
 	private static final double driveGearRatio = 24.0/27.0; //ratio between wheel over encoder
 	public static final int driveEncoderPulsePerRot = (int) (drivePulsePerRotation*driveGearRatio); //pulse per rotation * gear ratio
@@ -112,6 +123,19 @@ public class RobotMap extends ConstantsBase {
 			new Constant("catapultWinchUp", 4.0);
 	public static final Constant catapultWinchDown =
 			new Constant("catapultWinchDown", 1.0);
+	public static final Constant retractWinchSpeed =
+			new Constant("retractWinchSpeed", 1.0);
+
+	public static final Constant catapultRaiseAngle =
+			new Constant("catapultRaiseAngle", 44.0);
+	public static final Constant catapultRaiseVoltage =
+			new Constant("catapultRaiseVoltage", 2.79);
+	public static final Constant catapultLowerAngle =
+			new Constant("catapultLowerAngle", -26.0);
+	public static final Constant catapultLowerVoltage =
+			new Constant("catapultLowerVoltage", 3.83);
+	public static final Constant catapultWaitUntilFiredAngle =
+			new Constant("catapultWaitUntilFiredAngle", 30.0);
 	
 	private static final int winchPulsePerRotation = 256; //encoder ticks per rotation
 	private static final double winchGearRatio = 1.0/1.0; //ratio between wheel over encoder
@@ -126,33 +150,38 @@ public class RobotMap extends ConstantsBase {
 	public static final boolean winchEncoderReverse = true;
 	public static final int winchAvgEncoderVal = 5;
 
+
+	/****************************************************************
+     *                       Intake Parameters                      *
+     ****************************************************************/
+	public static final Constant intakeLowerTimeout =
+			new Constant("intakeLowerTimeout", 2.5);
+
+
 	/****************************************************************
      *                  Operator Interface Parameters               *
      ****************************************************************/
 	public static final Constant minDriveSpeed =
-			new Constant("minDriveSpeed", 0.11);
+			new Constant("minDriveSpeed", 0.2);
 	public static final Constant flashlightOnTime =
 			new Constant("flashlightOnTime", 5.0);
-	
-	
-	
+
+
 	/****************************************************************
      *                  Autonomous Parameters               *
      ****************************************************************/
-
 	public static final Constant RotationAngleToHot =
 			new Constant("RotationAngleToHot", 20.0);
-	
 	public static final Constant CameraSteadyStateSecs =
 			new Constant("RotationAngleToHot", 1.1);
-
 	public static final Constant VisionTimeOutSecs =
 			new Constant("VisionTimeOutSecs", 1.5);
+	public static final Constant autoDriveDistance = 
+	new Constant("autoDriveDistance", 10);	
+	public static final Constant rotateDriveAngle = 
+	new Constant("rotateDriveAngle", 15);	
 
-	
-	
-	
-	
+
 	/****************************************************************
      *                  Networking Paramters                        *
      ****************************************************************/

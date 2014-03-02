@@ -1,4 +1,4 @@
-package org.team2168.commands.Vision;
+package org.team2168.commands.vision;
 
 import org.team2168.commands.CommandBase;
 import org.team2168.subsystems.Vision;
@@ -8,7 +8,7 @@ import org.team2168.subsystems.Vision;
  *
  * @author Kevin
  */
-public class WaitForLeftHot extends CommandBase {
+public class WaitForRightHot extends CommandBase {
 	
 	private boolean stop;
 	
@@ -16,7 +16,7 @@ public class WaitForLeftHot extends CommandBase {
 	/**
 	 * Creates a new IntakeRaise command.
 	 */
-	public WaitForLeftHot() {
+	public WaitForRightHot() {
     	requires(vision);
     	stop = false;
     }
@@ -27,8 +27,8 @@ public class WaitForLeftHot extends CommandBase {
 
 		stop = false;
 
-		// assume leftside is hot, just in case we timeout
-		Vision.getInstance().setLeftOrRightHot(-1);
+		// assume rightside is hot, just in case we timeout
+		Vision.getInstance().setLeftOrRightHot(1);
 
 	}
 
@@ -38,10 +38,10 @@ public class WaitForLeftHot extends CommandBase {
 	protected void execute() {
 
 		// did we receive a valid frame and does it see a left target
-		if (Vision.getInstance().isValidFrame() && (Vision.getInstance().getCamLeftOrRightHot() == -1))
+		if (Vision.getInstance().isValidFrame() && (Vision.getInstance().getCamLeftOrRightHot() == 1))
 		{
 			
-			Vision.getInstance().setLeftOrRightHot(-1);
+			Vision.getInstance().setLeftOrRightHot(1);
 			System.out.println(Vision.getInstance().getLeftOrRightHot() + " (1 for right, -1 for left 0 for none)");
 			System.out.println("Took " + this.timeSinceInitialized() + " seconds");
 			stop = true;
