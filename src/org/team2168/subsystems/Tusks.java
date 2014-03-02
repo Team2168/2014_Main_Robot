@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * This subsystem controls the exit angle of the ball when it is fired from 
  * the catapult.
  */
-public class CatapultTusks extends Subsystem {
-	private static CatapultTusks instance = null;
+public class Tusks extends Subsystem {
+	private static Tusks instance = null;
 	
     // TUSK ACTUATOR OPERATION
 	//        --------------------------------
@@ -36,7 +36,7 @@ public class CatapultTusks extends Subsystem {
 	/**
 	 * A private constructor to prevent multiple instances from being created.
 	 */
-	private CatapultTusks() {
+	private Tusks() {
 		tuskSolenoid1 = new MomentaryDoubleSolenoid(RobotMap.catExtPort1.getInt(),
 				RobotMap.catRetPort1.getInt());
 		tuskSolenoid2 = new MomentaryDoubleSolenoid(RobotMap.catExtPort2.getInt(),
@@ -47,9 +47,9 @@ public class CatapultTusks extends Subsystem {
 	 * 
 	 * @return the instance of this subsystem.
 	 */
-	public static CatapultTusks getInstance() {
+	public static Tusks getInstance() {
 		if (instance == null) {
-			instance = new CatapultTusks();
+			instance = new Tusks();
 		}
 		return instance;
 	}

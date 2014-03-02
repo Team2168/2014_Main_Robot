@@ -2,6 +2,7 @@ package org.team2168.gamepads;
 
 import org.team2168.RobotMap;
 import org.team2168.utils.JoystickAnalogButton;
+import org.team2168.utils.Util;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -14,9 +15,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * @author kevin
  *
  */
-
-
-public class f310 extends Joystick
+public class F310 extends Joystick
 {
 	// Gamepad axis ports
 	private static final int AXIS_LEFT_X = 1;
@@ -41,10 +40,11 @@ public class f310 extends Joystick
 	private static final int BUTTON_MODE = -1;
 	private static final int BUTTON_LOGITECH = -1;
 
-
-
-
-	public f310(int port) {
+	/**
+	 * Default constructor
+	 * @param port the port the joystick is plugged into on the DS.
+	 */
+	public F310(int port) {
 		super(port);	
 	}
 
@@ -168,8 +168,6 @@ public class f310 extends Joystick
 		return (x > 0.5);
 	}
 
-
-
 	/**
 	 * Returns an object of Button A.
 	 */
@@ -199,13 +197,17 @@ public class f310 extends Joystick
 	}
 
 	/**
-	 * Gets the state of the Start button
-	 * @return the state of the Start button
+	 * Gets Start button object
+	 * @return the Start button
 	 */
 	public JoystickButton ButtonStart(){
 		return new JoystickButton(this, BUTTON_START);
 	}
 
+	/**
+	 * Gets the Back button object
+	 * @return the Back button
+	 */
 	public JoystickButton ButtonBack() {
 		return new JoystickButton(this, BUTTON_BACK);
 	}
@@ -271,6 +273,7 @@ public class f310 extends Joystick
 	 * @return The adjusted value.
 	 */
 	private double interpolate(double input) {
+		//TODO: Modify this to take in the set of points as a parameter, then move out to utils package.
 		double retVal = 0.0;
 		boolean done = false;
 		double m, b;
@@ -288,8 +291,11 @@ public class f310 extends Joystick
 			if (input >= joystickScale[i][0]) {
 				//We found where the point falls in out array, between index i and i-1
 				//Calculate the equation for the line. y=mx+b
-				m = (joystickScale[i][1] - joystickScale[i-1][1])/(joystickScale[i][0] - joystickScale[i-1][0]);
-				b = joystickScale[i][1] - (m * joystickScale[i][0]);
+				m = Util.slope(joystickScale[i-1][0],
+                               joystickScale[i-1][1],
+                               joystickScale[i][0],
+                               joystickScale[i][1]);
+				b = Util.intercept(m, joystickScale[i][0], joystickScale[i][1]);
 				retVal = m * input + b;
 
 				//we're finished, don't continue to loop
@@ -299,7 +305,6 @@ public class f310 extends Joystick
 
 		return retVal;
 	}
-
 
 	// minSpeed needs to be tweaked based on the particular drivetrain.
 	// It is the speed at which the drivetrain barely starts moving
@@ -314,6 +319,5 @@ public class f310 extends Joystick
 		{ -0.06, -RobotMap.minDriveSpeed.getDouble() },
 		{ -0.90, -0.68 },
 		{ -1.00, -1.00 } };	
-
 }
 

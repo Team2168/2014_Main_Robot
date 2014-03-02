@@ -1,4 +1,4 @@
-package org.team2168.commands.Vision;
+package org.team2168.commands.vision;
 
 import org.team2168.RobotMap;
 import org.team2168.commands.CommandBase;

@@ -1,18 +1,11 @@
 package org.team2168;
 
 import org.team2168.commands.drivetrain.*;
-import org.team2168.commands.catapult.*;
 import org.team2168.commands.intake.*;
-import org.team2168.commands.winch.ExtendWinchDogGear;
-import org.team2168.commands.winch.RetractWinchDogGear;
-import org.team2168.commands.winch.RetractWinchMotor;
+import org.team2168.commands.tusks.*;
+import org.team2168.commands.winch.*;
 import org.team2168.commands.flashlight.*;
-import org.team2168.gamepads.f310;
-import org.team2168.utils.JoystickAnalogButton;
-
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.team2168.gamepads.F310;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -53,9 +46,9 @@ public class OI {
 	// button.whenReleased(new ExampleCommand());
 
 	// Create mapping for buttons on joystick
-	private f310 driver = new f310(1);
-	private f310 operator   = new f310(2);
-	public f310 testController   = new f310(3);
+	private F310 driver = new F310(1);
+	private F310 operator   = new F310(2);
+	public F310 testController   = new F310(3);
 
 	
 	public OI() {
@@ -85,20 +78,19 @@ public class OI {
 		testController.ButtonX().whenPressed(new TusksTrussShotPosition());
 		testController.ButtonY().whenPressed(new TusksShortShotPosition());
 		testController.ButtonB().whenPressed(new TusksLongShotPosition());
-		
+		testController.ButtonA().whenPressed(new FireAndReload());
+
 		testController.ButtonStart().whenPressed(new ExtendWinchDogGear());
 		testController.ButtonBack().whenPressed(new RetractWinchDogGear());
 		
 		testController.ButtonRightBumper().whenPressed(new IntakeDown());
 		testController.ButtonLeftBumper().whenPressed(new IntakeUp());
 		
-		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(-0.5));
-		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(0.5));
-
+		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(-1));
+		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(1));
 
 		testController.ButtonLeftStick().whenPressed(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
 		testController.ButtonRightStick().whenPressed(new AutoDriveXDistance(-RobotMap.autoDriveDistance.getDouble()));
-
 
 		testController.ButtonLeftStick().whenPressed(new RotateDrivetrain(RobotMap.rotateDriveAngle.getDouble()));
 		testController.ButtonRightStick().whenPressed(new RotateDrivetrain(-RobotMap.rotateDriveAngle.getDouble()));
