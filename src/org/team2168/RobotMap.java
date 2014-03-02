@@ -1,6 +1,6 @@
 package org.team2168;
 
-import org.team2168.PIDController.Sensors.AverageEncoder;
+import org.team2168.PIDController.sensors.AverageEncoder;
 import org.team2168.utils.ConstantsBase;
 
 import edu.wpi.first.wpilibj.CounterBase;

@@ -1,7 +1,7 @@
 package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
-import org.team2168.PIDController.Sensors.AverageEncoder;
+import org.team2168.PIDController.sensors.AverageEncoder;
 import org.team2168.commands.winch.WinchWithJoystick;
 import org.team2168.utils.MomentaryDoubleSolenoid;
 import org.team2168.utils.Util;

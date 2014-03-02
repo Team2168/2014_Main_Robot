@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team2168.commands.CommandBase;
-import org.team2168.commands.Auto.Center_RotHotGoal_1Ball;
+import org.team2168.commands.auto.Center_RotHotGoal_1Ball;
 import org.team2168.subsystems.Winch;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.IntakePosition;
