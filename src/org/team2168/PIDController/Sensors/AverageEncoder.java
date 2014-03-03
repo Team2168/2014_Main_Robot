@@ -1,4 +1,4 @@
-package org.team2168.PIDController.sensors;
+package org.team2168.PIDController.Sensors;
 
 import edu.wpi.first.wpilibj.Encoder;
 
