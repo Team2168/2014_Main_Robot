@@ -90,7 +90,7 @@ public class OI {
 		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(1));
 
 		testController.ButtonLeftDPad().whenPressed(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
-		testController.ButtonRightDPad().whenPressed(new AutoDriveXDistance(-RobotMap.autoDriveDistance.getDouble()));
+		testController.ButtonRightDPad().whenPressed(new DriveDrivetrainStraight(RobotMap.autoDriveDistance.getDouble()));
 
 		testController.ButtonLeftStick().whenPressed(new RotateDrivetrainRelative(RobotMap.rotationAngleToHot.getDouble(), false));
 		testController.ButtonRightStick().whenPressed(new RotateDrivetrainRelative(-RobotMap.rotationAngleToHot.getDouble(), false));
