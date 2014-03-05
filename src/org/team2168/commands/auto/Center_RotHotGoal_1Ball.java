@@ -5,6 +5,7 @@ import org.team2168.commands.drivetrain.RotateDrivetrain;
 import org.team2168.commands.intake.IntakeDown;
 import org.team2168.commands.tusks.TusksLongShotPosition;
 import org.team2168.commands.vision.WaitForFirstHot;
+import org.team2168.commands.winch.FireAndReload;
 import org.team2168.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -32,6 +33,6 @@ public class Center_RotHotGoal_1Ball extends CommandGroup {
 		addSequential(new RotateDrivetrain(0.0,true));
 
 		// fire
-		// addSequential(new ShootSingleBall());
+		addSequential(new FireAndReload());
 	}
 }
