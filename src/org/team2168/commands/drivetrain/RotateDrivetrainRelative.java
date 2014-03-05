@@ -14,7 +14,6 @@ public class RotateDrivetrainRelative extends CommandBase
 
 	private boolean getAngleFromCam = false;
 
-	private static double maxSpeed;
 	public static final double kP = 0.01;
 	
 	/**
