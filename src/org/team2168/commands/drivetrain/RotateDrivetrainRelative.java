@@ -5,7 +5,7 @@ import org.team2168.commands.CommandBase;
 import org.team2168.subsystems.Vision;
 import org.team2168.utils.Util;
 
-public class RotateDrivetrain extends CommandBase
+public class RotateDrivetrainRelative extends CommandBase
 {
 	private double endAngle = 0.0;
 	private double startAngle = 0.0;
@@ -23,7 +23,7 @@ public class RotateDrivetrain extends CommandBase
 	 * @param getAngleFromVision, if you would like this command to rotate to the relative angle provided by the camera at the moment the command is ran, set this boolean to true, the first parameter angle is ignored, and the current output of the Vision subsystem is used instead.
 	 */
 
-	public RotateDrivetrain(double angle, boolean getAngleFromVision)
+	public RotateDrivetrainRelative(double angle, boolean getAngleFromVision)
 	{
 		requires(drivetrain);
 

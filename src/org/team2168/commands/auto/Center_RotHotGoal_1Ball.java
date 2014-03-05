@@ -1,7 +1,7 @@
 package org.team2168.commands.auto;
 
 import org.team2168.RobotMap;
-import org.team2168.commands.drivetrain.RotateDrivetrain;
+import org.team2168.commands.drivetrain.RotateDrivetrainRelative;
 import org.team2168.commands.intake.IntakeDown;
 import org.team2168.commands.tusks.TusksLongShotPosition;
 import org.team2168.commands.vision.WaitForFirstHot;
@@ -30,7 +30,7 @@ public class Center_RotHotGoal_1Ball extends CommandGroup {
 		addSequential(new WaitForChildren());
 
 		// Rotate DriveTrain = +/- min rotation angle, this will get angle from camera once executed
-		addSequential(new RotateDrivetrain(0.0,true));
+		addSequential(new RotateDrivetrainRelative(0.0,true));
 
 		// fire
 		addSequential(new FireAndReload());
