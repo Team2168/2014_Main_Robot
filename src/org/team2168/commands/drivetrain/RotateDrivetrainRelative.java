@@ -39,7 +39,7 @@ public class RotateDrivetrainRelative extends CommandBase
 		finished = false;
 		
 		if (this.getAngleFromCam)
-			commandedAngle = Vision.getInstance().getCamLeftOrRightHot() * RobotMap.rotationAngleToHot.getDouble();
+			commandedAngle = Vision.getInstance().getLeftOrRightHot() * RobotMap.rotationAngleToHot.getDouble();
 
 		drivetrain.drive(0, 0);
 		
