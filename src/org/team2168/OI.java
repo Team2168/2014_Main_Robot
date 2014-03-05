@@ -92,8 +92,8 @@ public class OI {
 		testController.ButtonLeftStick().whenPressed(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
 		testController.ButtonRightStick().whenPressed(new AutoDriveXDistance(-RobotMap.autoDriveDistance.getDouble()));
 
-		testController.ButtonLeftStick().whenPressed(new RotateDrivetrain(RobotMap.rotateDriveAngle.getDouble()));
-		testController.ButtonRightStick().whenPressed(new RotateDrivetrain(-RobotMap.rotateDriveAngle.getDouble()));
+		testController.ButtonLeftStick().whenPressed(new RotateDrivetrain(RobotMap.rotationAngleToHot.getDouble(), false));
+		testController.ButtonRightStick().whenPressed(new RotateDrivetrain(-RobotMap.rotationAngleToHot.getDouble(), false));
 		
 	}
 	

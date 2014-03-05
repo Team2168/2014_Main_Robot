@@ -28,10 +28,8 @@ public class Center_RotHotGoal_1Ball extends CommandGroup {
 		// lets see if this works
 		addSequential(new WaitForChildren());
 
-		// Rotate DriveTrain = +/- min rotation angle
-		addSequential(new RotateDrivetrain(
-				RobotMap.RotationAngleToHot.getDouble()
-						* Vision.getInstance().getLeftOrRightHot()));
+		// Rotate DriveTrain = +/- min rotation angle, this will get angle from camera once executed
+		addSequential(new RotateDrivetrain(0.0,true));
 
 		// fire
 		// addSequential(new ShootSingleBall());
