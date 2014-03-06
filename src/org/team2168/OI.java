@@ -65,8 +65,8 @@ public class OI {
 
 		operator.ButtonRightBumper().whenPressed(new IntakeDown());
 		operator.ButtonLeftBumper().whenPressed(new IntakeUp());
-		operator.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(0.5));
-		operator.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-0.5));
+		operator.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(1.0));
+		operator.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-1.0));
 		
 		operator.ButtonStart().whenPressed(new ExtendWinchDogGear());
 		operator.ButtonBack().whenPressed(new RetractWinchDogGear());
@@ -85,8 +85,8 @@ public class OI {
 		testController.ButtonRightBumper().whenPressed(new IntakeDown());
 		testController.ButtonLeftBumper().whenPressed(new IntakeUp());
 		
-		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(-1));
-		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(1));
+		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(1.0);
+		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-1.0));
 
 		testController.ButtonLeftDPad().whenPressed(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
 		testController.ButtonRightDPad().whenPressed(new DriveDrivetrainStraight(RobotMap.autoDriveDistance.getDouble()));
