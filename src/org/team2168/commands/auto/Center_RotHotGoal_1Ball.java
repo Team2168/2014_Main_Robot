@@ -1,6 +1,7 @@
 package org.team2168.commands.auto;
 
 import org.team2168.RobotMap;
+import org.team2168.commands.Sleep;
 import org.team2168.commands.drivetrain.AutoDriveXDistance;
 import org.team2168.commands.drivetrain.RotateDrivetrainRelative;
 import org.team2168.commands.intake.IntakeDown;
@@ -30,6 +31,8 @@ public class Center_RotHotGoal_1Ball extends CommandGroup {
 
 		// Rotate DriveTrain = +/- min rotation angle, this will get angle from camera once executed
 		addSequential(new RotateDrivetrainRelative(0.0,true));
+		
+		addSequential(new Sleep(), 1);
 
 		// fire
 		addSequential(new FireAndReload());

@@ -1,5 +1,10 @@
 package org.team2168;
 
+import org.team2168.commands.auto.Center_RotDrvFwdHotGoal_1Ball;
+import org.team2168.commands.auto.Center_RotHotGoal_1Ball;
+import org.team2168.commands.auto.Left_LeftHotGoal_1Ball;
+import org.team2168.commands.auto.NoBall_DrvFwd;
+import org.team2168.commands.auto.Right_RightHotGoal_1Ball;
 import org.team2168.commands.drivetrain.*;
 import org.team2168.commands.intake.*;
 import org.team2168.commands.tusks.*;
@@ -50,6 +55,7 @@ public class OI {
 	private F310 operator   = new F310(2);
 	public F310 testController   = new F310(3);
 
+	public F310 auto   = new F310(4);
 	
 	public OI() {
 		// DRIVER CONTROLLER BUTTON MAP ////////////////////////
@@ -94,6 +100,14 @@ public class OI {
 
 		testController.ButtonLeftStick().whenPressed(new RotateDrivetrainRelative(RobotMap.rotationAngleToHot.getDouble(), false));
 		testController.ButtonRightStick().whenPressed(new RotateDrivetrainRelative(-RobotMap.rotationAngleToHot.getDouble(), false));
+		
+		
+		auto.ButtonA().whenPressed(new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		auto.ButtonB().whenPressed(new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		auto.ButtonX().whenPressed(new Left_LeftHotGoal_1Ball());
+		auto.ButtonY().whenPressed(new Right_RightHotGoal_1Ball());
+		auto.ButtonRightBumper().whenPressed(new NoBall_DrvFwd());
+		
 		
 	}
 	

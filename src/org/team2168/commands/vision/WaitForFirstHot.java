@@ -43,7 +43,7 @@ public class WaitForFirstHot extends CommandBase {
 	protected void execute() {
 
 		// did we receive a valid frame?
-		if (Vision.getInstance().isValidFrame())
+		if (Vision.getInstance().isValidFrame() && Vision.getInstance().getCamLeftOrRightHot() != 0)
 		{
 			
 			Vision.getInstance().setLeftOrRightHot(Vision.getInstance().getCamLeftOrRightHot());
