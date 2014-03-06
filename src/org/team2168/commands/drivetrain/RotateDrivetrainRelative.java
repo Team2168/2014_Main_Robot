@@ -16,6 +16,15 @@ public class RotateDrivetrainRelative extends CommandBase
 
 	public static final double kP = 0.01;
 	
+	
+	public RotateDrivetrainRelative(double angle)
+	{
+		requires(drivetrain);
+		this.getAngleFromCam = false;
+		this.commandedAngle = angle;
+	}
+	
+	
 	/**
 	 * 
 	 * @param angle, angle to rotate relative to current position, if known at instantiation time., set next param to false, to rotate to this angle.
