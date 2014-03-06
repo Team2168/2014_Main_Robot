@@ -91,7 +91,7 @@ public class OI {
 		testController.ButtonRightBumper().whenPressed(new IntakeDown());
 		testController.ButtonLeftBumper().whenPressed(new IntakeUp());
 		
-		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(1.0);
+		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(1.0));
 		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-1.0));
 
 		testController.ButtonLeftDPad().whenPressed(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
