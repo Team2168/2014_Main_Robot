@@ -78,6 +78,9 @@ public class Robot extends IterativeRobot {
 	 */
 	public void disabledInit() {
 		
+		//prevent null case if entering telop during testing
+		autonomousCommand = (Command) autoChooser.getSelected();
+		
 		Winch.getInstance().resetWinchEncoder();
 		Drivetrain.getInstance().resetEncoders();
 
@@ -90,6 +93,9 @@ public class Robot extends IterativeRobot {
 	 * This method is run repeatedly while the robot is disabled.
 	 */
 	public void disabledPeriodic() {
+		
+    	autonomousCommand = (Command) autoChooser.getSelected();
+		
 		//Kill all active commands
 		Scheduler.getInstance().removeAll();
 		Scheduler.getInstance().disable();
@@ -119,7 +125,9 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().enable();
 
     	//get which auto command to run
-    	autonomousCommand = (Command) autoChooser.getSelected();
+		
+		System.out.println("Running: " + autonomousCommand.getName());
+
     	autonomousCommand.start();
 
 		//prevent gyro from initializing between auto and teleop
@@ -172,9 +180,9 @@ public class Robot extends IterativeRobot {
         autoChooser = new SendableChooser();
         autoChooser.addDefault("Center_RotDrvFwdHotGoal_1Ball", new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
         autoChooser.addObject("Center_RotHotGoal_1Ball", new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
-        autoChooser.addDefault("Center_RotDrvFwdHotGoal_1Ball", new Left_LeftHotGoal_1Ball());
-        autoChooser.addObject("Center_RotHotGoal_1Ball", new Right_RightHotGoal_1Ball());
-        autoChooser.addObject("Center_RotHotGoal_1Ball", new NoBall_DrvFwd());
+        autoChooser.addObject("Left_WaitForLeftHot_1Ball", new Left_LeftHotGoal_1Ball());
+        autoChooser.addObject("Right_WaitForRightHot_1ball", new Right_RightHotGoal_1Ball());
+        autoChooser.addObject("NoBall_DrvDrw", new NoBall_DrvFwd());
         SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
     }
 	

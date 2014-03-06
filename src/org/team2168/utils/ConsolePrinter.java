@@ -3,6 +3,7 @@ package org.team2168.utils;
 import java.util.TimerTask;
 
 import org.team2168.RobotMap;
+import org.team2168.subsystems.Vision;
 import org.team2168.subsystems.Winch;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.IntakePosition;
@@ -53,6 +54,15 @@ public class ConsolePrinter {
 		SmartDashboard.putBoolean("Intake Limit:", IntakePosition.getInstance().getIntakeLimitSwitch());
 		SmartDashboard.putNumber("Pot Voltage:", Winch.getInstance().getWinchPotentiometerVoltage());	
 		SmartDashboard.putNumber("Catapult Angle", Winch.getInstance().getCatapultAngle());
+		
+		
+		
+		SmartDashboard.putBoolean("Camera Status", Vision.getInstance().isCameraConnected());
+		SmartDashboard.putBoolean("Bone Status", Vision.getInstance().isBoneConnected());
+		SmartDashboard.putBoolean("Processing Status", Vision.getInstance().isProcessingTreadRunning());
+		SmartDashboard.putBoolean("HotGoal Status", Vision.getInstance().isHotinView());
+		
+		
 		
 		
 		}

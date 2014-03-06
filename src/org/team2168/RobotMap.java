@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.CounterBase;
 public class RobotMap extends ConstantsBase {
 	
 	public static final Constant debug = 
-			new Constant("debug", 0);
+			new Constant("debug", 1);
 	
 	
 	/****************************************************************

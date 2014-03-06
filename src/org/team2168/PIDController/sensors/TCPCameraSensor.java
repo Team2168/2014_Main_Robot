@@ -28,6 +28,8 @@ public class TCPCameraSensor {
 	private StringBuffer sb = new StringBuffer();
 	private volatile boolean sendEnable;
 	private volatile boolean recvEnable;
+	
+	private volatile boolean clientConnected;
 
 	private DriverStation ds;
 
@@ -97,11 +99,14 @@ public class TCPCameraSensor {
 
 					// wait for a client to connect, this blocks until a connect
 					// is made
+					clientConnected = false;
 					System.out.println("Listening on: "
 							+ conn.getLocalAddress() + " on port: "
 							+ conn.getLocalPort());
 					sc = conn.acceptAndOpen();
 					System.out.println("Client Connected");
+					clientConnected = true;
+					
 
 					// make this true if you want to send data to the beaglebone
 					// as well
@@ -283,13 +288,13 @@ public boolean isHotInView()
 
 public int LeftOrRightHot()
 {
-	return Integer.valueOf(dataReceived[3]).intValue();
+	return Integer.valueOf(dataReceived[5]).intValue();
 }
 
 
 public double getDitance()
 {
-	double dist = Double.valueOf(dataReceived[4]).doubleValue();
+	double dist = Double.valueOf(dataReceived[6]).doubleValue();
 	
 	if (Double.isNaN(dist) || Double.isInfinite(dist))
 		return 0.0;
@@ -300,7 +305,7 @@ public double getDitance()
 
 public double getCount()
 {
-	int count = Integer.valueOf(dataReceived[5]).intValue();
+	int count = Integer.valueOf(dataReceived[7]).intValue();
 	
 	if (Double.isNaN(count) || Double.isInfinite(count))
 		return 0;
@@ -309,5 +314,32 @@ public double getCount()
 	
 }
 
+public boolean isCameraConnected()
+{
+	int message = Integer.valueOf(dataReceived[3]).intValue();
+	
+	if (message == 1)
+		return true;
+	else
+		return false;
+	
+}
+
+public boolean isProcessingTreadRunning()
+{
+	int message = Integer.valueOf(dataReceived[4]).intValue();
+	
+	if (message == 1)
+		return true;
+	else
+		return false;
+
+}
+
+public boolean isClientConnected()
+{
+	return clientConnected;
+
+}
 
 }

@@ -110,6 +110,24 @@ public class Vision extends Subsystem{
 		return cam.isValidFrame();
 				
 	}
+	
+	public boolean isCameraConnected()
+	{
+		return cam.isCameraConnected();
+				
+	}
+	
+	public boolean isProcessingTreadRunning()
+	{
+		return cam.isProcessingTreadRunning();
+				
+	}
+	
+	public boolean isBoneConnected()
+	{
+		return cam.isClientConnected();
+
+	}
 /**
  * 
  * @param LorR make 1 for Right, -1 for left, 0 otherwise
