@@ -143,7 +143,7 @@ public class TCPCameraSensor {
 
 							
 
-							System.out.println("Match Start: " + isMatchStart()+", " + "Valid Frame: " + isValidFrame()+", " + "Hot: " + isHotInView()+", " + "LorR: " + LeftOrRightHot()+", " + "dist: " + dataReceived[4]+", " + "Count: " + dataReceived[5]);
+						//	System.out.println("Match Start: " + isMatchStart()+", " + "Valid Frame: " + isValidFrame()+", " + "Hot: " + isHotInView()+", " + "LorR: " + LeftOrRightHot()+", " + "dist: " + dataReceived[4]+", " + "Count: " + dataReceived[5]);
 
 
 
