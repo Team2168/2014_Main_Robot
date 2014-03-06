@@ -3,6 +3,7 @@ package org.team2168.utils;
 import java.util.TimerTask;
 
 import org.team2168.RobotMap;
+import org.team2168.subsystems.Tusks;
 import org.team2168.subsystems.Vision;
 import org.team2168.subsystems.Winch;
 import org.team2168.subsystems.Drivetrain;
@@ -62,7 +63,9 @@ public class ConsolePrinter {
 		SmartDashboard.putBoolean("Processing Status", Vision.getInstance().isProcessingTreadRunning());
 		SmartDashboard.putBoolean("HotGoal Status", Vision.getInstance().isHotinView());
 		
-		
+		SmartDashboard.putBoolean("Truss Status", Tusks.getInstance().isTrussShot());
+		SmartDashboard.putBoolean("Wall Status", Tusks.getInstance().isShortRangeShot());
+		SmartDashboard.putBoolean("Far Status", Tusks.getInstance().isLongRangeShot());
 		
 		
 		}

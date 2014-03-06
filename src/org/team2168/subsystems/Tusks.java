@@ -14,6 +14,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Tusks extends Subsystem {
 	private static Tusks instance = null;
 	
+	private volatile boolean longRange;
+	private volatile boolean shortRange;
+	private volatile boolean truss;
+	
+	
     // TUSK ACTUATOR OPERATION
 	//        --------------------------------
 	//  ------|------|     --||--------|     |
@@ -37,6 +42,11 @@ public class Tusks extends Subsystem {
 	 * A private constructor to prevent multiple instances from being created.
 	 */
 	private Tusks() {
+		
+		longRange = false;
+		shortRange = false;
+		truss = false;
+		
 		tuskSolenoid1 = new MomentaryDoubleSolenoid(RobotMap.catExtPort1.getInt(),
 				RobotMap.catRetPort1.getInt());
 		tuskSolenoid2 = new MomentaryDoubleSolenoid(RobotMap.catExtPort2.getInt(),
@@ -67,6 +77,10 @@ public class Tusks extends Subsystem {
 	public void longRangeShot(){
 		tuskSolenoid1.set(DoubleSolenoid.Value.kReverse);
 		tuskSolenoid2.set(DoubleSolenoid.Value.kReverse);
+		
+		longRange = true;
+		shortRange = false;
+		truss = false;
 	}
 
 	/**
@@ -76,6 +90,10 @@ public class Tusks extends Subsystem {
 	public void trussShot() {
 		tuskSolenoid1.set(DoubleSolenoid.Value.kForward);
 		tuskSolenoid2.set(DoubleSolenoid.Value.kReverse);
+		
+		longRange = false;
+		shortRange = false;
+		truss = true;
 	}
 
 	/**
@@ -85,6 +103,11 @@ public class Tusks extends Subsystem {
 	public void shortRangeShot(){
 		tuskSolenoid1.set(DoubleSolenoid.Value.kForward);
 		tuskSolenoid2.set(DoubleSolenoid.Value.kForward);
+		
+		longRange = false;
+		shortRange = true;
+		truss = false;
+		
 	}
 	
 	public void setSolenoid1(DoubleSolenoid.Value state) {
@@ -94,5 +117,23 @@ public class Tusks extends Subsystem {
 	public void setSolenoid2(DoubleSolenoid.Value state) {
 		tuskSolenoid2.set(state);
 	}
+	
+	public boolean isLongRangeShot()
+	{
+		return longRange;
+	}
+	
+	public boolean isShortRangeShot()
+	{
+		return shortRange;
+	}
+	
+	public boolean isTrussShot()
+	{
+		return truss;
+	}
+	
+	
+	
 }
 
