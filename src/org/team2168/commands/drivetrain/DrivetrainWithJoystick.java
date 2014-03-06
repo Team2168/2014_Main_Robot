@@ -1,4 +1,3 @@
-
 package org.team2168.commands.drivetrain;
 
 import org.team2168.OI;
@@ -20,7 +19,6 @@ public class DrivetrainWithJoystick extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//TODO: one of these will need to be negated
     	drivetrain.drive(oi.getBaseDriverRightStick(),
     			oi.getBaseDriverLeftStick());
     
