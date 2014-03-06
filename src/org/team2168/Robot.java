@@ -12,8 +12,15 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.team2168.commands.CommandBase;
+import org.team2168.commands.auto.Center_RotDrvFwdHotGoal_1Ball;
 import org.team2168.commands.auto.Center_RotHotGoal_1Ball;
+import org.team2168.commands.auto.Left_LeftHotGoal_1Ball;
+import org.team2168.commands.auto.NoBall_DrvFwd;
+import org.team2168.commands.auto.Right_RightHotGoal_1Ball;
 import org.team2168.subsystems.Winch;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.IntakePosition;
@@ -37,6 +44,7 @@ public class Robot extends IterativeRobot {
 	
 	ConsolePrinter printer;
 
+	SendableChooser autoChooser;
 	Command autonomousCommand;
 
 	/**
@@ -44,7 +52,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		// instantiate the command used for the autonomous period
-		autonomousCommand = new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble());
+		
 
 		compressor = new Compressor(RobotMap.pressureSwitch.getInt(),
 				RobotMap.compressorRelay.getInt());
@@ -54,6 +62,13 @@ public class Robot extends IterativeRobot {
 		// Initialize all subsystems
 		CommandBase.init();
 
+		
+        //Initialize auto mode chooser
+        autoSelectInit();
+		
+        
+        printer.startThread();
+		
 		//Console Message so we know robot finished loading
 		System.out.println("****Robot Done Loading****");
 	}
@@ -102,8 +117,10 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		Scheduler.getInstance().enable();
-		// schedule the autonomous command (example)
-		autonomousCommand.start();
+
+    	//get which auto command to run
+    	autonomousCommand = (Command) autoChooser.getSelected();
+    	autonomousCommand.start();
 
 		//prevent gyro from initializing between auto and teleop
 		matchStarted = true;
@@ -130,7 +147,7 @@ public class Robot extends IterativeRobot {
 		autonomousCommand.cancel();
 		Scheduler.getInstance().enable();
 		
-		printer.startThread();
+		
 		
 		compressor.start();
 	}
@@ -148,4 +165,17 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
+	
+	
+    private void autoSelectInit()
+    {
+        autoChooser = new SendableChooser();
+        autoChooser.addDefault("Center_RotDrvFwdHotGoal_1Ball", new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+        autoChooser.addObject("Center_RotHotGoal_1Ball", new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+        autoChooser.addDefault("Center_RotDrvFwdHotGoal_1Ball", new Left_LeftHotGoal_1Ball());
+        autoChooser.addObject("Center_RotHotGoal_1Ball", new Right_RightHotGoal_1Ball());
+        autoChooser.addObject("Center_RotHotGoal_1Ball", new NoBall_DrvFwd());
+        SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
+    }
+	
 }
