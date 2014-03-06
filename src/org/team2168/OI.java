@@ -61,8 +61,7 @@ public class OI {
 		operator.ButtonX().whenPressed(new TusksTrussShotPosition());
 		operator.ButtonY().whenPressed(new TusksShortShotPosition());
 		operator.ButtonB().whenPressed(new TusksLongShotPosition());
-		
-		//operatorButtonA.whenPressed(new Fire());
+		operator.ButtonA().whenPressed(new FireAndReload());
 
 		operator.ButtonRightBumper().whenPressed(new IntakeDown());
 		operator.ButtonLeftBumper().whenPressed(new IntakeUp());
