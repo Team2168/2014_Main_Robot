@@ -167,7 +167,7 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant minDriveSpeed =
 			new Constant("minDriveSpeed", 0.2);
 	public static final Constant flashlightOnTime =
-			new Constant("flashlightOnTime", 5.0);
+			new Constant("flashlightOnTime", 15.0);
 
 
 	/****************************************************************
