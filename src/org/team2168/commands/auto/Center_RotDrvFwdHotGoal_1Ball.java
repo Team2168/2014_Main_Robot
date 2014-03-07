@@ -32,18 +32,18 @@ public class Center_RotDrvFwdHotGoal_1Ball extends CommandGroup {
 		// lets see if this works
 		addSequential(new WaitForChildren());
 
-		// Rotate DriveTrain = +/- min rotation angle, this will get angle from camera once executed
-		addSequential(new RotateDrivetrainRelative(0.0,true));
+		// Rotate DriveTrain based on angle from camera. Drive to the goal the
+		//  camera thinks is NOT hot, since it will take more than 5sec to get
+		//  to position to fire the ball.
+		addSequential(new RotateDrivetrainRelative(0.0, true, true));
 		
-		addSequential(new Sleep(), 1);
+		addSequential(new Sleep(), 1.0);
 
 		// Drive forward to inscrease likelyhood of shoot and gain 5 pts, should run 55 inches forward
 		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
-		
 
-		addSequential(new Sleep(), 2);
-		
-		
+		//Let the ball settle before a shot
+		addSequential(new Sleep(), 2.0);
 		
 		// fire
 		addSequential(new FireAndReload());

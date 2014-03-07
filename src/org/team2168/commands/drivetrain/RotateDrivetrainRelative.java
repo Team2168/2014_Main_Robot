@@ -11,32 +11,46 @@ public class RotateDrivetrainRelative extends CommandBase
 	private double startAngle = 0.0;
 	private double commandedAngle = 0.0;
 	private boolean finished = false;
-
+	private boolean negate = false;
 	private boolean getAngleFromCam = false;
 
 	public static final double kP = 0.01;
 	
-	
+	/**
+	 * 
+	 * @param angle angle (degrees) to rotate to relative to current position
+	 */
 	public RotateDrivetrainRelative(double angle)
 	{
-		requires(drivetrain);
-		this.getAngleFromCam = false;
-		this.commandedAngle = angle;
+		this(angle, false, false);
+	}
+	
+	public RotateDrivetrainRelative(double angle, boolean getAngleFromVision) {
+		this(angle, getAngleFromVision, false);
 	}
 	
 	
 	/**
 	 * 
-	 * @param angle, angle to rotate relative to current position, if known at instantiation time., set next param to false, to rotate to this angle.
-	 * @param getAngleFromVision, if you would like this command to rotate to the relative angle provided by the camera at the moment the command is ran, set this boolean to true, the first parameter angle is ignored, and the current output of the Vision subsystem is used instead.
+	 * @param angle, angle to rotate relative to current position, if known at
+	 *   instantiation time., set next param to false, to rotate to this angle.
+	 * @param getAngleFromVision, if you would like this command to rotate to
+	 *   the relative angle provided by the camera at the moment the command
+	 *   is ran, set this boolean to true, the first parameter angle is ignored,
+	 *   and the current output of the Vision subsystem is used instead.
+	 * @param negate cause the robot to rotate in the direction opposite of what
+	 *   is specified in the angle parameter, or from camera. This is a hack for
+	 *   commands that take too long to prep for a shot. 
 	 */
 
-	public RotateDrivetrainRelative(double angle, boolean getAngleFromVision)
+	public RotateDrivetrainRelative(double angle, boolean getAngleFromVision,
+			boolean negate)
 	{
 		requires(drivetrain);
 
 		this.getAngleFromCam = getAngleFromVision;
 		this.commandedAngle = angle;
+		this.negate = negate;
 	}
 
 	/**
@@ -46,9 +60,15 @@ public class RotateDrivetrainRelative extends CommandBase
 	{
 		finished = false;
 		
-		if (this.getAngleFromCam)
-			commandedAngle = Vision.getInstance().getLeftOrRightHot() * RobotMap.rotationAngleToHot.getDouble();
+		if (getAngleFromCam) {
+			commandedAngle = Vision.getInstance().getLeftOrRightHot()
+					* RobotMap.rotationAngleToHot.getDouble();
+		}
 
+		if (negate) {
+			commandedAngle = -commandedAngle;
+		}
+		
 		drivetrain.drive(0, 0);
 		
 		//find current angle and calculate offset
