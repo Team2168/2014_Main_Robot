@@ -180,7 +180,9 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant VisionTimeOutSecs =
 			new Constant("VisionTimeOutSecs", 1.5);
 	public static final Constant autoDriveDistance = 
-	new Constant("autoDriveDistance", 80);	
+			new Constant("autoDriveDistance", 80);
+	public static final Constant autoDelayBeforeStart =
+			new Constant("autoDelayBeforeStart", 1.0);
 
 
 	/****************************************************************

@@ -8,6 +8,7 @@
 package org.team2168;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -16,11 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.team2168.commands.CommandBase;
-import org.team2168.commands.auto.Center_RotDrvFwdHotGoal_1Ball;
-import org.team2168.commands.auto.Center_RotHotGoal_1Ball;
-import org.team2168.commands.auto.Left_LeftHotGoal_1Ball;
-import org.team2168.commands.auto.NoBall_DrvFwd;
-import org.team2168.commands.auto.Right_RightHotGoal_1Ball;
+import org.team2168.commands.auto.*;
 import org.team2168.subsystems.Winch;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.IntakePosition;
@@ -46,6 +43,7 @@ public class Robot extends IterativeRobot {
 
 	SendableChooser autoChooser;
 	Command autonomousCommand;
+	DriverStationLCD lcd;
 
 	/**
 	 * This method is run when the robot is first powered on.
@@ -62,10 +60,10 @@ public class Robot extends IterativeRobot {
 		// Initialize all subsystems
 		CommandBase.init();
 
+		lcd = DriverStationLCD.getInstance();
 		
         //Initialize auto mode chooser
         autoSelectInit();
-		
         
         printer.startThread();
 		
@@ -93,9 +91,10 @@ public class Robot extends IterativeRobot {
 	 * This method is run repeatedly while the robot is disabled.
 	 */
 	public void disabledPeriodic() {
-		
     	autonomousCommand = (Command) autoChooser.getSelected();
-		
+		lcd.println(DriverStationLCD.Line.kUser2, 1, "Auto: "+autonomousCommand.getName());
+		lcd.updateLCD();
+
 		//Kill all active commands
 		Scheduler.getInstance().removeAll();
 		Scheduler.getInstance().disable();
@@ -124,10 +123,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		Scheduler.getInstance().enable();
 
-    	//get which auto command to run
-		
-		System.out.println("Running: " + autonomousCommand.getName());
-
+		//Run the selected auto mode
     	autonomousCommand.start();
 
 		//prevent gyro from initializing between auto and teleop
@@ -154,9 +150,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		autonomousCommand.cancel();
 		Scheduler.getInstance().enable();
-		
-		
-		
+
 		compressor.start();
 	}
 
@@ -182,7 +176,8 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Center_RotHotGoal_1Ball", new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
         autoChooser.addObject("Left_WaitForLeftHot_1Ball", new Left_LeftHotGoal_1Ball());
         autoChooser.addObject("Right_WaitForRightHot_1ball", new Right_RightHotGoal_1Ball());
-        autoChooser.addObject("NoBall_DrvDrw", new NoBall_DrvFwd());
+        autoChooser.addObject("ShootStraight_DrvFwd", new ShootStraight_DrvFwd());
+        autoChooser.addObject("NoBall_DrvFwd", new NoBall_DrvFwd());
         SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
     }
 	
