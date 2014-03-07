@@ -23,7 +23,15 @@ public class CompetitionDashboard extends CommandBase {
     }
 
     protected void execute() {
-  
+    	SmartDashboard.putBoolean("IsCatapultRetrated", 
+    			catapultWinch.isCatapultRetracted());
+    	SmartDashboard.putBoolean("IsBallPresent", catapultWinch.isBallPresent());
+    	SmartDashboard.putBoolean("IntakeUp",intakePosition.isIntakeUp());
+    	SmartDashboard.putBoolean("IntakeDown",intakePosition.isIntakeDown());
+    	SmartDashboard.getBoolean("DogGearExtended", 
+    			catapultWinch.isDogGearExtended());
+    	SmartDashboard.getBoolean("DogGearRetracted", 
+    			catapultWinch.isDogGearRetracted());
     	
     	
     }
