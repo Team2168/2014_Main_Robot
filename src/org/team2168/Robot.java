@@ -99,7 +99,6 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().removeAll();
 		Scheduler.getInstance().disable();
 		
-		
 		//Check to see if the gyro is drifting, if it is re-initialize it.
 		//Thanks FRC254.
 		double curAngle = CommandBase.drivetrain.getGyroAngle();
