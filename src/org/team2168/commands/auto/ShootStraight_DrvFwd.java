@@ -35,13 +35,13 @@ public class ShootStraight_DrvFwd extends CommandGroup {
 		//ball settle
 		addSequential(new Sleep(), RobotMap.autoDelayBeforeStart.getDouble());
 		
-		addSequential(new AutoDriveXDistance(40));
+		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()/2));
 		
 		// fire, then drive and reload
 		addSequential(new Fire());
 		addSequential(new WaitUntilFired());
 		
-		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
+		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()/2));
 		
 		addSequential(new TusksTrussShotPosition());
 		
