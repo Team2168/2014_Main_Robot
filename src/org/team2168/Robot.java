@@ -8,6 +8,7 @@
 package org.team2168;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -18,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.team2168.commands.CommandBase;
 import org.team2168.commands.auto.*;
+import org.team2168.commands.winch.Reload;
 import org.team2168.subsystems.Winch;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.IntakePosition;
@@ -43,6 +45,7 @@ public class Robot extends IterativeRobot {
 
 	SendableChooser autoChooser;
 	Command autonomousCommand;
+	Command teleopInitCommand;
 	DriverStationLCD lcd;
 
 	/**
@@ -78,6 +81,8 @@ public class Robot extends IterativeRobot {
 		
 		//prevent null case if entering telop during testing
 		autonomousCommand = (Command) autoChooser.getSelected();
+		
+		teleopInitCommand = new Reload();
 		
 		Winch.getInstance().resetWinchEncoder();
 		Drivetrain.getInstance().resetEncoders();
@@ -150,6 +155,8 @@ public class Robot extends IterativeRobot {
 		autonomousCommand.cancel();
 		Scheduler.getInstance().enable();
 
+		if(DriverStation.getInstance().isFMSAttached())
+			teleopInitCommand.start();
 		compressor.start();
 	}
 
