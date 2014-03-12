@@ -52,9 +52,6 @@ public class Robot extends IterativeRobot {
 	 * This method is run when the robot is first powered on.
 	 */
 	public void robotInit() {
-		// instantiate the command used for the autonomous period
-		
-
 		compressor = new Compressor(RobotMap.pressureSwitch.getInt(),
 				RobotMap.compressorRelay.getInt());
 		
@@ -65,10 +62,10 @@ public class Robot extends IterativeRobot {
 
 		lcd = DriverStationLCD.getInstance();
 		
-        //Initialize auto mode chooser
-        autoSelectInit();
-        
-        printer.startThread();
+		//Initialize auto mode chooser
+		autoSelectInit();
+
+		printer.startThread();
 		
 		//Console Message so we know robot finished loading
 		System.out.println("****Robot Done Loading****");
@@ -78,10 +75,8 @@ public class Robot extends IterativeRobot {
 	 * This method is run once each time the robot is disabled.
 	 */
 	public void disabledInit() {
-		
 		//prevent null case if entering telop during testing
 		autonomousCommand = (Command) autoChooser.getSelected();
-		
 		teleopInitCommand = new Reload();
 		
 		Winch.getInstance().resetWinchEncoder();
@@ -96,7 +91,7 @@ public class Robot extends IterativeRobot {
 	 * This method is run repeatedly while the robot is disabled.
 	 */
 	public void disabledPeriodic() {
-    	autonomousCommand = (Command) autoChooser.getSelected();
+		autonomousCommand = (Command) autoChooser.getSelected();
 		lcd.println(DriverStationLCD.Line.kUser2, 1, "Auto: "+autonomousCommand.getName());
 		lcd.updateLCD();
 
@@ -128,7 +123,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().enable();
 
 		//Run the selected auto mode
-    	autonomousCommand.start();
+		autonomousCommand.start();
 
 		//prevent gyro from initializing between auto and teleop
 		matchStarted = true;
@@ -157,6 +152,7 @@ public class Robot extends IterativeRobot {
 
 		if(DriverStation.getInstance().isFMSAttached())
 			teleopInitCommand.start();
+
 		compressor.start();
 	}
 
@@ -175,17 +171,17 @@ public class Robot extends IterativeRobot {
 	}
 	
 	
-    private void autoSelectInit()
-    {
-        autoChooser = new SendableChooser();
-        autoChooser.addDefault("ShootStraight_DrvFwd", new ShootStraight_DrvFwd());
-        autoChooser.addObject("ShootStraight_2BallDrvFwd", new ShootStraight_2Ball_DrvFwd());
-        autoChooser.addObject("Center_RotDrvFwdHotGoal_1Ball", new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
-        autoChooser.addObject("Center_RotHotGoal_1Ball", new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
-        autoChooser.addObject("Left_WaitForLeftHot_1Ball", new Left_LeftHotGoal_1Ball());
-        autoChooser.addObject("Right_WaitForRightHot_1ball", new Right_RightHotGoal_1Ball());
-        autoChooser.addObject("NoBall_DrvFwd", new NoBall_DrvFwd());
-        SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
-    }
+	private void autoSelectInit()
+	{
+		autoChooser = new SendableChooser();
+		autoChooser.addDefault("ShootStraight_DrvFwd", new ShootStraight_DrvFwd());
+		autoChooser.addObject("ShootStraight_2BallDrvFwd", new ShootStraight_2Ball_DrvFwd());
+		autoChooser.addObject("Center_RotDrvFwdHotGoal_1Ball", new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		autoChooser.addObject("Center_RotHotGoal_1Ball", new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		autoChooser.addObject("Left_WaitForLeftHot_1Ball", new Left_LeftHotGoal_1Ball());
+		autoChooser.addObject("Right_WaitForRightHot_1ball", new Right_RightHotGoal_1Ball());
+		autoChooser.addObject("NoBall_DrvFwd", new NoBall_DrvFwd());
+		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
+	}
 	
 }
