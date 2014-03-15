@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Fire extends CommandGroup {
 
 	public Fire() {
-		//addParallel(new DisengageTappers());
+		addSequential(new DisengageTappers());
 		
 		//verify the intake is lowered
 		addSequential(new IntakeDown(), RobotMap.intakeLowerTimeout.getDouble());
 		
-		//addParallel(new TapperFirePosition());
+		addSequential(new TapperFirePosition());
 		
 		//TODO: wait for ball to settle
 

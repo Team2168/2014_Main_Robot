@@ -12,10 +12,9 @@ public class Reload extends CommandGroup {
 		//engage the winch drum
 		addSequential(new RetractWinchDogGear());
 		
-		//Retract the tusks in preparation for intaking next ball
+		//Retract the tusks and tappers in preparation for intaking next ball
 		addSequential(new TusksTrussShotPosition());
-		
-		//addParallel(new DisengageTappers());
+		addSequential(new DisengageTappers());
 		
 		//retract the catapult all the way
 		addSequential(new RetractWinchUntilLowered(
