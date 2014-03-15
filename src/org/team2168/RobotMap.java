@@ -30,6 +30,10 @@ public class RobotMap extends ConstantsBase {
 			new Constant("leftDriveMotor", 2);
 	public static final Constant winchMotor = new Constant("winchMotor", 3);
 	public static final Constant intakeMotor = new Constant("intakeMotor", 4);
+	public static final Constant rightTapperServo =
+			new Constant("rightTapperServo", 8);
+	public static final Constant leftTapperServo =
+			new Constant("leftTapperServo", 9);
 	public static final Constant visionServo = new Constant("visionServo", 10);
 	
 	//DIO Channels////////////////////////////////////////////////////
@@ -131,12 +135,13 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant catapultRaiseAngle =
 			new Constant("catapultRaiseAngle", 44.0);
 	public static final Constant catapultRaiseVoltage =
-			//new Constant("catapultRaiseVoltage", 2.79); //practice bot
+			//new Constant("catapultRaiseVoltage", 2.951); //practice bot
 			new Constant("catapultRaiseVoltage", 4.39); //comp bot
 	public static final Constant catapultLowerAngle =
-			new Constant("catapultLowerAngle", -26.0);
+			//new Constant("catapultLowerAngle", -23.0); //practice bot
+			new Constant("catapultLowerAngle", -26.0); //comp bot?
 	public static final Constant catapultLowerVoltage =
-			//new Constant("catapultLowerVoltage", 3.83); //practice bot.
+			//new Constant("catapultLowerVoltage", 3.938); //practice bot.
 			new Constant("catapultLowerVoltage", 3.2); //comp bot
 	public static final Constant catapultWaitUntilFiredAngle =
 			new Constant("catapultWaitUntilFiredAngle", 30.0);
@@ -163,7 +168,12 @@ public class RobotMap extends ConstantsBase {
      ****************************************************************/
 	public static final Constant intakeLowerTimeout =
 			new Constant("intakeLowerTimeout", 2.5);
-
+	public static final Constant ballTapperEngageAngle =
+			new Constant("ballTapperEngageAngle", 55.0);
+	public static final Constant ballTapperShotAngle =
+			new Constant("ballTapperShotAngle", 36.0);
+	public static final Constant ballTapperDisengageAngle =
+			new Constant("ballTapperDisengageAngle", 0.0);
 
 	/****************************************************************
      *                  Operator Interface Parameters               *
