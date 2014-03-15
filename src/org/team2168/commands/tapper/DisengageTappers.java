@@ -27,10 +27,11 @@ public class DisengageTappers extends CommandBase {
 	}
 
 	/**
-	 * Check if the command has completed.
+	 * The command has completed when both tappers are at the angle specified.
 	 */
 	protected boolean isFinished() {
-		return false;
+		return (servoTapper.getLeftAngle() == RobotMap.ballTapperDisengageAngle.getDouble())
+				&& (servoTapper.getRightAngle() == RobotMap.ballTapperDisengageAngle.getDouble());
 	}
 
 	/**
