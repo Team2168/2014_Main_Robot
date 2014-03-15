@@ -43,8 +43,8 @@ public class OI {
 		operator.ButtonStart().whenPressed(new ExtendWinchDogGear());
 		operator.ButtonBack().whenPressed(new RetractWinchDogGear());
 
-		operator.ButtonLeftDPad().whenPressed(new DisengageTapper());
-		operator.ButtonRightDPad().whenPressed(new EngageTapper());
+		operator.ButtonLeftDPad().whenPressed(new DisengageTappers());
+		operator.ButtonRightDPad().whenPressed(new EngageTappers());
 		
 
 		// TEST CONTROLLER BUTTON MAP //////////////////////////

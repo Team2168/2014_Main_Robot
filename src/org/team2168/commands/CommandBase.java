@@ -22,6 +22,7 @@ public abstract class CommandBase extends Command {
     public static Flashlight flashlight = Flashlight.getInstance();
     public static Vision vision = Vision.getInstance();
     public static BallTapper tapper = BallTapper.getInstance();
+    public static ServoBallTapper servoTapper = ServoBallTapper.getInstance();
     
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely

@@ -1,14 +1,15 @@
 package org.team2168.commands.tapper;
 
+import org.team2168.RobotMap;
 import org.team2168.commands.CommandBase;
 
 /**
- * Disengages the ball tapper.
+ * Control the servo ball tappers with a joystick 
  */
-public class DisengageTapper extends CommandBase {
+public class DisengageTappers extends CommandBase {
 
-	public DisengageTapper() {
-		requires(tapper);
+	public DisengageTappers() {
+		requires(servoTapper);
 	}
 
 	/**
@@ -21,14 +22,15 @@ public class DisengageTapper extends CommandBase {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		tapper.disengage();
+		servoTapper.setLeftAngle(RobotMap.ballTapperDisengageAngle.getDouble());
+		servoTapper.setRightAngle(RobotMap.ballTapperDisengageAngle.getDouble());
 	}
 
 	/**
 	 * Check if the command has completed.
 	 */
 	protected boolean isFinished() {
-		return tapper.isDisengaged();
+		return false;
 	}
 
 	/**
