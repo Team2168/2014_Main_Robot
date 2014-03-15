@@ -145,9 +145,15 @@ public class RobotMap extends ConstantsBase {
 			new Constant("catapultLowerVoltage", 3.2); //comp bot
 	public static final Constant catapultWaitUntilFiredAngle =
 			new Constant("catapultWaitUntilFiredAngle", 30.0);
-	//TODO: Determine appropriate threshold voltage value for ball presence
-	public static final Constant catapultBallPresentVoltage =
-			new Constant("catapultBallPresentVoltage", 2.0);
+	//TODO: Determine appropriate threshold voltage values for ball presence
+	public static final Constant ballSettledVoltage =
+			new Constant("ballSettledVoltage", 2.5);
+	public static final Constant ballSettleTime =
+			new Constant("ballSettleTime", 0.2);
+	public static final Constant ballPresentVoltage =
+			new Constant("ballPresentVoltage", 1.0);
+	public static final Constant ballPresentTime =
+			new Constant("ballPresentTime", 0.1);
 	
 	private static final int winchPulsePerRotation = 256; //encoder ticks per rotation
 	private static final double winchGearRatio = 1.0/1.0; //ratio between wheel over encoder
@@ -168,6 +174,7 @@ public class RobotMap extends ConstantsBase {
      ****************************************************************/
 	public static final Constant intakeLowerTimeout =
 			new Constant("intakeLowerTimeout", 2.5);
+
 	public static final Constant ballTapperEngageAngle =
 			new Constant("ballTapperEngageAngle", 55.0);
 	public static final Constant ballTapperShotAngle =
