@@ -21,7 +21,7 @@ public abstract class CommandBase extends Command {
     public static Winch catapultWinch = Winch.getInstance();
     public static Flashlight flashlight = Flashlight.getInstance();
     public static Vision vision = Vision.getInstance();
-    public static BallTapper tapper = BallTapper.getInstance();
+    public static SolenoidBallTapper solenoidTapper = SolenoidBallTapper.getInstance();
     public static ServoBallTapper servoTapper = ServoBallTapper.getInstance();
     
     public static void init() {
