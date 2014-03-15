@@ -1,7 +1,6 @@
 package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
-import org.team2168.commands.tapper.ServoTapperWithJoystick;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -11,16 +10,19 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ServoBallTapper extends Subsystem {
 	private static ServoBallTapper instance = null;
-	private Servo leftTapper, rightTapper;
+	private static Servo leftTapper, rightTapper;
+	private static final boolean invertLeft = true;
+	private static final boolean invertRight = false;
 
 	/**
 	 * A private constructor to prevent multiple instances from being created.
 	 */
 	private ServoBallTapper() {
 		leftTapper = new Servo(RobotMap.leftTapperServo.getInt());
-		leftTapper.setAngle(180);
 		rightTapper = new Servo(RobotMap.rightTapperServo.getInt());
-		rightTapper.setAngle(0);
+		
+		setLeftAngle(0);
+		setRightAngle(0);
 	}
 
 	/**
@@ -37,62 +39,80 @@ public class ServoBallTapper extends Subsystem {
 	 * Set the default command
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new ServoTapperWithJoystick());
+		//setDefaultCommand(new ServoTapperWithJoystick());
 	}
 	
 	/**
-	 * Set the angular position of the left tapper
+	 * Set the angular position of the left tapper. Where zero is fully retracted.
+	 * This one moves counter-clockwise.
 	 * @param angle 0 - 180 degrees
 	 */
 	public void setLeftAngle(double angle) {
-		if(angle > 180) {
-			angle = 180;
-		}
-		if(angle < 0) {
-			angle = 0;
-		}
-		//run the left side in reverse
-		angle = 180 - angle;
-		leftTapper.setAngle(angle);
+		setAngle(angle, invertLeft, leftTapper);
 	}
 
+	/**
+	 * Set the angular position of the left tapper. Where zero is fully retracted.
+	 * This one moves clockwise.
+	 * @param angle 0 - 180 degrees
+	 */
 	public void setRightAngle(double angle) {
-		if(angle > 180) {
-			angle = 180;
-		}
-		if(angle < 0) {
-			angle = 0;
-		}
-		rightTapper.setAngle(angle);
+		setAngle(angle, invertRight, rightTapper);
 	}
 	
 	/**
-	 * Engage the tapper (stop ball motion)
+	 * Set the angular position of a servo.
+	 * 
+	 * @param angle in degrees (0 - 180) to set the servo to.
+	 * @param invert clockwise or counterclockwise rotation. Clockwise if false.
+	 * @param servo the Servo object to set the angle of.
 	 */
-//	public void engage() {
-//		
-//	}
+	private void setAngle(double angle, boolean invert, Servo servo) {
+		if(angle > 180) {
+			angle = 180;
+		} else if(angle < 0) {
+			angle = 0;
+		}
+		
+		if(invert) {
+			angle = 180 - angle;
+		}
+		
+		servo.setAngle(angle);
+	}
 
 	/**
-	 * Disengage the tapper (allow intake/firing)
+	 * Get the angle of the left tapper. 
+	 * @return the angle of the servo (degrees). Angle greater than zero
+	 *   is counterclockwise rotation.
 	 */
-//	public void disengage() {
-//		tapperRelay.set(Relay.Value.kReverse);
-//	}
+	public double getLeftAngle() {
+		return getAngle(invertLeft, leftTapper);
+	}
 	
-//	/**
-//	 * Is the tapper engaged.
-//	 * @return true if engaged
-//	 */
-//	public boolean isEngaged() {
-//		return tapperRelay.get() == Relay.Value.kForward;
-//	}
-//	
-//	/**
-//	 * Is the tapper disengaged.
-//	 * @return true if disengaged
-//	 */
-//	public boolean isDisengaged() {
-//		return tapperRelay.get() == Relay.Value.kReverse;
-//	}
+	/**
+	 * Get the angle of the right tapper. 
+	 * @return the angle of the servo (degrees). Angle greater than zero
+	 *   is clockwise rotation.
+	 */
+	public double getRightAngle() {
+		return getAngle(invertRight, rightTapper);
+	}
+	
+	/**
+	 * Get the angle of a servo.
+	 * @param inverted specifies if positive angles should be
+	 *   clockwise (false) or counterclockwise (true).
+	 * @param servo The Servo object to get the angle of. 
+	 * @return the angle of the zero (degrees).
+	 */
+	private double getAngle(boolean inverted, Servo servo) {
+		double angle = servo.getAngle();
+		
+		if(inverted) {
+			angle = -angle + 180;
+		}
+		
+		return angle;
+	}
 }
