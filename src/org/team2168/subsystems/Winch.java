@@ -25,7 +25,8 @@ public class Winch extends Subsystem {
 	private static MomentaryDoubleSolenoid winchSolenoid;
 	private static AverageEncoder winchEncoder;
 	private static AnalogChannel winchPotentiometer;
-	private static AnalogChannel ballSensor;
+	private static AnalogChannel winchBallSensor;
+	private static AnalogChannel intakeBallSensor;
 	private static Debouncer ballPresent, ballNotPresent;
 	private static Debouncer ballSettled;
 
@@ -37,7 +38,8 @@ public class Winch extends Subsystem {
 		winchInputSwitch = new DigitalInput(RobotMap.winchLimitSwitch.getInt());
 		winchSolenoid = new MomentaryDoubleSolenoid(
 				RobotMap.winchExtPort.getInt(),RobotMap.winchRetPort.getInt());
-		ballSensor = new AnalogChannel(RobotMap.ballSensorPort.getInt());
+		winchBallSensor = new AnalogChannel(RobotMap.winchBallSensorPort.getInt());
+		intakeBallSensor = new AnalogChannel(RobotMap.intakeBallSensorPort.getInt());
 		ballPresent = new Debouncer(RobotMap.ballPresentTime.getDouble());
 		ballNotPresent = new Debouncer(RobotMap.ballPresentTime.getDouble());
 		ballSettled = new Debouncer(RobotMap.ballSettleTime.getDouble());
@@ -162,19 +164,27 @@ public class Winch extends Subsystem {
 	
     
 	/**
-	 * Get the ball sensor voltage.
-	 * @return The voltage read from the ball sensor. 0.0 to 5.0
+	 * Get the winch's ball sensor voltage.
+	 * @return The voltage read from the sensor. 0.0 to 5.0
 	 */
-	public double getBallSensorVoltage() {
-		return ballSensor.getVoltage();
+	public double getWinchBallSensorVoltage() {
+		return winchBallSensor.getVoltage();
 	}
 	
 	/**
-	 * Check if ball is present on the catapult.
+	 * Get the intake's ball sensor voltage.
+	 * @return The voltage read from the sensor. 0.0 to 5.0
+	 */
+	public double getIntakeBallSensorVoltage() {
+		return intakeBallSensor.getVoltage();
+	}
+	
+	/**
+	 * Check if ball is present in the intake.
 	 * @return true if present for a duration
 	 */
 	public boolean isBallPresent() {
-		return ballPresent.update(getBallSensorVoltage()
+		return ballPresent.update(getIntakeBallSensorVoltage()
 				>= RobotMap.ballPresentVoltage.getDouble());
 	}
 	
@@ -183,7 +193,7 @@ public class Winch extends Subsystem {
 	 * @return true if not present for a duration
 	 */
 	public boolean isBallNotPresent() {
-		return ballNotPresent.update(!(getBallSensorVoltage()
+		return ballNotPresent.update(!(getIntakeBallSensorVoltage()
 				>= RobotMap.ballPresentVoltage.getDouble()));
 	}
 	
@@ -192,7 +202,7 @@ public class Winch extends Subsystem {
 	 * @return true if ball is settled.
 	 */
 	public boolean isBallSettled() {
-		return ballSettled.update(getBallSensorVoltage()
+		return ballSettled.update(getWinchBallSensorVoltage()
 				>= RobotMap.ballSettledVoltage.getDouble());
 	}
 	

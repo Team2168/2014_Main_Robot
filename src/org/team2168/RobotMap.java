@@ -82,10 +82,13 @@ public class RobotMap extends ConstantsBase {
 	
 	//Analog Input Channels///////////////////////////////////////////
 	public static final Constant gyroPort = new Constant("gyroPort", 1);
-	public static final Constant ballSensorPort =
-			new Constant("ballSensorPort", 2);
+	
 	public static final Constant potentiometerPort =
 			new Constant("potentiometerPort", 3);
+	public static final Constant winchBallSensorPort =
+			new Constant("winchBallSensorPort", 4);
+	public static final Constant intakeBallSensorPort =
+			new Constant("intakeBallSensorPort", 5);
 	
 	/****************************************************************
      *                    Drivetrain Parameters                     *
@@ -151,7 +154,7 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant ballSettleTime =
 			new Constant("ballSettleTime", 0.2);
 	public static final Constant ballPresentVoltage =
-			new Constant("ballPresentVoltage", 1.0);
+			new Constant("ballPresentVoltage", 0.75);
 	public static final Constant ballPresentTime =
 			new Constant("ballPresentTime", 0.1);
 	
