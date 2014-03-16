@@ -147,7 +147,11 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		autonomousCommand.cancel();
+		
+		//don't try to cancel a command if it isn't running yet
+		if(autonomousCommand != null) {
+			autonomousCommand.cancel();
+		}
 		Scheduler.getInstance().enable();
 
 		if(DriverStation.getInstance().isFMSAttached())
