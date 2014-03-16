@@ -38,7 +38,9 @@ public class OI {
 		operator.ButtonRightBumper().whenPressed(new IntakeDown());
 		operator.ButtonLeftBumper().whenPressed(new IntakeUp());
 		operator.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(1.0));
+		//operator.ButtonRightTrigger().whenReleased(new EngageTappers());
 		operator.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-1.0));
+		//operator.ButtonLeftTrigger().whenPressed(new DisengageTappers());
 		
 		operator.ButtonStart().whenPressed(new ExtendWinchDogGear());
 		operator.ButtonBack().whenPressed(new RetractWinchDogGear());
@@ -60,13 +62,10 @@ public class OI {
 		testController.ButtonLeftBumper().whenPressed(new IntakeUp());
 		
 		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(1.0));
+		testController.ButtonRightTrigger().whenPressed(new AutomaticEngageTappers());
 		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-1.0));
+		testController.ButtonLeftTrigger().whenPressed(new DisengageTappers());
 
-		testController.ButtonLeftDPad().whenPressed(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
-		testController.ButtonRightDPad().whenPressed(new DriveDrivetrainStraight(RobotMap.autoDriveDistance.getDouble()));
-
-		testController.ButtonLeftStick().whenPressed(new RotateDrivetrainRelative(RobotMap.rotationAngleToHot.getDouble(), false));
-		testController.ButtonRightStick().whenPressed(new RotateDrivetrainRelative(-RobotMap.rotationAngleToHot.getDouble(), false));
 		
 		
 		auto.ButtonA().whenPressed(new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
