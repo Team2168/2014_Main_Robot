@@ -13,6 +13,10 @@ public class ServoBallTapper extends Subsystem {
 	private static Servo leftTapper, rightTapper;
 	private static final boolean invertLeft = true;
 	private static final boolean invertRight = false;
+	
+	//These need to match the implementation of angle ranges in the Servo class.
+	//TODO: modify the servo class to allow you to set min/max angles.
+	//  There's no good reason to not have this supported.
 	private static final double MAX_ANGLE = 170.0;
 	private static final double MIN_ANGLE= 0.0;
 
