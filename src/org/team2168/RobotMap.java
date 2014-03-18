@@ -154,7 +154,7 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant ballSettleTime =
 			new Constant("ballSettleTime", 0.2);
 	public static final Constant ballPresentVoltage =
-			new Constant("ballPresentVoltage", 0.75);
+			new Constant("ballPresentVoltage", 0.9);
 	public static final Constant ballPresentTime =
 			new Constant("ballPresentTime", 0.1);
 	

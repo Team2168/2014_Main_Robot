@@ -57,6 +57,9 @@ public class ConsolePrinter {
 		SmartDashboard.putNumber("Catapult Angle", Winch.getInstance().getCatapultAngle());
 		
 		
+		SmartDashboard.putNumber("Intake Ball presence", Winch.getInstance().getIntakeBallSensorVoltage());
+		SmartDashboard.putNumber("Winch ball presence", Winch.getInstance().getWinchBallSensorVoltage());
+		
 		
 		SmartDashboard.putBoolean("Camera Status", Vision.getInstance().isCameraConnected());
 		SmartDashboard.putBoolean("Bone Status", Vision.getInstance().isBoneConnected());
