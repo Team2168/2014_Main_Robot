@@ -13,6 +13,8 @@ public class ServoBallTapper extends Subsystem {
 	private static Servo leftTapper, rightTapper;
 	private static final boolean invertLeft = true;
 	private static final boolean invertRight = false;
+	private static final double MAX_ANGLE = 170.0;
+	private static final double MIN_ANGLE= 0.0;
 
 	/**
 	 * A private constructor to prevent multiple instances from being created.
@@ -45,7 +47,7 @@ public class ServoBallTapper extends Subsystem {
 	/**
 	 * Set the angular position of the left tapper. Where zero is fully retracted.
 	 * This one moves counter-clockwise.
-	 * @param angle 0 - 180 degrees
+	 * @param angle 0 - 170 degrees
 	 */
 	public void setLeftAngle(double angle) {
 		setAngle(angle, invertLeft, leftTapper);
@@ -54,7 +56,7 @@ public class ServoBallTapper extends Subsystem {
 	/**
 	 * Set the angular position of the left tapper. Where zero is fully retracted.
 	 * This one moves clockwise.
-	 * @param angle 0 - 180 degrees
+	 * @param angle 0 - 170 degrees
 	 */
 	public void setRightAngle(double angle) {
 		setAngle(angle, invertRight, rightTapper);
@@ -68,14 +70,14 @@ public class ServoBallTapper extends Subsystem {
 	 * @param servo the Servo object to set the angle of.
 	 */
 	private void setAngle(double angle, boolean invert, Servo servo) {
-		if(angle > 180) {
-			angle = 180;
-		} else if(angle < 0) {
-			angle = 0;
+		if(angle > MAX_ANGLE) {
+			angle = MAX_ANGLE;
+		} else if(angle < MIN_ANGLE) {
+			angle = MIN_ANGLE;
 		}
 		
 		if(invert) {
-			angle = 180 - angle;
+			angle = MAX_ANGLE - angle;
 		}
 		
 		servo.setAngle(angle);
@@ -110,7 +112,7 @@ public class ServoBallTapper extends Subsystem {
 		double angle = servo.getAngle();
 		
 		if(inverted) {
-			angle = -angle + 180;
+			angle = -angle + MAX_ANGLE;
 		}
 		
 		return angle;
