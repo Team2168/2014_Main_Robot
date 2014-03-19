@@ -11,13 +11,14 @@ public class Reload extends CommandGroup {
 	public Reload() {
 		//engage the winch drum
 		addSequential(new RetractWinchDogGear());
-		
-		//Retract the tusks and tappers in preparation for intaking next ball
-		addSequential(new TusksTrussShotPosition());
-		addSequential(new DisengageTappers());
+
 		
 		//retract the catapult all the way
 		addSequential(new RetractWinchUntilLowered(
 				RobotMap.retractWinchSpeed.getDouble()));
+		
+		//Retract the tusks and tappers in preparation for intaking next ball
+		addSequential(new TusksTrussShotPosition());
+		addSequential(new DisengageTappers());
 	}
 }

@@ -5,6 +5,7 @@ import org.team2168.commands.auto.Center_RotHotGoal_1Ball;
 import org.team2168.commands.auto.Left_LeftHotGoal_1Ball;
 import org.team2168.commands.auto.NoBall_DrvFwd;
 import org.team2168.commands.auto.Right_RightHotGoal_1Ball;
+import org.team2168.commands.auto.Right_RightHotGoal_2Ball;
 import org.team2168.commands.drivetrain.*;
 import org.team2168.commands.intake.*;
 import org.team2168.commands.tapper.*;
@@ -63,19 +64,20 @@ public class OI {
 		testController.ButtonRightBumper().whenPressed(new IntakeDown());
 		testController.ButtonLeftBumper().whenPressed(new IntakeUp());
 		
-		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(
-				RobotMap.intakeWheelVoltage.getDouble()));
-		testController.ButtonRightTrigger().whenPressed(new AutomaticEngageTappers());
-		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(
-				-RobotMap.intakeWheelVoltage.getDouble()));
-		testController.ButtonLeftTrigger().whenPressed(new DisengageTappers());
-
+		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(RobotMap.intakeWheelVoltage.getDouble()));
+		testController.ButtonRightTrigger().whenPressed(new DisengageTappers());
+		
+		testController.ButtonLeftTrigger().whenPressed(new AutomaticEngageTappers());
+		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-RobotMap.intakeWheelVoltage.getDouble()));
+		
 		testController.ButtonLeftDPad().whenPressed(new IntakeSingleBallAndSettle());
 		
+		
+		// Auto CONTROLLER BUTTON MAP //////////////////////////		
 		auto.ButtonA().whenPressed(new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
 		auto.ButtonB().whenPressed(new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
 		auto.ButtonX().whenPressed(new Left_LeftHotGoal_1Ball());
-		auto.ButtonY().whenPressed(new Right_RightHotGoal_1Ball());
+		auto.ButtonY().whenPressed(new Right_RightHotGoal_2Ball());
 		auto.ButtonRightBumper().whenPressed(new NoBall_DrvFwd());
 		
 		

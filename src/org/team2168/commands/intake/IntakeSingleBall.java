@@ -11,7 +11,7 @@ public class IntakeSingleBall extends CommandGroup {
 	public IntakeSingleBall() {
 		//Drive the motors to acquire ball
 		addParallel(new IntakeDriveMotor(
-				RobotMap.intakeWheelVoltage.getDouble()));
+				-RobotMap.intakeWheelVoltage.getDouble()));
 		
 		//wait until you see a ball
 		addSequential(new WaitUntilBallPresent());
