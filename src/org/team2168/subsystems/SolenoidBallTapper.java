@@ -7,23 +7,23 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * Subsystem for the mechanism that keeps the balls from moving around.
  */
-public class BallTapper extends Subsystem {
-	private static BallTapper instance = null;
+public class SolenoidBallTapper extends Subsystem {
+	private static SolenoidBallTapper instance = null;
 	private Relay tapperRelay;
 
 	/**
 	 * A private constructor to prevent multiple instances from being created.
 	 */
-	private BallTapper() {
+	private SolenoidBallTapper() {
 		tapperRelay = new Relay(RobotMap.ballTapperRelay.getInt());
 	}
 
 	/**
 	 * @return the instance of this subsystem.
 	 */
-	public static BallTapper getInstance() {
+	public static SolenoidBallTapper getInstance() {
 		if (instance == null) {
-			instance = new BallTapper();
+			instance = new SolenoidBallTapper();
 		}
 		return instance;
 	}

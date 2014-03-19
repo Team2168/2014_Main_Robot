@@ -1,34 +1,39 @@
-package org.team2168.commands.tapper;
+package org.team2168.commands.winch;
 
 import org.team2168.commands.CommandBase;
 
 /**
- * Disengages the ball tapper.
+ * Wait until a ball is not detected.
+ * @author James
  */
-public class DisengageTapper extends CommandBase {
+public class WaitUntilBallNotPresent extends CommandBase {
 
-	public DisengageTapper() {
-		requires(tapper);
+	/**
+	 * Creates a new command.
+	 */
+	public WaitUntilBallNotPresent() {
+		requires(catapultWinch);
 	}
 
 	/**
 	 * Called just before this Command runs the first time
 	 */
 	protected void initialize() {
+		catapultWinch.resetBallNotPresent();
 	}
 
 	/**
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		tapper.disengage();
 	}
 
 	/**
-	 * Check if the command has completed.
+	 * Wait until a ball is not present in the intake
+	 * @return true when a ball is not detected
 	 */
 	protected boolean isFinished() {
-		return tapper.isDisengaged();
+		return catapultWinch.isBallNotPresent();
 	}
 
 	/**
@@ -39,7 +44,7 @@ public class DisengageTapper extends CommandBase {
 
 	/**
 	 * Called when another command which requires one or more of the same
-	 * subsystems is scheduled to run.
+	 * subsystems is scheduled to run
 	 */
 	protected void interrupted() {
 	}

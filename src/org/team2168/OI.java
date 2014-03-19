@@ -37,14 +37,18 @@ public class OI {
 
 		operator.ButtonRightBumper().whenPressed(new IntakeDown());
 		operator.ButtonLeftBumper().whenPressed(new IntakeUp());
-		operator.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(1.0));
-		operator.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-1.0));
+		operator.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(
+				RobotMap.intakeWheelVoltage.getDouble()));
+		//operator.ButtonRightTrigger().whenReleased(new EngageTappers());
+		operator.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(
+				-RobotMap.intakeWheelVoltage.getDouble()));
+		//operator.ButtonLeftTrigger().whenPressed(new DisengageTappers());
 		
 		operator.ButtonStart().whenPressed(new ExtendWinchDogGear());
 		operator.ButtonBack().whenPressed(new RetractWinchDogGear());
 
-		operator.ButtonLeftDPad().whenPressed(new DisengageTapper());
-		operator.ButtonRightDPad().whenPressed(new EngageTapper());
+		operator.ButtonLeftDPad().whenPressed(new DisengageTappers());
+		operator.ButtonRightDPad().whenPressed(new EngageTappers());
 		
 
 		// TEST CONTROLLER BUTTON MAP //////////////////////////
@@ -59,15 +63,14 @@ public class OI {
 		testController.ButtonRightBumper().whenPressed(new IntakeDown());
 		testController.ButtonLeftBumper().whenPressed(new IntakeUp());
 		
-		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(1.0));
-		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-1.0));
+		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(
+				RobotMap.intakeWheelVoltage.getDouble()));
+		testController.ButtonRightTrigger().whenPressed(new AutomaticEngageTappers());
+		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(
+				-RobotMap.intakeWheelVoltage.getDouble()));
+		testController.ButtonLeftTrigger().whenPressed(new DisengageTappers());
 
-		testController.ButtonLeftDPad().whenPressed(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
-		testController.ButtonRightDPad().whenPressed(new DriveDrivetrainStraight(RobotMap.autoDriveDistance.getDouble()));
-
-		testController.ButtonLeftStick().whenPressed(new RotateDrivetrainRelative(RobotMap.rotationAngleToHot.getDouble(), false));
-		testController.ButtonRightStick().whenPressed(new RotateDrivetrainRelative(-RobotMap.rotationAngleToHot.getDouble(), false));
-		
+		testController.ButtonLeftDPad().whenPressed(new IntakeSingleBallAndSettle());
 		
 		auto.ButtonA().whenPressed(new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
 		auto.ButtonB().whenPressed(new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));

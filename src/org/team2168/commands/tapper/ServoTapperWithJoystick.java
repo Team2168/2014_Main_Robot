@@ -3,12 +3,12 @@ package org.team2168.commands.tapper;
 import org.team2168.commands.CommandBase;
 
 /**
- * Engages the ball tapper.
+ * Control the servo ball tappers with a joystick 
  */
-public class EngageTapper extends CommandBase {
+public class ServoTapperWithJoystick extends CommandBase {
 
-	public EngageTapper() {
-		requires(tapper);
+	public ServoTapperWithJoystick() {
+		requires(servoTapper);
 	}
 
 	/**
@@ -21,14 +21,15 @@ public class EngageTapper extends CommandBase {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		tapper.engage();
+		servoTapper.setLeftAngle(oi.auto.getLeftStickRaw_X() * 180);
+		servoTapper.setRightAngle(oi.auto.getLeftStickRaw_X() * 180);
 	}
 
 	/**
 	 * Check if the command has completed.
 	 */
 	protected boolean isFinished() {
-		return tapper.isEngaged();
+		return false;
 	}
 
 	/**
