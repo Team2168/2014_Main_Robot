@@ -30,8 +30,9 @@ public class TapperFirePosition extends CommandBase {
 	 * The command has completed when both tappers are at the angle specified.
 	 */
 	protected boolean isFinished() {
-		return (servoTapper.getLeftAngle() == RobotMap.ballTapperShotAngle.getDouble())
-				&& (servoTapper.getRightAngle() == RobotMap.ballTapperShotAngle.getDouble());
+		return true;
+//		return (servoTapper.getLeftAngle() == RobotMap.ballTapperShotAngle.getDouble())
+//				&& (servoTapper.getRightAngle() == RobotMap.ballTapperShotAngle.getDouble());
 	}
 
 	/**

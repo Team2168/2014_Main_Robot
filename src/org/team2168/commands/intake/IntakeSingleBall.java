@@ -1,5 +1,6 @@
 package org.team2168.commands.intake;
 
+import org.team2168.RobotMap;
 import org.team2168.commands.winch.WaitUntilBallNotPresent;
 import org.team2168.commands.winch.WaitUntilBallPresent;
 
@@ -9,7 +10,8 @@ public class IntakeSingleBall extends CommandGroup {
 
 	public IntakeSingleBall() {
 		//Drive the motors to acquire ball
-		addParallel(new IntakeDriveMotor(-1.0));
+		addParallel(new IntakeDriveMotor(
+				RobotMap.intakeWheelVoltage.getDouble()));
 		
 		//wait until you see a ball
 		addSequential(new WaitUntilBallPresent());
@@ -18,6 +20,6 @@ public class IntakeSingleBall extends CommandGroup {
 		addSequential(new WaitUntilBallNotPresent());
 		
 		//stop intake motors
-		addParallel(new IntakeDriveMotor(0.0));
+		addSequential(new IntakeDriveMotor(0.0),0.1);
 	}
 }

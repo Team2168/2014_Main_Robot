@@ -150,7 +150,7 @@ public class RobotMap extends ConstantsBase {
 			new Constant("catapultWaitUntilFiredAngle", 30.0);
 	//TODO: Determine appropriate threshold voltage values for ball presence
 	public static final Constant ballSettledVoltage =
-			new Constant("ballSettledVoltage", 2.5);
+			new Constant("ballSettledVoltage", 1.6);
 	public static final Constant ballSettleTime =
 			new Constant("ballSettleTime", 0.2);
 	public static final Constant ballPresentVoltage =
@@ -177,7 +177,9 @@ public class RobotMap extends ConstantsBase {
      ****************************************************************/
 	public static final Constant intakeLowerTimeout =
 			new Constant("intakeLowerTimeout", 2.5);
-
+	public static final Constant intakeWheelVoltage =
+			new Constant("intakeWheelVoltage", 0.62);
+	
 	public static final Constant ballTapperEngageAngle =
 			new Constant("ballTapperEngageAngle", 55.0);
 	public static final Constant ballTapperShotAngle =

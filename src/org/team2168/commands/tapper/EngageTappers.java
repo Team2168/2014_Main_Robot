@@ -30,8 +30,9 @@ public class EngageTappers extends CommandBase {
 	 * The command has completed when both tappers are at the angle specified.
 	 */
 	protected boolean isFinished() {
-		return (servoTapper.getLeftAngle() == RobotMap.ballTapperEngageAngle.getDouble())
-				&& (servoTapper.getRightAngle() == RobotMap.ballTapperEngageAngle.getDouble());
+		return true;
+//		return (servoTapper.getLeftAngle() == RobotMap.ballTapperEngageAngle.getDouble())
+//				&& (servoTapper.getRightAngle() == RobotMap.ballTapperEngageAngle.getDouble());
 	}
 
 	/**

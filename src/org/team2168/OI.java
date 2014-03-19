@@ -37,9 +37,11 @@ public class OI {
 
 		operator.ButtonRightBumper().whenPressed(new IntakeDown());
 		operator.ButtonLeftBumper().whenPressed(new IntakeUp());
-		operator.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(1.0));
+		operator.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(
+				RobotMap.intakeWheelVoltage.getDouble()));
 		//operator.ButtonRightTrigger().whenReleased(new EngageTappers());
-		operator.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-1.0));
+		operator.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(
+				-RobotMap.intakeWheelVoltage.getDouble()));
 		//operator.ButtonLeftTrigger().whenPressed(new DisengageTappers());
 		
 		operator.ButtonStart().whenPressed(new ExtendWinchDogGear());
@@ -61,12 +63,14 @@ public class OI {
 		testController.ButtonRightBumper().whenPressed(new IntakeDown());
 		testController.ButtonLeftBumper().whenPressed(new IntakeUp());
 		
-		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(1.0));
+		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(
+				RobotMap.intakeWheelVoltage.getDouble()));
 		testController.ButtonRightTrigger().whenPressed(new AutomaticEngageTappers());
-		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-1.0));
+		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(
+				-RobotMap.intakeWheelVoltage.getDouble()));
 		testController.ButtonLeftTrigger().whenPressed(new DisengageTappers());
 
-		
+		testController.ButtonLeftDPad().whenPressed(new IntakeSingleBallAndSettle());
 		
 		auto.ButtonA().whenPressed(new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
 		auto.ButtonB().whenPressed(new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
