@@ -175,17 +175,16 @@ public class Robot extends IterativeRobot {
 	}
 	
 	
-	private void autoSelectInit()
-	{
+	private void autoSelectInit() {
 		autoChooser = new SendableChooser();
-		autoChooser.addObject("ShootStraight_DrvFwd", new ShootStraight_DrvFwd());
-		autoChooser.addObject("ShootStraight_2BallDrvFwd", new ShootStraight_2Ball_DrvFwd());
-		autoChooser.addObject("Center_RotDrvFwdHotGoal_1Ball", new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
-		autoChooser.addObject("Center_RotHotGoal_1Ball", new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
-		autoChooser.addObject("Left_WaitForLeftHot_1Ball", new Left_LeftHotGoal_1Ball());
-		autoChooser.addObject("Right_WaitForRightHot_1ball", new Right_RightHotGoal_1Ball());
-		autoChooser.addDefault("Right_WaitForRightHot_2ball", new Right_RightHotGoal_2Ball());
-		autoChooser.addObject("NoBall_DrvFwd", new NoBall_DrvFwd());
+		autoChooser.addDefault("2 Ball, Shoot Straight, Drive Fwd", new Right_RightHotGoal_2Ball());
+		autoChooser.addObject("1 Ball, Shoot Straight Drive Fwd", new ShootStraight_DrvFwd());
+		autoChooser.addObject("1 Ball, Wait for Left Hot", new Left_LeftHotGoal_1Ball());
+		autoChooser.addObject("1 Ball, Wait for Right Hot", new Right_RightHotGoal_1Ball());
+		autoChooser.addObject("No Ball, Drive Forward", new NoBall_DrvFwd());
+		//autoChooser.addObject("Center_RotHotGoal_1Ball", new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		//autoChooser.addObject("Center_RotDrvFwdHotGoal_1Ball", new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		//autoChooser.addObject("ShootStraight_2BallDrvFwd", new ShootStraight_2Ball_DrvFwd());
 		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
 	}
 	
