@@ -145,7 +145,7 @@ public class RobotMap extends ConstantsBase {
 			new Constant("catapultLowerAngle", -26.0); //comp bot?
 	public static final Constant catapultLowerVoltage =
 			//new Constant("catapultLowerVoltage", 3.938); //practice bot.
-			new Constant("catapultLowerVoltage", 3.189); //comp bot
+			new Constant("catapultLowerVoltage", 3.209); //comp bot
 	public static final Constant catapultWaitUntilFiredAngle =
 			new Constant("catapultWaitUntilFiredAngle", 30.0);
 	//TODO: Determine appropriate threshold voltage values for ball presence
