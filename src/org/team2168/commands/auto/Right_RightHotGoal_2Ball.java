@@ -27,8 +27,9 @@ public class Right_RightHotGoal_2Ball extends CommandGroup {
 		addParallel(new TusksLongShotPosition());
 
 		// move intake out of way, spin wheel to keep ball in robot
-		addParallel(new IntakeDriveMotor(-0.25));
-		addSequential(new IntakeDown(), 1);
+		addParallel(new IntakeDriveMotor(
+				RobotMap.intakeWheelSpeedWhenLowering.getDouble()));
+		addSequential(new IntakeDown(), 1.5);
 		addParallel(new IntakeDriveMotor(0.0));
 		addSequential(new EngageTappers());
 		

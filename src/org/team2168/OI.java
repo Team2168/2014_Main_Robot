@@ -6,7 +6,6 @@ import org.team2168.commands.auto.Left_LeftHotGoal_1Ball;
 import org.team2168.commands.auto.NoBall_DrvFwd;
 import org.team2168.commands.auto.Right_RightHotGoal_1Ball;
 import org.team2168.commands.auto.Right_RightHotGoal_2Ball;
-import org.team2168.commands.drivetrain.*;
 import org.team2168.commands.intake.*;
 import org.team2168.commands.tapper.*;
 import org.team2168.commands.tusks.*;
@@ -61,8 +60,8 @@ public class OI {
 		testController.ButtonStart().whenPressed(new ExtendWinchDogGear());
 		testController.ButtonBack().whenPressed(new RetractWinchDogGear());
 		
-		testController.ButtonRightBumper().whenPressed(new IntakeDown());
-		testController.ButtonLeftBumper().whenPressed(new IntakeUp());
+		testController.ButtonRightBumper().whenPressed(new IntakeDownAndDriveMotors());
+		testController.ButtonLeftBumper().whenPressed(new IntakeUp_Safe());
 		
 		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(RobotMap.intakeWheelVoltage.getDouble()));
 		testController.ButtonRightTrigger().whenPressed(new DisengageTappers());
