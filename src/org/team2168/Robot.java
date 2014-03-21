@@ -91,7 +91,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void disabledPeriodic() {
 		autonomousCommand = (Command) autoChooser.getSelected();
-		lcd.println(DriverStationLCD.Line.kUser2, 1, "Auto: "+autonomousCommand.getName());
+		lcd.println(DriverStationLCD.Line.kUser2, 1, autonomousCommand.getName());
 		lcd.updateLCD();
 
 		//Kill all active commands

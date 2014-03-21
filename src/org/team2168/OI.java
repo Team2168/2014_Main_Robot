@@ -61,12 +61,16 @@ public class OI {
 		testController.ButtonBack().whenPressed(new RetractWinchDogGear());
 		
 		testController.ButtonRightBumper().whenPressed(new IntakeDownAndDriveMotors());
+		testController.ButtonRightBumper().whenReleased(new AutomaticEngageTappers());
 		testController.ButtonLeftBumper().whenPressed(new IntakeUp_Safe());
 		
 		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(RobotMap.intakeWheelVoltage.getDouble()));
 		testController.ButtonRightTrigger().whenPressed(new DisengageTappers());
 		
-		testController.ButtonLeftTrigger().whileHeld(new IntakeSingleBallAndSettle());
+		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-RobotMap.intakeWheelVoltage.getDouble()));
+		testController.ButtonLeftTrigger().whenPressed(new AutomaticEngageTappers());
+		//testController.ButtonLeftTrigger().whenPressed(new IntakeSingleBallAndSettle());
+		//testController.ButtonLeftTrigger().whenReleased(new IntakeWithJoystick());
 		
 		testController.ButtonLeftDPad().whenPressed(new DisengageTappers());
 		testController.ButtonRightDPad().whenPressed(new EngageTappers());
