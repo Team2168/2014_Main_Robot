@@ -136,10 +136,10 @@ public class RobotMap extends ConstantsBase {
 			new Constant("retractWinchSpeed", 1.0);
 
 	public static final Constant catapultRaiseAngle =
-			new Constant("catapultRaiseAngle", 44.0);
+			new Constant("catapultRaiseAngle", 45.0);
 	public static final Constant catapultRaiseVoltage =
 			//new Constant("catapultRaiseVoltage", 2.951); //practice bot
-			new Constant("catapultRaiseVoltage", 4.43); //comp bot
+			new Constant("catapultRaiseVoltage", 4.221); //comp bot
 	public static final Constant catapultLowerAngle =
 			//new Constant("catapultLowerAngle", -23.0); //practice bot
 			new Constant("catapultLowerAngle", -26.0); //comp bot?
