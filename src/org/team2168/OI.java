@@ -66,10 +66,10 @@ public class OI {
 		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(RobotMap.intakeWheelVoltage.getDouble()));
 		testController.ButtonRightTrigger().whenPressed(new DisengageTappers());
 		
-		testController.ButtonLeftTrigger().whenPressed(new AutomaticEngageTappers());
-		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-RobotMap.intakeWheelVoltage.getDouble()));
+		testController.ButtonLeftTrigger().whileHeld(new IntakeSingleBallAndSettle());
 		
-		testController.ButtonLeftDPad().whenPressed(new IntakeSingleBallAndSettle());
+		testController.ButtonLeftDPad().whenPressed(new DisengageTappers());
+		testController.ButtonRightDPad().whenPressed(new EngageTappers());
 		
 		
 		// Auto CONTROLLER BUTTON MAP //////////////////////////		

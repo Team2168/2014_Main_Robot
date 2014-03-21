@@ -3,7 +3,8 @@ package org.team2168.commands.winch;
 import org.team2168.commands.CommandBase;
 
 /**
- * Wait until a ball is not detected.
+ * Wait until a ball is not detected in the intake OR there is a ball present
+ *   on the winch.
  * @author James
  */
 public class WaitUntilBallNotPresent extends CommandBase {
@@ -20,6 +21,7 @@ public class WaitUntilBallNotPresent extends CommandBase {
 	 */
 	protected void initialize() {
 		catapultWinch.resetBallNotPresent();
+		catapultWinch.resetBallPresentOnWinch();
 	}
 
 	/**
@@ -33,7 +35,8 @@ public class WaitUntilBallNotPresent extends CommandBase {
 	 * @return true when a ball is not detected
 	 */
 	protected boolean isFinished() {
-		return catapultWinch.isBallNotPresent();
+		return catapultWinch.isBallNotPresent()
+				|| catapultWinch.isBallPresentOnWinch();
 	}
 
 	/**

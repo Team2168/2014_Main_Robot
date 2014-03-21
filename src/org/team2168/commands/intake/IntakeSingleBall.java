@@ -20,6 +20,6 @@ public class IntakeSingleBall extends CommandGroup {
 		addSequential(new WaitUntilBallNotPresent());
 		
 		//stop intake motors
-		addSequential(new IntakeDriveMotor(0.0),0.1);
+		addSequential(new IntakeDriveMotor(0.0), 0.1);
 	}
 }

@@ -15,7 +15,7 @@ public class Reload extends CommandGroup {
 		
 		//retract the catapult all the way
 		addSequential(new RetractWinchUntilLowered(
-				RobotMap.retractWinchSpeed.getDouble()));
+				RobotMap.retractWinchSpeed.getDouble()), 4.0);
 		
 		//Retract the tusks and tappers in preparation for intaking next ball
 		addSequential(new TusksTrussShotPosition());
