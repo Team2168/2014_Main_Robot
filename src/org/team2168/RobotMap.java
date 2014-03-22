@@ -182,7 +182,7 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant intakeLowerTimeout =
 			new Constant("intakeLowerTimeout", 2.5);
 	public static final Constant intakeWheelVoltage =
-			new Constant("intakeWheelVoltage", 1.00);
+			new Constant("intakeWheelVoltage", 0.7);
 	
 	public static final Constant ballTapperEngageAngle =
 			//new Constant("ballTapperEngageAngle", 55.0); //practice bot
