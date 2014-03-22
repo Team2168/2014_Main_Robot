@@ -6,7 +6,6 @@ import org.team2168.commands.auto.Left_LeftHotGoal_1Ball;
 import org.team2168.commands.auto.NoBall_DrvFwd;
 import org.team2168.commands.auto.Right_RightHotGoal_1Ball;
 import org.team2168.commands.auto.Right_RightHotGoal_2Ball;
-import org.team2168.commands.drivetrain.*;
 import org.team2168.commands.intake.*;
 import org.team2168.commands.tapper.*;
 import org.team2168.commands.tusks.*;
@@ -36,20 +35,42 @@ public class OI {
 		operator.ButtonB().whenPressed(new TusksLongShotPosition());
 		operator.ButtonA().whenPressed(new FireAndReload());
 
-		operator.ButtonRightBumper().whenPressed(new IntakeDown());
-		operator.ButtonLeftBumper().whenPressed(new IntakeUp());
-		operator.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(
-				RobotMap.intakeWheelVoltage.getDouble()));
-		//operator.ButtonRightTrigger().whenReleased(new EngageTappers());
-		operator.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(
-				-RobotMap.intakeWheelVoltage.getDouble()));
-		//operator.ButtonLeftTrigger().whenPressed(new DisengageTappers());
-		
 		operator.ButtonStart().whenPressed(new ExtendWinchDogGear());
 		operator.ButtonBack().whenPressed(new RetractWinchDogGear());
-
+		
+		operator.ButtonRightBumper().whenPressed(new IntakeDownAndDriveMotors());
+		operator.ButtonRightBumper().whenReleased(new AutomaticEngageTappers());
+		operator.ButtonLeftBumper().whenPressed(new IntakeUp_Safe());
+		
+		operator.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(RobotMap.intakeWheelVoltage.getDouble()));
+		operator.ButtonRightTrigger().whenPressed(new DisengageTappers());
+		
+		operator.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-RobotMap.intakeWheelVoltage.getDouble()));
+		operator.ButtonLeftTrigger().whenPressed(new AutomaticEngageTappers());
+		
 		operator.ButtonLeftDPad().whenPressed(new DisengageTappers());
 		operator.ButtonRightDPad().whenPressed(new EngageTappers());
+		
+		//Old map
+//		operator.ButtonX().whenPressed(new TusksTrussShotPosition());
+//		operator.ButtonY().whenPressed(new TusksShortShotPosition());
+//		operator.ButtonB().whenPressed(new TusksLongShotPosition());
+//		operator.ButtonA().whenPressed(new FireAndReload());
+//
+//		operator.ButtonRightBumper().whenPressed(new IntakeDown());
+//		operator.ButtonLeftBumper().whenPressed(new IntakeUp());
+//		operator.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(
+//				RobotMap.intakeWheelVoltage.getDouble()));
+//		//operator.ButtonRightTrigger().whenReleased(new EngageTappers());
+//		operator.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(
+//				-RobotMap.intakeWheelVoltage.getDouble()));
+//		//operator.ButtonLeftTrigger().whenPressed(new DisengageTappers());
+//		
+//		operator.ButtonStart().whenPressed(new ExtendWinchDogGear());
+//		operator.ButtonBack().whenPressed(new RetractWinchDogGear());
+//
+//		operator.ButtonLeftDPad().whenPressed(new DisengageTappers());
+//		operator.ButtonRightDPad().whenPressed(new EngageTappers());
 		
 
 		// TEST CONTROLLER BUTTON MAP //////////////////////////
@@ -61,16 +82,18 @@ public class OI {
 		testController.ButtonStart().whenPressed(new ExtendWinchDogGear());
 		testController.ButtonBack().whenPressed(new RetractWinchDogGear());
 		
-		testController.ButtonRightBumper().whenPressed(new IntakeDown());
-		testController.ButtonLeftBumper().whenPressed(new IntakeUp());
+		testController.ButtonRightBumper().whenPressed(new IntakeDownAndDriveMotors());
+		testController.ButtonRightBumper().whenReleased(new AutomaticEngageTappers());
+		testController.ButtonLeftBumper().whenPressed(new IntakeUp_Safe());
 		
 		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(RobotMap.intakeWheelVoltage.getDouble()));
 		testController.ButtonRightTrigger().whenPressed(new DisengageTappers());
 		
-		testController.ButtonLeftTrigger().whenPressed(new AutomaticEngageTappers());
 		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-RobotMap.intakeWheelVoltage.getDouble()));
+		testController.ButtonLeftTrigger().whenPressed(new AutomaticEngageTappers());
 		
-		testController.ButtonLeftDPad().whenPressed(new IntakeSingleBallAndSettle());
+		testController.ButtonLeftDPad().whenPressed(new DisengageTappers());
+		testController.ButtonRightDPad().whenPressed(new EngageTappers());
 		
 		
 		// Auto CONTROLLER BUTTON MAP //////////////////////////		

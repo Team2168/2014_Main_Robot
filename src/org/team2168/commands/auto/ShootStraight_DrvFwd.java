@@ -16,9 +16,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitForChildren;
 
 public class ShootStraight_DrvFwd extends CommandGroup {
-
+	public static final String name = "1 Ball, Shoot Straight Drive Fwd";
 
 	public ShootStraight_DrvFwd() {
+		super(name);
 		//Extend the tusks and drive wheels to prevent the ball from
 		//  falling backwards.
 		addParallel(new IntakeDriveMotor(-0.15));

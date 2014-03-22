@@ -149,6 +149,10 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant catapultWaitUntilFiredAngle =
 			new Constant("catapultWaitUntilFiredAngle", 30.0);
 	//TODO: Determine appropriate threshold voltage values for ball presence
+	public static final Constant ballPresentOnWinchVoltage =
+			new Constant("ballPresentOnWinchVoltage", 0.75);
+	public static final Constant ballPresentOnWinchTime =
+			new Constant("ballPresentOnWinchTime", 0.2);
 	public static final Constant ballSettledVoltage =
 			new Constant("ballSettledVoltage", 1.6);
 	public static final Constant ballSettleTime =
@@ -178,7 +182,7 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant intakeLowerTimeout =
 			new Constant("intakeLowerTimeout", 2.5);
 	public static final Constant intakeWheelVoltage =
-			new Constant("intakeWheelVoltage", 1.00);
+			new Constant("intakeWheelVoltage", 0.7);
 	
 	public static final Constant ballTapperEngageAngle =
 			//new Constant("ballTapperEngageAngle", 55.0); //practice bot
@@ -188,6 +192,8 @@ public class RobotMap extends ConstantsBase {
 			new Constant("ballTapperShotAngle", 60.0); //comp bot
 	public static final Constant ballTapperDisengageAngle =
 			new Constant("ballTapperDisengageAngle", 0.0);
+	public static final Constant intakeWheelSpeedWhenLowering =
+			new Constant("intakeWheelSpeedWhenLowering", -0.25);
 
 	/****************************************************************
      *                  Operator Interface Parameters               *

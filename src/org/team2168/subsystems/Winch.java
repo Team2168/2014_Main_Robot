@@ -28,7 +28,7 @@ public class Winch extends Subsystem {
 	private static AnalogChannel winchBallSensor;
 	private static AnalogChannel intakeBallSensor;
 	private static Debouncer ballPresent, ballNotPresent;
-	private static Debouncer ballSettled;
+	private static Debouncer ballSettled, ballPresentOnWinch;
 
 	/**
 	 * A private constructor to prevent multiple instances from being created.
@@ -43,6 +43,7 @@ public class Winch extends Subsystem {
 		ballPresent = new Debouncer(RobotMap.ballPresentTime.getDouble());
 		ballNotPresent = new Debouncer(RobotMap.ballPresentTime.getDouble());
 		ballSettled = new Debouncer(RobotMap.ballSettleTime.getDouble());
+		ballPresentOnWinch = new Debouncer(RobotMap.ballPresentOnWinchTime.getDouble());
 		
 		winchPotentiometer =
 				new AnalogChannel(RobotMap.potentiometerPort.getInt());
@@ -206,6 +207,11 @@ public class Winch extends Subsystem {
 				>= RobotMap.ballSettledVoltage.getDouble());
 	}
 	
+	public boolean isBallPresentOnWinch() {
+		return ballPresentOnWinch.update(getWinchBallSensorVoltage()
+				>= RobotMap.ballPresentOnWinchVoltage.getDouble());
+	}
+	
 	/**
 	 * Called once prior to checking if the ball is present.
 	 */
@@ -225,6 +231,10 @@ public class Winch extends Subsystem {
 	 */
 	public void resetBallSettled() {
 		ballSettled.reset();
+	}
+	
+	public void resetBallPresentOnWinch() {
+		ballPresentOnWinch.reset();
 	}
 }
 

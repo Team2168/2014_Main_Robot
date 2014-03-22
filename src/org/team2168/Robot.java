@@ -18,11 +18,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.team2168.commands.CommandBase;
+import org.team2168.commands.TeleopDefaults;
 import org.team2168.commands.auto.*;
-import org.team2168.commands.winch.Reload;
 import org.team2168.subsystems.Winch;
 import org.team2168.subsystems.Drivetrain;
-import org.team2168.subsystems.IntakePosition;
 import org.team2168.utils.ConsolePrinter;
 import org.team2168.utils.ConstantsBase;
 import org.team2168.utils.Debouncer;
@@ -77,7 +76,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		//prevent null case if entering telop during testing
 		autonomousCommand = (Command) autoChooser.getSelected();
-		teleopInitCommand = new Reload();
+		teleopInitCommand = new TeleopDefaults();
 		
 		Winch.getInstance().resetWinchEncoder();
 		Drivetrain.getInstance().resetEncoders();
@@ -92,7 +91,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void disabledPeriodic() {
 		autonomousCommand = (Command) autoChooser.getSelected();
-		lcd.println(DriverStationLCD.Line.kUser2, 1, "Auto: "+autonomousCommand.getName());
+		lcd.println(DriverStationLCD.Line.kUser2, 1, autonomousCommand.getName());
 		lcd.updateLCD();
 
 		//Kill all active commands
@@ -175,17 +174,16 @@ public class Robot extends IterativeRobot {
 	}
 	
 	
-	private void autoSelectInit()
-	{
+	private void autoSelectInit() {
 		autoChooser = new SendableChooser();
-		autoChooser.addObject("ShootStraight_DrvFwd", new ShootStraight_DrvFwd());
-		autoChooser.addObject("ShootStraight_2BallDrvFwd", new ShootStraight_2Ball_DrvFwd());
-		autoChooser.addObject("Center_RotDrvFwdHotGoal_1Ball", new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
-		autoChooser.addObject("Center_RotHotGoal_1Ball", new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
-		autoChooser.addObject("Left_WaitForLeftHot_1Ball", new Left_LeftHotGoal_1Ball());
-		autoChooser.addObject("Right_WaitForRightHot_1ball", new Right_RightHotGoal_1Ball());
-		autoChooser.addDefault("Right_WaitForRightHot_2ball", new Right_RightHotGoal_2Ball());
-		autoChooser.addObject("NoBall_DrvFwd", new NoBall_DrvFwd());
+		autoChooser.addDefault(Right_RightHotGoal_2Ball.name, new Right_RightHotGoal_2Ball());
+		autoChooser.addObject(ShootStraight_DrvFwd.name, new ShootStraight_DrvFwd());
+		autoChooser.addObject(Left_LeftHotGoal_1Ball.name, new Left_LeftHotGoal_1Ball());
+		autoChooser.addObject(Right_RightHotGoal_1Ball.name, new Right_RightHotGoal_1Ball());
+		autoChooser.addObject(NoBall_DrvFwd.name, new NoBall_DrvFwd());
+		//autoChooser.addObject("Center_RotHotGoal_1Ball", new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		//autoChooser.addObject("Center_RotDrvFwdHotGoal_1Ball", new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		//autoChooser.addObject("ShootStraight_2BallDrvFwd", new ShootStraight_2Ball_DrvFwd());
 		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
 	}
 	

@@ -15,10 +15,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitForChildren;
 
 public class Left_LeftHotGoal_1Ball extends CommandGroup {
-
+	public static final String name = "1 Ball, Wait for Left Hot";
 
 	public Left_LeftHotGoal_1Ball() {
-
+		super(name);
 		// wait for hot goal, assume camera is facing right hot goal
 		addParallel(new TusksLongShotPosition());
 		addParallel(new IntakeDriveMotor(-0.15));

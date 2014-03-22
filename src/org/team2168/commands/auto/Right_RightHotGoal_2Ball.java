@@ -18,20 +18,23 @@ import org.team2168.commands.winch.WaitUntilFired;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Right_RightHotGoal_2Ball extends CommandGroup {
-
+	public static final String name = "2 Ball, Shoot Straight, Drive Fwd";
+	
 	public Right_RightHotGoal_2Ball() {
+		super(name);
+		
 		// set tusks to long shot
 		addParallel(new TusksLongShotPosition());
 
 		// move intake out of way, spin wheel to keep ball in robot
-		addParallel(new IntakeDriveMotor(-0.25));
-		addSequential(new IntakeDown(), 1);
+		addParallel(new IntakeDriveMotor(
+				RobotMap.intakeWheelSpeedWhenLowering.getDouble()));
+		addSequential(new IntakeDown(), 1.5);
 		addParallel(new IntakeDriveMotor(0.0));
 		addSequential(new EngageTappers());
 		
 		// wait for ball to settle
-		addSequential(new WaitUntilBallSettled(),
-				RobotMap.autoBallSettleTime.getDouble());
+		addSequential(new WaitUntilBallSettled(), 2.0);
 
 		// First ball
 		addSequential(new FireAndReload());
