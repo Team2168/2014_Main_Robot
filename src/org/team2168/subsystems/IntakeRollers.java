@@ -1,6 +1,7 @@
 package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
+import org.team2168.commands.intake.IntakeWithJoystick;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -28,19 +29,19 @@ public class IntakeRollers extends Subsystem{
 	
 	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new IntakeWithJoystick());
 	}
 	
 	/**
 	 * Drive the intakes motors.
 	 * @param speed value from 1.0 to -1.0, positive brings ball into robot.
 	 */
-	public void intakeMotorControl(double speed)
+	public void driveIntake(double speed)  //TODO: CHECK SIGN, seems like positive doesn't take the ball into the robot
 	{
 		intakeMotorController.set(speed);
 	}
 	
 	public void stopMotors(){
-		intakeMotorControl(0);
+		driveIntake(0);
 	}
 }

@@ -1,84 +1,146 @@
 package org.team2168;
 
-import org.team2168.commands.*;
-import org.team2168.commands.drivetrain.*;
-import org.team2168.commands.catapult.*;
+import org.team2168.commands.auto.Center_RotDrvFwdHotGoal_1Ball;
+import org.team2168.commands.auto.Center_RotHotGoal_1Ball;
+import org.team2168.commands.auto.Left_LeftHotGoal_1Ball;
+import org.team2168.commands.auto.NoBall_DrvFwd;
+import org.team2168.commands.auto.Right_RightHotGoal_1Ball;
+import org.team2168.commands.auto.Right_RightHotGoal_2Ball;
 import org.team2168.commands.intake.*;
+import org.team2168.commands.tapper.*;
+import org.team2168.commands.tusks.*;
+import org.team2168.commands.winch.*;
 import org.team2168.commands.flashlight.*;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.DigitalIOButton;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.team2168.gamepads.F310;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
-
-	// Another type of button you can create is a DigitalIOButton, which is
-	// a button or switch hooked up to the cypress module. These are useful if
-	// you want to build a customized operator interface.
-	// Button button = new DigitalIOButton(1);
-
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
-
-	// // TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
-
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
-
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
-
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new ExampleCommand());
-
 	// Create mapping for buttons on joystick
-	private Joystick baseDriver = new Joystick(1);
-	private Joystick operator   = new Joystick(2);
+	private F310 driver         = new F310(1);
+	private F310 operator       = new F310(2);
+	public  F310 testController = new F310(3);
+	public  F310 auto           = new F310(4);
 	
-	public static final int rightJoyAxis = 5;
-	public static final int leftJoyAxis  = 2;
-	public static final int triggerAxis  = 3;
+	public OI() {
+		// DRIVER CONTROLLER BUTTON MAP ////////////////////////
+		driver.ButtonRightBumper().whenPressed(new FlashlightOn(RobotMap.flashlightOnTime.getDouble()));
 
-	public Button driveButtonA = new JoystickButton(baseDriver, 1),
-			driveButtonB = new JoystickButton(baseDriver, 2),
-			driveButtonX = new JoystickButton(baseDriver, 3),
-			driveButtonY = new JoystickButton(baseDriver, 4),
-			driveButtonLeftBumper = new JoystickButton(baseDriver, 5),
-			driveButtonRightBumper = new JoystickButton(baseDriver, 6),
-			driveButtonReset = new JoystickButton(baseDriver, 7),
-			driveButtonStart = new JoystickButton(baseDriver, 8),
-			driveButtonLeftStick = new JoystickButton(baseDriver, 9),
-			driveButtonRightStick = new JoystickButton(baseDriver, 10);
+
+		// OPERATOR CONTROLLER BUTTON MAP //////////////////////
+		operator.ButtonX().whenPressed(new TusksTrussShotPosition());
+		operator.ButtonY().whenPressed(new TusksShortShotPosition());
+		operator.ButtonB().whenPressed(new TusksLongShotPosition());
+		operator.ButtonA().whenPressed(new FireAndReload());
+
+		operator.ButtonStart().whenPressed(new ExtendWinchDogGear());
+		operator.ButtonBack().whenPressed(new RetractWinchDogGear());
+		
+		operator.ButtonRightBumper().whenPressed(new IntakeDownAndDriveMotors());
+		operator.ButtonRightBumper().whenReleased(new AutomaticEngageTappers());
+		operator.ButtonLeftBumper().whenPressed(new IntakeUp_Safe());
+		
+		operator.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(RobotMap.intakeWheelVoltage.getDouble()));
+		operator.ButtonRightTrigger().whenPressed(new DisengageTappers());
+		
+		operator.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-RobotMap.intakeWheelVoltage.getDouble()));
+		operator.ButtonLeftTrigger().whenPressed(new AutomaticEngageTappers());
+		
+		operator.ButtonLeftDPad().whenPressed(new DisengageTappers());
+		operator.ButtonRightDPad().whenPressed(new EngageTappers());
+		
+		//Old map
+//		operator.ButtonX().whenPressed(new TusksTrussShotPosition());
+//		operator.ButtonY().whenPressed(new TusksShortShotPosition());
+//		operator.ButtonB().whenPressed(new TusksLongShotPosition());
+//		operator.ButtonA().whenPressed(new FireAndReload());
+//
+//		operator.ButtonRightBumper().whenPressed(new IntakeDown());
+//		operator.ButtonLeftBumper().whenPressed(new IntakeUp());
+//		operator.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(
+//				RobotMap.intakeWheelVoltage.getDouble()));
+//		//operator.ButtonRightTrigger().whenReleased(new EngageTappers());
+//		operator.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(
+//				-RobotMap.intakeWheelVoltage.getDouble()));
+//		//operator.ButtonLeftTrigger().whenPressed(new DisengageTappers());
+//		
+//		operator.ButtonStart().whenPressed(new ExtendWinchDogGear());
+//		operator.ButtonBack().whenPressed(new RetractWinchDogGear());
+//
+//		operator.ButtonLeftDPad().whenPressed(new DisengageTappers());
+//		operator.ButtonRightDPad().whenPressed(new EngageTappers());
+		
+
+		// TEST CONTROLLER BUTTON MAP //////////////////////////
+		testController.ButtonX().whenPressed(new TusksTrussShotPosition());
+		testController.ButtonY().whenPressed(new TusksShortShotPosition());
+		testController.ButtonB().whenPressed(new TusksLongShotPosition());
+		testController.ButtonA().whenPressed(new FireAndReload());
+
+		testController.ButtonStart().whenPressed(new ExtendWinchDogGear());
+		testController.ButtonBack().whenPressed(new RetractWinchDogGear());
+		
+		testController.ButtonRightBumper().whenPressed(new IntakeDownAndDriveMotors());
+		testController.ButtonRightBumper().whenReleased(new AutomaticEngageTappers());
+		testController.ButtonLeftBumper().whenPressed(new IntakeUp_Safe());
+		
+		testController.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(RobotMap.intakeWheelVoltage.getDouble()));
+		testController.ButtonRightTrigger().whenPressed(new DisengageTappers());
+		
+		testController.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-RobotMap.intakeWheelVoltage.getDouble()));
+		testController.ButtonLeftTrigger().whenPressed(new AutomaticEngageTappers());
+		
+		testController.ButtonLeftDPad().whenPressed(new DisengageTappers());
+		testController.ButtonRightDPad().whenPressed(new EngageTappers());
+		
+		
+		// Auto CONTROLLER BUTTON MAP //////////////////////////		
+		auto.ButtonA().whenPressed(new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		auto.ButtonB().whenPressed(new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		auto.ButtonX().whenPressed(new Left_LeftHotGoal_1Ball());
+		auto.ButtonY().whenPressed(new Right_RightHotGoal_2Ball());
+		auto.ButtonRightBumper().whenPressed(new NoBall_DrvFwd());
+		
+		
+	}
 	
-	public Button operatorButtonA = new JoystickButton(operator, 1),
-			operatorButtonB = new JoystickButton(operator, 2),
-			operatorButtonX = new JoystickButton(operator, 3),
-			operatorButtonY = new JoystickButton(operator, 4),
-			operatorButtonLeftBumper = new JoystickButton(operator, 5),
-			operatorButtonRightBumper = new JoystickButton(operator, 6),
-			operatorButtonReset = new JoystickButton(operator, 7),
-			operatorButtonStart = new JoystickButton(operator, 8),
-			operatorButtonLeftStick = new JoystickButton(operator, 9),
-			operatorButtonRightStick = new JoystickButton(operator, 10),
-			operatorButtonRightTrigger = new JoystickButton(operator, 11),
-			operatorButtonLeftTrigger = new JoystickButton(operator, 12);
+	/**
+	 * Get the left joystick y-axis value. Positive is pushing up on the stick.
+	 * 
+	 * @return the base driver's left joystick value (1.0 to -1.0)
+	 */
+	public double getBaseDriverLeftStick() {
+		return interpolate(-(driver.getLeftStickRaw_Y()));
+	}
+	
+	/**
+	 * Get the right joystick y-axis value. Positive is pushing up on the stick.
+	 * 
+	 * @return the base driver's right joystick value (1.0 to -1.0)
+	 */
+	public double getBaseDriverRightStick() {
+		return interpolate(-(driver.getRightStickRaw_Y()));
+	}
+	
+	/**
+	 * Get the left joystick y-axis value. Positive is pushing up on the stick.
+	 * 
+	 * @return the operator's left joystick value (1.0 to -1.0)
+	 */
+	public double getOperatorLeftStick() {
+		return -operator.getLeftStickRaw_Y();
+	}
+	
+	/**
+	 * Get the right joystick y-axis value. Positive is pushing up on the stick.
+	 * 
+	 * @return the operator's right joystick value (1.0 to -1.0)
+	 */
+	public double getOperatorRightStick() {
+		return -operator.getRightStickRaw_Y();
+	}
 	
 	// minSpeed needs to be tweaked based on the particular drivetrain.
 	// It is the speed at which the drivetrain barely starts moving
@@ -93,64 +155,6 @@ public class OI {
 		{ -0.06, -RobotMap.minDriveSpeed.getDouble() },
 		{ -0.90, -0.68 },
 		{ -1.00, -1.00 } };
-
-	public OI() {
-		// DRIVER CONTROLLER BUTTON MAP ////////////////////////
-		driveButtonRightBumper.whenPressed(
-				new FlashlightOn(RobotMap.flashlightOnTime.getDouble()));
-		
-		// OPERATOR CONTROLLER BUTTON MAP //////////////////////
-		operatorButtonX.whenPressed(new TusksTrussShotPosition());
-		operatorButtonY.whenPressed(new TusksShortShotPosition());
-		operatorButtonB.whenPressed(new TusksLongShotPosition());
-		
-		operatorButtonA.whenPressed(new OpenWinchDogGear());
-		operatorButtonA.whenReleased(new WindWinch(1));
-		
-		operatorButtonRightBumper.whenPressed(new IntakeLower());
-		operatorButtonRightTrigger.whenPressed(new IntakeRun(-1));
-		operatorButtonRightTrigger.whenReleased(new IntakeRun(0));
-		
-		operatorButtonLeftTrigger.whenPressed(new IntakeRun(1));
-		operatorButtonRightTrigger.whenReleased(new IntakeRun(0));
-		operatorButtonLeftBumper.whenPressed(new IntakeRaise());
-	}
-
-	/**
-	 * Get the left joystick y-axis value. Positive is pushing up on the stick.
-	 * 
-	 * @return the base driver's left joystick value (1.0 to -1.0)
-	 */
-	public double getBaseDriverLeftStick() {
-		return interpolate(-(baseDriver.getRawAxis(leftJoyAxis)));
-	}
-	
-	/**
-	 * Get the right joystick y-axis value. Positive is pushing up on the stick.
-	 * 
-	 * @return the base driver's right joystick value (1.0 to -1.0)
-	 */
-	public double getBaseDriverRightStick() {
-		return interpolate(-(baseDriver.getRawAxis(rightJoyAxis)));
-	}
-	
-	/**
-	 * Get the left joystick y-axis value. Positive is pushing up on the stick.
-	 * 
-	 * @return the operator's left joystick value (1.0 to -1.0)
-	 */
-	public double getOperatorLeftStick() {
-		return -operator.getRawAxis(leftJoyAxis);
-	}
-	
-	/**
-	 * Get the right joystick y-axis value. Positive is pushing up on the stick.
-	 * 
-	 * @return the operator's right joystick value (1.0 to -1.0)
-	 */
-	public double getOperatorRightStick() {
-		return -operator.getRawAxis(rightJoyAxis);
-	}
 	
 	/**
 	 * Electronic braking - aka "Falcon Claw"

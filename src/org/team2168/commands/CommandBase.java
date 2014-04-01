@@ -1,7 +1,6 @@
 package org.team2168.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team2168.OI;
 import org.team2168.subsystems.*;
 
@@ -18,10 +17,12 @@ public abstract class CommandBase extends Command {
     public static Drivetrain drivetrain = Drivetrain.getInstance();
     public static IntakePosition intakePosition = IntakePosition.getInstance();
     public static IntakeRollers intakeRollers = IntakeRollers.getInstance();
-    public static CatapultTusks catapultTusks = CatapultTusks.getInstance();
-    public static CatapultWinch catapultWinch = CatapultWinch.getInstance();
+    public static Tusks catapultTusks = Tusks.getInstance();
+    public static Winch catapultWinch = Winch.getInstance();
     public static Flashlight flashlight = Flashlight.getInstance();
     public static Vision vision = Vision.getInstance();
+    public static SolenoidBallTapper solenoidTapper = SolenoidBallTapper.getInstance();
+    public static ServoBallTapper servoTapper = ServoBallTapper.getInstance();
     
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely

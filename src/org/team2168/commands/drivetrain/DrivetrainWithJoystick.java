@@ -1,8 +1,8 @@
-
 package org.team2168.commands.drivetrain;
 
 import org.team2168.OI;
 import org.team2168.commands.CommandBase;
+import org.team2168.subsystems.Drivetrain;
 
 public class DrivetrainWithJoystick extends CommandBase {
 
@@ -19,9 +19,9 @@ public class DrivetrainWithJoystick extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//TODO: one of these will need to be negated
     	drivetrain.drive(oi.getBaseDriverRightStick(),
     			oi.getBaseDriverLeftStick());
+    
     
     }
 

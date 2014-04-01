@@ -1,6 +1,6 @@
 package org.team2168;
 
-import org.team2168.PIDController.Sensors.AverageEncoder;
+import org.team2168.PIDController.sensors.AverageEncoder;
 import org.team2168.utils.ConstantsBase;
 
 import edu.wpi.first.wpilibj.CounterBase;
@@ -15,6 +15,11 @@ import edu.wpi.first.wpilibj.CounterBase;
  * modifications.
  */
 public class RobotMap extends ConstantsBase {
+	
+	public static final Constant debug = 
+			new Constant("debug", 1);
+	
+	
 	/****************************************************************
      *                       CRIO MAP                               *
      ****************************************************************/        
@@ -25,6 +30,10 @@ public class RobotMap extends ConstantsBase {
 			new Constant("leftDriveMotor", 2);
 	public static final Constant winchMotor = new Constant("winchMotor", 3);
 	public static final Constant intakeMotor = new Constant("intakeMotor", 4);
+	public static final Constant rightTapperServo =
+			new Constant("rightTapperServo", 8);
+	public static final Constant leftTapperServo =
+			new Constant("leftTapperServo", 9);
 	public static final Constant visionServo = new Constant("visionServo", 10);
 	
 	//DIO Channels////////////////////////////////////////////////////
@@ -42,39 +51,44 @@ public class RobotMap extends ConstantsBase {
 			new Constant("winchEncoderA", 6);
 	public static final Constant winchEncoderB = 
 			new Constant("winchEncoderB", 7);
-	public static final Constant intakeSensor =
-			new Constant("intakeSensor", 8);
+	public static final Constant intakeDownLimitSwitch =
+			new Constant("intakeDownLimitSwitch", 8);
 	public static final Constant pressureSwitch =
 			new Constant("pressureSwitch", 14);
 	
 	
 	//Relay Output Channels///////////////////////////////////////////
-	public static final Constant compressorRelay =
-			new Constant("compressorRelay", 1);
 	public static final Constant flashlightRelay =
-			new Constant("flashlightRelay", 2);
-	
+			new Constant("flashlightRelay", 1);
+	public static final Constant compressorRelay =
+			new Constant("compressorRelay", 2);
+	public static final Constant ballTapperRelay =
+			new Constant("ballTapperRelay", 3);
+
 	//Solenoid Channels(third slot on cRio)///////////////////////////
 	public static final Constant intakeExtPort = 
 			new Constant("intakeExtPort", 1);
 	public static final Constant intakeRetPort = 
 			new Constant("intakeRetPort", 2);
-	public static final Constant catExtPort1 = new Constant("catExtPort1", 3);
-	public static final Constant catRetPort1 = new Constant("catRetPort1", 4);
-	public static final Constant catExtPort2 = new Constant("catExtPort2", 5);
-	public static final Constant catRetPort2 = new Constant("catRetPort2", 6);
-	public static final Constant winchExtPort = new Constant("winchExtPort", 7);
-	public static final Constant winchRetPort = new Constant("winchRetPort", 8);
+	public static final Constant winchExtPort = new Constant("winchExtPort", 3);
+	public static final Constant winchRetPort = new Constant("winchRetPort", 4);
+	public static final Constant catExtPort1 = new Constant("catExtPort1", 5);
+	public static final Constant catRetPort1 = new Constant("catRetPort1", 6);
+	public static final Constant catExtPort2 = new Constant("catExtPort2", 7);
+	public static final Constant catRetPort2 = new Constant("catRetPort2", 8);
 	
 	//Solenoid Channels(fourth slot on cRio)//////////////////////////
 	
 	
 	//Analog Input Channels///////////////////////////////////////////
 	public static final Constant gyroPort = new Constant("gyroPort", 1);
-	public static final Constant ballSensorPort =
-			new Constant("ballSensorPort", 2);
+	
 	public static final Constant potentiometerPort =
 			new Constant("potentiometerPort", 3);
+	public static final Constant winchBallSensorPort =
+			new Constant("winchBallSensorPort", 4);
+	public static final Constant intakeBallSensorPort =
+			new Constant("intakeBallSensorPort", 5);
 	
 	/****************************************************************
      *                    Drivetrain Parameters                     *
@@ -87,6 +101,12 @@ public class RobotMap extends ConstantsBase {
 			new Constant("drivetrainGearRatio",(24.0/27.0));
 	public static final Constant driveRateLimit = 
 			new Constant("driveRateLimit", 0.15);
+	
+	public static final Constant rotateDriveKP = 
+			new Constant("rotateDriveKP", 0.06);
+	public static final Constant rotateDriveMaxSpeed = 
+			new Constant("rotateDriveMaxSpeed", 0.8);
+
 	
 	private static final int drivePulsePerRotation = 256; //encoder ticks per rotation
 	private static final double driveGearRatio = 24.0/27.0; //ratio between wheel over encoder
@@ -104,12 +124,43 @@ public class RobotMap extends ConstantsBase {
 	/****************************************************************
      *                      Catapult Parameters                     *
      ****************************************************************/
-	 public static final Constant wheelDiameterWinch = 
-			 new Constant("wheelDiameterWinch", 2);
-	 public static final Constant catapultWinchUp =	
-			 new Constant("catapultWinchUp", 4.0);
-	 public static final Constant catapultWinchDown =
-			 new Constant("catapultWinchDown", 1.0);
+	public static final Constant tuskIntermediatePositionDelay =
+			new Constant("tuskIntermediatePositionDelay", 0.1);
+	public static final Constant wheelDiameterWinch =
+			new Constant("wheelDiameterWinch", 2);
+	public static final Constant catapultWinchUp =
+			new Constant("catapultWinchUp", 4.0);
+	public static final Constant catapultWinchDown =
+			new Constant("catapultWinchDown", 1.0);
+	public static final Constant retractWinchSpeed =
+			new Constant("retractWinchSpeed", 1.0);
+
+	public static final Constant catapultRaiseAngle =
+			new Constant("catapultRaiseAngle", 45.0);
+	public static final Constant catapultRaiseVoltage =
+			//new Constant("catapultRaiseVoltage", 2.951); //practice bot
+			new Constant("catapultRaiseVoltage", 4.221); //comp bot
+	public static final Constant catapultLowerAngle =
+			//new Constant("catapultLowerAngle", -23.0); //practice bot
+			new Constant("catapultLowerAngle", -26.0); //comp bot?
+	public static final Constant catapultLowerVoltage =
+			//new Constant("catapultLowerVoltage", 3.938); //practice bot.
+			new Constant("catapultLowerVoltage", 3.209); //comp bot
+	public static final Constant catapultWaitUntilFiredAngle =
+			new Constant("catapultWaitUntilFiredAngle", 30.0);
+	//TODO: Determine appropriate threshold voltage values for ball presence
+	public static final Constant ballPresentOnWinchVoltage =
+			new Constant("ballPresentOnWinchVoltage", 0.75);
+	public static final Constant ballPresentOnWinchTime =
+			new Constant("ballPresentOnWinchTime", 0.2);
+	public static final Constant ballSettledVoltage =
+			new Constant("ballSettledVoltage", 1.6);
+	public static final Constant ballSettleTime =
+			new Constant("ballSettleTime", 0.8);
+	public static final Constant ballPresentVoltage =
+			new Constant("ballPresentVoltage", 0.9);
+	public static final Constant ballPresentTime =
+			new Constant("ballPresentTime", 0.1);
 	
 	private static final int winchPulsePerRotation = 256; //encoder ticks per rotation
 	private static final double winchGearRatio = 1.0/1.0; //ratio between wheel over encoder
@@ -124,13 +175,59 @@ public class RobotMap extends ConstantsBase {
 	public static final boolean winchEncoderReverse = true;
 	public static final int winchAvgEncoderVal = 5;
 
+
+	/****************************************************************
+     *                       Intake Parameters                      *
+     ****************************************************************/
+	public static final Constant intakeLowerTimeout =
+			new Constant("intakeLowerTimeout", 2.5);
+	public static final Constant intakeWheelVoltage =
+			new Constant("intakeWheelVoltage", 0.7);
+	
+	public static final Constant ballTapperEngageAngle =
+			//new Constant("ballTapperEngageAngle", 55.0); //practice bot
+			new Constant("ballTapperEngageAngle", 70.0);
+	public static final Constant ballTapperShotAngle =
+			//new Constant("ballTapperShotAngle", 36.0); //practice bot
+			new Constant("ballTapperShotAngle", 60.0); //comp bot
+	public static final Constant ballTapperDisengageAngle =
+			new Constant("ballTapperDisengageAngle", 0.0);
+	public static final Constant intakeWheelSpeedWhenLowering =
+			new Constant("intakeWheelSpeedWhenLowering", -0.25);
+
 	/****************************************************************
      *                  Operator Interface Parameters               *
      ****************************************************************/
 	public static final Constant minDriveSpeed =
-			new Constant("minDriveSpeed", 0.11);
+			new Constant("minDriveSpeed", 0.2);
 	public static final Constant flashlightOnTime =
-			new Constant("flashlightOnTime", 5.0);
+			new Constant("flashlightOnTime", 15.0);
+
+	
+	/****************************************************************
+     *                  Autonomous Parameters               *
+     ****************************************************************/
+	public static final Constant rotationAngleToHot =
+			new Constant("rotationAngleToHot", 5.0);
+	public static final Constant CameraSteadyStateSecs =
+			new Constant("CameraSteadyStateSecs", 1.1);
+	public static final Constant VisionTimeOutSecs =
+			new Constant("VisionTimeOutSecs", 1.5);
+	public static final Constant autoDriveDistance = 
+			new Constant("autoDriveDistance", 80);
+	public static final Constant autoDelayBeforeStart =
+			new Constant("autoDelayBeforeStart", 2.0);
+	public static final Constant autoBallSettleTime = 
+			new Constant("autoBallSettleTime", 2.0);
+	public static final Constant autoIntakeRunTime = 
+			new Constant("autoIntakeRunTime", 1.0);
+
+
+	/****************************************************************
+     *                  Networking Paramters                        *
+     ****************************************************************/
+
+	
 
 	static {
 		// Set any overridden constants from the file on startup.

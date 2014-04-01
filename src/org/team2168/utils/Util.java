@@ -48,4 +48,28 @@ public class Util {
 
 		return retString;
 	}
+	
+	/**
+	 * Calculate the slope of a line given two points
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2 
+	 * @return the slope
+	 */
+	public static double slope(double x1, double y1, double x2, double y2) {
+		return (y2 - y1)/(x2 - x1);
+	}
+	
+	/**
+	 * Calculate the y intercept of the line given its slope and a point
+	 *   on the line
+	 * @param slope
+	 * @param x
+	 * @param y
+	 * @return the y intercept of the line.
+	 */
+	public static double intercept(double slope, double x, double y) {
+		return y - (slope * x);
+	}
 }

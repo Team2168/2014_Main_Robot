@@ -7,14 +7,23 @@
 
 package org.team2168;
 
-import org.team2168.PIDController.Sensors.TCPCameraSensor;
-import org.team2168.commands.ExampleCommand;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.team2168.commands.CommandBase;
+import org.team2168.commands.TeleopDefaults;
+import org.team2168.commands.auto.*;
+import org.team2168.subsystems.Winch;
+import org.team2168.subsystems.Drivetrain;
+import org.team2168.utils.ConsolePrinter;
+import org.team2168.utils.ConstantsBase;
 import org.team2168.utils.Debouncer;
 import org.team2168.utils.FalconGyro;
 
@@ -31,35 +40,50 @@ public class Robot extends IterativeRobot {
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
 	private Compressor compressor;
 	private static boolean matchStarted = false;
-
-	TCPCameraSensor cam = new TCPCameraSensor(1111, 1000);
 	
+	ConsolePrinter printer;
+
+	SendableChooser autoChooser;
 	Command autonomousCommand;
+	Command teleopInitCommand;
+	DriverStationLCD lcd;
 
 	/**
 	 * This method is run when the robot is first powered on.
 	 */
 	public void robotInit() {
-		// instantiate the command used for the autonomous period
-		autonomousCommand = new ExampleCommand();
-
 		compressor = new Compressor(RobotMap.pressureSwitch.getInt(),
 				RobotMap.compressorRelay.getInt());
+		
+		printer = new ConsolePrinter(200);
 
 		// Initialize all subsystems
 		CommandBase.init();
 
+		lcd = DriverStationLCD.getInstance();
+		
+		//Initialize auto mode chooser
+		autoSelectInit();
+
+		printer.startThread();
+		
 		//Console Message so we know robot finished loading
 		System.out.println("****Robot Done Loading****");
-
-
 	}
 
 	/**
 	 * This method is run once each time the robot is disabled.
 	 */
 	public void disabledInit() {
+		//prevent null case if entering telop during testing
+		autonomousCommand = (Command) autoChooser.getSelected();
+		teleopInitCommand = new TeleopDefaults();
+		
+		Winch.getInstance().resetWinchEncoder();
+		Drivetrain.getInstance().resetEncoders();
 
+		
+		ConstantsBase.readConstantsFromFile();
 
 	}
 
@@ -67,10 +91,13 @@ public class Robot extends IterativeRobot {
 	 * This method is run repeatedly while the robot is disabled.
 	 */
 	public void disabledPeriodic() {
+		autonomousCommand = (Command) autoChooser.getSelected();
+		lcd.println(DriverStationLCD.Line.kUser2, 1, autonomousCommand.getName());
+		lcd.updateLCD();
+
 		//Kill all active commands
 		Scheduler.getInstance().removeAll();
 		Scheduler.getInstance().disable();
-		
 		
 		//Check to see if the gyro is drifting, if it is re-initialize it.
 		//Thanks FRC254.
@@ -79,8 +106,7 @@ public class Robot extends IterativeRobot {
 				.update(Math.abs(curAngle - lastAngle) > (.75 / 50.0))
 				&& gyroReinits < 3 && !matchStarted) {
 			gyroReinits++;
-			System.out.println("!!! Sensed drift, about to auto-reinit gyro ("
-					+ gyroReinits + ")");
+			System.out.println("!!! Sensed drift, about to auto-reinit gyro ("+ gyroReinits + ")");
 			CommandBase.drivetrain.reinitGyro();
 			CommandBase.drivetrain.resetGyro();
 			gyroDriftDetector.reset();
@@ -95,8 +121,12 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		Scheduler.getInstance().enable();
-		// schedule the autonomous command (example)
+
+		//Run the selected auto mode
 		autonomousCommand.start();
+
+		//prevent gyro from initializing between auto and teleop
+		matchStarted = true;
 		
 		//No compressor for auto mode, lower battery load
 		//compressor.start();
@@ -120,9 +150,16 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		autonomousCommand.cancel();
-		Scheduler.getInstance().enable();
 		
+		//don't try to cancel a command if it isn't running yet
+		if(autonomousCommand != null) {
+			autonomousCommand.cancel();
+		}
+		Scheduler.getInstance().enable();
+
+		if(DriverStation.getInstance().isFMSAttached())
+			teleopInitCommand.start();
+
 		compressor.start();
 	}
 
@@ -139,4 +176,19 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
+	
+	
+	private void autoSelectInit() {
+		autoChooser = new SendableChooser();
+		autoChooser.addDefault(Right_RightHotGoal_2Ball.name, new Right_RightHotGoal_2Ball());
+		autoChooser.addObject(ShootStraight_DrvFwd.name, new ShootStraight_DrvFwd());
+		autoChooser.addObject(Left_LeftHotGoal_1Ball.name, new Left_LeftHotGoal_1Ball());
+		autoChooser.addObject(Right_RightHotGoal_1Ball.name, new Right_RightHotGoal_1Ball());
+		autoChooser.addObject(NoBall_DrvFwd.name, new NoBall_DrvFwd());
+		//autoChooser.addObject("Center_RotHotGoal_1Ball", new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		//autoChooser.addObject("Center_RotDrvFwdHotGoal_1Ball", new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		//autoChooser.addObject("ShootStraight_2BallDrvFwd", new ShootStraight_2Ball_DrvFwd());
+		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
+	}
+	
 }
