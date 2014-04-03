@@ -39,14 +39,20 @@ public class Robot extends IterativeRobot {
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
 	private Compressor compressor;
 	private static boolean matchStarted = false;
+	private static Robot instance = null;
+
+	private static Command autonomousCommand;
+	private static Command teleopInitCommand;
+	SendableChooser autoChooser;
+	
 	
 	ConsolePrinter printer;
 
-	SendableChooser autoChooser;
-	Command autonomousCommand;
-	Command teleopInitCommand;
 	DriverStationLCD lcd;
+	
 
+
+	
 	/**
 	 * This method is run when the robot is first powered on.
 	 */
@@ -187,4 +193,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
 	}
 	
+	public static String getAutoName()
+	{
+		if(autonomousCommand != null)
+			return autonomousCommand.getName();
+		else
+			return "None";
+		
+	}
 }
