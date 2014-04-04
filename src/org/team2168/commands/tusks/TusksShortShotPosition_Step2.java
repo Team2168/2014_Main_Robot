@@ -3,6 +3,8 @@ package org.team2168.commands.tusks;
 import org.team2168.ArduinoInterface;
 import org.team2168.commands.CommandBase;
 
+import edu.wpi.first.wpilibj.DriverStation;
+
 /**
  * The second step in the move sequence to the intermediate tusk position.
  * @author James
@@ -31,7 +33,9 @@ public class TusksShortShotPosition_Step2 extends CommandBase {
 	}
 
 	protected void end() {
-		ArduinoInterface.getInstance().set(2, true);
-		ArduinoInterface.getInstance().set(3, false);
+		if(DriverStation.getInstance().isOperatorControl()) {
+			ArduinoInterface.getInstance().set(2, true);
+			ArduinoInterface.getInstance().set(3, false);	
+		}
 	}
 }
