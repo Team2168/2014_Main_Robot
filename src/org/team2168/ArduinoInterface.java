@@ -2,6 +2,8 @@ package org.team2168;
 
 import org.team2168.utils.BitRelay;
 
+import edu.wpi.first.wpilibj.Relay;
+
 public class ArduinoInterface {
 	private static ArduinoInterface instance = null;
 	BitRelay relay1, relay2;
@@ -16,7 +18,7 @@ public class ArduinoInterface {
 	//  6    X  1  1  0          "        - 2 ball
 	//  3    X  0  1  1    Unknown Target - 1 ball
 	//  7    X  1  1  1          "        - 2 ball
-	//  0    X  0  0  0    Turn off LED strip
+	//  0    X  X  0  0    Turn off LED strip
 	//  8    1  0  0  0    Tusk Extended
 	//  4    0  1  0  0    Tusk Intermediate
 	//  C    1  1  0  0    Tusk Retracted
@@ -27,6 +29,10 @@ public class ArduinoInterface {
 	private ArduinoInterface() {
 		relay1 = new BitRelay(RobotMap.arduinoRelay1.getInt());
 		relay2 = new BitRelay(RobotMap.arduinoRelay2.getInt());
+		
+		//Initialize to off
+		relay1.set(Relay.Value.kOff);
+		relay2.set(Relay.Value.kOff);
 	}
 	
 	/**

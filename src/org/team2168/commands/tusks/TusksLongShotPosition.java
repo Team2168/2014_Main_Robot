@@ -1,5 +1,6 @@
 package org.team2168.commands.tusks;
 
+import org.team2168.ArduinoInterface;
 import org.team2168.commands.CommandBase;
 
 public class TusksLongShotPosition extends CommandBase {
@@ -26,5 +27,7 @@ public class TusksLongShotPosition extends CommandBase {
 	}
 
 	protected void end() {
+		ArduinoInterface.getInstance().set(2, false);
+		ArduinoInterface.getInstance().set(3, true);
 	}
 }

@@ -157,6 +157,10 @@ public class Robot extends IterativeRobot {
 			teleopInitCommand.start();
 
 		compressor.start();
+		
+		//Turn hot goal bits off once we've left auto mode.
+		ArduinoInterface.getInstance().set(0, false);
+		ArduinoInterface.getInstance().set(1, false);
 	}
 
 	/**
