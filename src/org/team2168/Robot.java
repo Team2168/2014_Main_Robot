@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team2168.commands.CommandBase;
 import org.team2168.commands.TeleopDefaults;
 import org.team2168.commands.auto.*;
+import org.team2168.subsystems.Vision;
 import org.team2168.subsystems.Winch;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.utils.ConsolePrinter;
@@ -81,9 +82,7 @@ public class Robot extends IterativeRobot {
 		Winch.getInstance().resetWinchEncoder();
 		Drivetrain.getInstance().resetEncoders();
 
-		
 		ConstantsBase.readConstantsFromFile();
-
 	}
 
 	/**
@@ -113,6 +112,12 @@ public class Robot extends IterativeRobot {
 			System.out.println("Finished auto-reinit gyro");
 		}
 		lastAngle = curAngle;
+		
+		//Set Hot Goal bits for arduino lights
+		ArduinoInterface.getInstance().set(0,
+				Vision.getInstance().getCamLeftHot());
+		ArduinoInterface.getInstance().set(1,
+				Vision.getInstance().getCamRightHot());
 	}
 
 	/**
@@ -136,6 +141,12 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
+		//Set Hot Goal bits for arduino lights
+		ArduinoInterface.getInstance().set(0,
+				Vision.getInstance().getCamLeftHot());
+		ArduinoInterface.getInstance().set(1,
+				Vision.getInstance().getCamRightHot());
 	}
 
 	/**
@@ -158,9 +169,8 @@ public class Robot extends IterativeRobot {
 
 		compressor.start();
 		
-		//Turn hot goal bits off once we've left auto mode.
-		ArduinoInterface.getInstance().set(0, false);
-		ArduinoInterface.getInstance().set(1, false);
+		//Turn all Arduino pins when we leave auto mode.
+		ArduinoInterface.getInstance().reset();
 	}
 
 	/**

@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Relay;
 
 public class ArduinoInterface {
 	private static ArduinoInterface instance = null;
-	BitRelay relay1, relay2;
+	private static BitRelay relay1, relay2;
 	
 	//TRUTH TABLE FOR ARDUINO COMMUNICATIONS
 	// HEX      BIT #
@@ -31,8 +31,7 @@ public class ArduinoInterface {
 		relay2 = new BitRelay(RobotMap.arduinoRelay2.getInt());
 		
 		//Initialize to off
-		relay1.set(Relay.Value.kOff);
-		relay2.set(Relay.Value.kOff);
+		reset();
 	}
 	
 	/**
@@ -69,5 +68,13 @@ public class ArduinoInterface {
 			//invalid bit number, do nothing
 			break;
 		}
+	}
+	
+	/**
+	 * Set all output pins to false.
+	 */
+	public void reset() {
+		relay1.set(Relay.Value.kOff);
+		relay2.set(Relay.Value.kOff);
 	}
 }
