@@ -6,18 +6,13 @@ import org.team2168.commands.drivetrain.AutoDriveXDistance;
 import org.team2168.commands.intake.IntakeDown;
 import org.team2168.commands.intake.IntakeDriveMotor;
 import org.team2168.commands.tusks.TusksLongShotPosition;
-import org.team2168.commands.tusks.TusksShortShotPosition;
 import org.team2168.commands.tusks.TusksTrussShotPosition;
 import org.team2168.commands.winch.Fire;
 import org.team2168.commands.winch.FireAndReload;
 import org.team2168.commands.winch.Reload;
 import org.team2168.commands.winch.WaitUntilFired;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitForChildren;
-
-public class ShootStraight_2Ball_DrvFwd extends CommandGroup {
-
+public class ShootStraight_2Ball_DrvFwd extends AutoCommandGroup {
 
 	public ShootStraight_2Ball_DrvFwd() {
 		//Extend the tusks and drive wheels to prevent the ball from
@@ -58,7 +53,9 @@ public class ShootStraight_2Ball_DrvFwd extends CommandGroup {
 		addParallel(new Reload());
 		
 		addSequential(new AutoDriveXDistance(80));
-		
-
+	}
+	
+	public int numBalls() {
+		return 2;
 	}
 }

@@ -11,10 +11,7 @@ import org.team2168.commands.winch.Fire;
 import org.team2168.commands.winch.Reload;
 import org.team2168.commands.winch.WaitUntilFired;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitForChildren;
-
-public class Left_LeftHotGoal_1Ball extends CommandGroup {
+public class Left_LeftHotGoal_1Ball extends AutoCommandGroup {
 	public static final String name = "1 Ball, Wait for Left Hot";
 
 	public Left_LeftHotGoal_1Ball() {
@@ -41,5 +38,9 @@ public class Left_LeftHotGoal_1Ball extends CommandGroup {
 		
 		addParallel(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
 		addParallel(new Reload());
+	}
+	
+	public int numBalls() {
+		return 1;
 	}
 }
