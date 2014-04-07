@@ -2,7 +2,11 @@ package org.team2168.utils;
 
 import java.util.TimerTask;
 
+import org.team2168.ArduinoInterface;
 import org.team2168.RobotMap;
+import org.team2168.commands.flashlight.FlashlightOff;
+import org.team2168.commands.flashlight.FlashlightOn;
+import org.team2168.commands.tusks.*;
 import org.team2168.subsystems.Tusks;
 import org.team2168.subsystems.Vision;
 import org.team2168.subsystems.Winch;
@@ -71,9 +75,20 @@ public class ConsolePrinter {
 		SmartDashboard.putBoolean("Far Status", Tusks.getInstance().isLongRangeShot());
 		
 		
+		
+		SmartDashboard.putData("TuskLongShot", new TusksLongShotPosition());
+		SmartDashboard.putData("TuskShortShot", new TusksShortShotPosition());
+		SmartDashboard.putData("TuskTrussShot", new TusksTrussShotPosition());
+		SmartDashboard.putData("Flashlight On", new FlashlightOn());
+		SmartDashboard.putData("Flashlight Off", new FlashlightOff());
+		
+		SmartDashboard.putBoolean("bit0", arduino.get(0));
+		SmartDashboard.putBoolean("bit1", arduino.get(1));
+		SmartDashboard.putBoolean("bit2", arduino.get(2));
+		SmartDashboard.putBoolean("bit3", arduino.get(3));
 		}
 	}
-	
+	ArduinoInterface arduino = ArduinoInterface.getInstance();
 
 	private class ConsolePrintTask extends TimerTask {
 		private ConsolePrinter console;

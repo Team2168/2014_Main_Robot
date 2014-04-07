@@ -70,6 +70,30 @@ public class ArduinoInterface {
 		}
 	}
 	
+	public boolean get(int bit) {
+		boolean retVal = false;
+		
+		switch(bit) {
+		case 0:
+			retVal = relay1.get() == Relay.Value.kForward;
+			break;
+		case 1:
+			retVal = relay1.get() == Relay.Value.kReverse;
+			break;
+		case 2:
+			retVal = relay2.get() == Relay.Value.kForward;
+			break;
+		case 3:
+			retVal = relay2.get() == Relay.Value.kReverse;
+			break;
+		default:
+			//invalid bit number, return false
+			break;
+		}
+		
+		return retVal;
+	}
+	
 	/**
 	 * Set all output pins to false.
 	 */
