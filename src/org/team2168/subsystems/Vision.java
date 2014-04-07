@@ -22,14 +22,14 @@ public class Vision extends Subsystem{
 	/**
 	 * Default constructor for vision target. TCP Listens on Port 1111;
 	 */
-	public Vision()
+	private Vision()
 	{
 		cam = new TCPCameraSensor(1111, 200);
 		vision_servo = new Servo(RobotMap.visionServo.getInt());
 		//initialize data variable
 		dataReceived = new String[cam.getMessageLength()];
 		
-		for(int i =0; i<cam.getMessageLength(); i++)
+		for(int i = 0; i < cam.getMessageLength(); i++)
 			dataReceived[i] = "0";
 		
 		LeftOrRightHot = 0;
@@ -46,8 +46,6 @@ public class Vision extends Subsystem{
 		return instance;
 	}
 
-
-
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 	}
@@ -62,7 +60,8 @@ public class Vision extends Subsystem{
 
 
 	/**
-	 * @return true when the beaglebone reports it know the match has started, false otherwise
+	 * @return true when the beaglebone reports the match has started,
+	 *   false otherwise
 	 */
 	public boolean isMatchStart()
 	{
@@ -71,7 +70,8 @@ public class Vision extends Subsystem{
 	
 	/**
 	 * 
-	 * @return true if the beaglebone detected a left hot target after match start
+	 * @return true if the beaglebone detected a left hot target
+	 *   after match start
 	 */
 	public boolean isLeftHot()
 	{
@@ -84,7 +84,8 @@ public class Vision extends Subsystem{
 	
 	/**
 	 * 
-	 * @return true if the beaglebone detected a right hot target after match start
+	 * @return true if the beaglebone detected a right hot target after match
+	 *   start.
 	 */
 	public boolean isRightHot()
 	{
@@ -97,7 +98,8 @@ public class Vision extends Subsystem{
 	
 	/**
 	 * 
-	 * @return true if the beaglebone sees a hot target in its current view.  This ignores match start.
+	 * @return true if the beaglebone sees a hot target in its current view.
+	 *   This ignores match start.
 	 */
 	public boolean isHotinView()
 	{
@@ -145,6 +147,14 @@ public class Vision extends Subsystem{
 	public int getCamLeftOrRightHot()
 	{
 		return cam.LeftOrRightHot();
+	}
+	
+	public boolean getCamLeftHot() {
+		return getCamLeftOrRightHot() == -1;
+	}
+	
+	public boolean getCamRightHot() {
+		return getCamLeftOrRightHot() == 1;
 	}
 	
 	public double getDistance()

@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team2168.commands.CommandBase;
 import org.team2168.commands.TeleopDefaults;
 import org.team2168.commands.auto.*;
+import org.team2168.subsystems.Vision;
 import org.team2168.subsystems.Winch;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.utils.ConsolePrinter;
@@ -40,11 +41,12 @@ public class Robot extends IterativeRobot {
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
 	private Compressor compressor;
 	private static boolean matchStarted = false;
+	private ArduinoInterface arduino = ArduinoInterface.getInstance();
 	
 	ConsolePrinter printer;
 
 	SendableChooser autoChooser;
-	Command autonomousCommand;
+	AutoCommandGroup autonomousCommand;
 	Command teleopInitCommand;
 	DriverStationLCD lcd;
 
@@ -76,22 +78,20 @@ public class Robot extends IterativeRobot {
 	 */
 	public void disabledInit() {
 		//prevent null case if entering telop during testing
-		autonomousCommand = (Command) autoChooser.getSelected();
+		autonomousCommand = (AutoCommandGroup) autoChooser.getSelected();
 		teleopInitCommand = new TeleopDefaults();
 		
 		Winch.getInstance().resetWinchEncoder();
 		Drivetrain.getInstance().resetEncoders();
 
-		
 		ConstantsBase.readConstantsFromFile();
-
 	}
 
 	/**
 	 * This method is run repeatedly while the robot is disabled.
 	 */
 	public void disabledPeriodic() {
-		autonomousCommand = (Command) autoChooser.getSelected();
+		autonomousCommand = (AutoCommandGroup) autoChooser.getSelected();
 		lcd.println(DriverStationLCD.Line.kUser2, 1, autonomousCommand.getName());
 		lcd.updateLCD();
 
@@ -114,6 +114,8 @@ public class Robot extends IterativeRobot {
 			System.out.println("Finished auto-reinit gyro");
 		}
 		lastAngle = curAngle;
+		
+		setArduinoAutonomousStatuses();
 	}
 
 	/**
@@ -140,6 +142,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
+		setArduinoAutonomousStatuses();
 	}
 
 	/**
@@ -151,7 +155,7 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		
-		//don't try to cancel a command if it isn't running yet
+		//don't try to cancel a command if it isn't initialized yet
 		if(autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
@@ -161,6 +165,9 @@ public class Robot extends IterativeRobot {
 			teleopInitCommand.start();
 
 		compressor.start();
+		
+		//Turn all Arduino pins when we leave auto mode.
+		arduino.reset();
 	}
 
 	/**
@@ -177,8 +184,28 @@ public class Robot extends IterativeRobot {
 		LiveWindow.run();
 	}
 	
-	
+	private void setArduinoAutonomousStatuses() {
+		//Set Hot Goal bits for arduino lights
+		if(!Vision.getInstance().getCamLeftHot() &&
+		   !Vision.getInstance().getCamRightHot()) {
+			//neither goal is hot... error
+			arduino.set(0, true);
+			arduino.set(1, true);
+		} else {
+			arduino.set(0, Vision.getInstance().getCamLeftHot());
+			arduino.set(1, Vision.getInstance().getCamRightHot());
+		}
+		
+		//Let the arduino know the number of balls we're going to shoot in auto.		
+		if(autonomousCommand.numBalls() == 2) {
+			arduino.set(2, true);
+		} else {
+			arduino.set(2, false);
+		}
+ 	}
+
 	private void autoSelectInit() {
+		//NOTE: ONLY ADD AutoCommandGroup objects to this chooser!
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault(Right_RightHotGoal_2Ball.name, new Right_RightHotGoal_2Ball());
 		autoChooser.addObject(ShootStraight_DrvFwd.name, new ShootStraight_DrvFwd());
@@ -190,5 +217,4 @@ public class Robot extends IterativeRobot {
 		//autoChooser.addObject("ShootStraight_2BallDrvFwd", new ShootStraight_2Ball_DrvFwd());
 		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
 	}
-	
 }

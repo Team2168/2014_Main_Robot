@@ -11,19 +11,16 @@ import org.team2168.subsystems.IntakePosition;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
 public class ConsolePrinter {
 	// tread executor
 	private java.util.Timer executor;
 	private long period;
-	
-	
+
 	public ConsolePrinter(long period) {
 		this.period = period;
 
 	}
-	
-	
+
 	public void startThread() {
 		this.executor = new java.util.Timer();
 		this.executor.schedule(new ConsolePrintTask(this), 0L, this.period);
@@ -31,7 +28,6 @@ public class ConsolePrinter {
 	
 	public void print()
 	{
-		
 		if(RobotMap.debug.getInt() == 1)
 		{
 			
@@ -69,11 +65,8 @@ public class ConsolePrinter {
 		SmartDashboard.putBoolean("Truss Status", Tusks.getInstance().isTrussShot());
 		SmartDashboard.putBoolean("Wall Status", Tusks.getInstance().isShortRangeShot());
 		SmartDashboard.putBoolean("Far Status", Tusks.getInstance().isLongRangeShot());
-		
-		
 		}
 	}
-	
 
 	private class ConsolePrintTask extends TimerTask {
 		private ConsolePrinter console;
@@ -92,6 +85,4 @@ public class ConsolePrinter {
 			console.print();
 		}
 	}
-	
-
 }

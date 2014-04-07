@@ -64,6 +64,10 @@ public class RobotMap extends ConstantsBase {
 			new Constant("compressorRelay", 2);
 	public static final Constant ballTapperRelay =
 			new Constant("ballTapperRelay", 3);
+	public static final Constant arduinoRelay1 =
+			new Constant("arduinoRelay1", 4);
+	public static final Constant arduinoRelay2 =
+			new Constant("arduinoRelay2", 5);
 
 	//Solenoid Channels(third slot on cRio)///////////////////////////
 	public static final Constant intakeExtPort = 

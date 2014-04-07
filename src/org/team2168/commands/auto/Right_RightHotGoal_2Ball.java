@@ -15,9 +15,7 @@ import org.team2168.commands.winch.Reload;
 import org.team2168.commands.winch.WaitUntilBallSettled;
 import org.team2168.commands.winch.WaitUntilFired;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-
-public class Right_RightHotGoal_2Ball extends CommandGroup {
+public class Right_RightHotGoal_2Ball extends AutoCommandGroup {
 	public static final String name = "2 Ball, Shoot Straight, Drive Fwd";
 	
 	public Right_RightHotGoal_2Ball() {
@@ -61,5 +59,9 @@ public class Right_RightHotGoal_2Ball extends CommandGroup {
 		addParallel(new DisengageTappers());
 		addParallel(new IntakeUp());
 		addParallel(new Reload());
+	}
+	
+	public int numBalls() {
+		return 2;
 	}
 }
