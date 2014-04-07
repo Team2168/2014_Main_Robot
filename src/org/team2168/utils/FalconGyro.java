@@ -99,13 +99,15 @@ public class FalconGyro extends SensorBase implements PIDSource, ISensor,
 		//Don't bother re-initializing the gyro if the match has already started 
 		if(DriverStation.getInstance().isDisabled()) {
 			m_analog.initAccumulator();
-		
+			//make sure we wait long enough to accumulate at least one sample
+			Timer.delay(0.025);
+			
 			//Attempt to calibrate the gyro. Delay until we have waited for the
 			//  length of the calibration period or a match has started,
 			//  whichever happens first.
 			while((Timer.getFPGATimestamp() < startTime + kCalibrationSampleTime)
 					&& DriverStation.getInstance().isDisabled()) {
-				Timer.delay(0.01);
+				Timer.delay(0.005);
 			}
 	
 			m_analog.getAccumulatorOutput(result);
