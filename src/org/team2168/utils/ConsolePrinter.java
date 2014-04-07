@@ -2,7 +2,6 @@ package org.team2168.utils;
 
 import java.util.TimerTask;
 
-import org.team2168.ArduinoInterface;
 import org.team2168.RobotMap;
 import org.team2168.subsystems.Tusks;
 import org.team2168.subsystems.Vision;
