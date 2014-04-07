@@ -6,16 +6,12 @@ import org.team2168.commands.drivetrain.AutoDriveXDistance;
 import org.team2168.commands.intake.IntakeDown;
 import org.team2168.commands.intake.IntakeDriveMotor;
 import org.team2168.commands.tusks.TusksLongShotPosition;
-import org.team2168.commands.vision.WaitForLeftHot;
 import org.team2168.commands.vision.WaitForRightHot;
 import org.team2168.commands.winch.Fire;
 import org.team2168.commands.winch.Reload;
 import org.team2168.commands.winch.WaitUntilFired;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitForChildren;
-
-public class Right_RightHotGoal_1Ball extends CommandGroup {
+public class Right_RightHotGoal_1Ball extends AutoCommandGroup {
 	public static final String name = "1 Ball, Wait for Right Hot"; 
 
 	public Right_RightHotGoal_1Ball() {
@@ -43,5 +39,9 @@ public class Right_RightHotGoal_1Ball extends CommandGroup {
 		
 		addParallel(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
 		addParallel(new Reload());
+	}
+	
+	public int numBalls() {
+		return 1;
 	}
 }

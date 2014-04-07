@@ -1,11 +1,6 @@
 package org.team2168;
 
-import org.team2168.commands.auto.Center_RotDrvFwdHotGoal_1Ball;
-import org.team2168.commands.auto.Center_RotHotGoal_1Ball;
-import org.team2168.commands.auto.Left_LeftHotGoal_1Ball;
-import org.team2168.commands.auto.NoBall_DrvFwd;
-import org.team2168.commands.auto.Right_RightHotGoal_1Ball;
-import org.team2168.commands.auto.Right_RightHotGoal_2Ball;
+import org.team2168.commands.auto.*;
 import org.team2168.commands.intake.*;
 import org.team2168.commands.tapper.*;
 import org.team2168.commands.tusks.*;

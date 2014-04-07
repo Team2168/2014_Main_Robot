@@ -1,6 +1,9 @@
 package org.team2168.commands.tusks;
 
+import org.team2168.ArduinoInterface;
 import org.team2168.commands.CommandBase;
+
+import edu.wpi.first.wpilibj.DriverStation;
 
 public class TusksTrussShotPosition extends CommandBase {
 
@@ -26,6 +29,10 @@ public class TusksTrussShotPosition extends CommandBase {
 	}
 
 	protected void end() {
+		if(DriverStation.getInstance().isOperatorControl()) {
+			ArduinoInterface.getInstance().set(2, true);
+			ArduinoInterface.getInstance().set(3, true);
+		}
 	}
 	
 }

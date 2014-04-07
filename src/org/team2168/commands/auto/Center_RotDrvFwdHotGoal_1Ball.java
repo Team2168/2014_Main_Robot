@@ -3,26 +3,21 @@ package org.team2168.commands.auto;
 import org.team2168.RobotMap;
 import org.team2168.commands.Sleep;
 import org.team2168.commands.drivetrain.AutoDriveXDistance;
-import org.team2168.commands.drivetrain.DriveDrivetrainStraight;
 import org.team2168.commands.drivetrain.RotateDrivetrainRelative;
 import org.team2168.commands.intake.IntakeDown;
 import org.team2168.commands.tusks.TusksLongShotPosition;
 import org.team2168.commands.vision.WaitForFirstHot;
 import org.team2168.commands.winch.FireAndReload;
-import org.team2168.subsystems.Vision;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitForChildren;
 
-public class Center_RotDrvFwdHotGoal_1Ball extends CommandGroup {
+public class Center_RotDrvFwdHotGoal_1Ball extends AutoCommandGroup {
 
 	public Center_RotDrvFwdHotGoal_1Ball() {
-
 		this(1.5); // default 1.5 second delay
 	}
 
 	public Center_RotDrvFwdHotGoal_1Ball(double firstHotGoalTimeOut) {
-
 		// wait for hot goal, assume camera is facing right hot goal
 		addParallel(new TusksLongShotPosition());
 		addParallel(new IntakeDown());
@@ -47,5 +42,9 @@ public class Center_RotDrvFwdHotGoal_1Ball extends CommandGroup {
 		
 		// fire
 		addSequential(new FireAndReload());
+	}
+	
+	public int numBalls() {
+		return 1;
 	}
 }
