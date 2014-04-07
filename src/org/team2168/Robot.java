@@ -101,7 +101,6 @@ public class Robot extends IterativeRobot {
 		//Check to see if the gyro is drifting, if it is re-initialize it.
 		//Thanks FRC254.
 		double curAngle = CommandBase.drivetrain.getGyroAngle();
-		System.out.println(curAngle - lastAngle);
 		if (gyroDriftDetector
 				.update(Math.abs(curAngle - lastAngle) > (.75 / 50.0))
 				&& gyroReinits < 3 && !matchStarted) {
