@@ -2,11 +2,11 @@ package org.team2168;
 
 import org.team2168.utils.BitRelay;
 
-import edu.wpi.first.wpilibj.Relay;
-
 public class ArduinoInterface {
 	private static ArduinoInterface instance = null;
 	private static BitRelay relay1, relay2;
+	private static final int NUM_BITS = 4;
+	private static boolean[] bitStates = new boolean[NUM_BITS];
 	
 	//TRUTH TABLE FOR ARDUINO COMMUNICATIONS
 	// HEX      BIT #
@@ -30,7 +30,7 @@ public class ArduinoInterface {
 		relay1 = new BitRelay(RobotMap.arduinoRelay1.getInt());
 		relay2 = new BitRelay(RobotMap.arduinoRelay2.getInt());
 		
-		//Initialize to off
+		//Initialize outputs to off state.
 		reset();
 	}
 	
@@ -51,6 +51,10 @@ public class ArduinoInterface {
 	 * @param val the value to set the specified bit to (true = high).
 	 */
 	public void set(int bit, boolean val) {
+		if((bit < NUM_BITS) && (bit >= 0)) {
+			bitStates[bit] = val;
+		}
+		
 		switch(bit) {
 		case 0:
 			relay1.setForward(val);
@@ -73,22 +77,8 @@ public class ArduinoInterface {
 	public boolean get(int bit) {
 		boolean retVal = false;
 		
-		switch(bit) {
-		case 0:
-			retVal = relay1.get() == Relay.Value.kForward;
-			break;
-		case 1:
-			retVal = relay1.get() == Relay.Value.kReverse;
-			break;
-		case 2:
-			retVal = relay2.get() == Relay.Value.kForward;
-			break;
-		case 3:
-			retVal = relay2.get() == Relay.Value.kReverse;
-			break;
-		default:
-			//invalid bit number, return false
-			break;
+		if((bit < NUM_BITS) && (bit >= 0)) {
+			retVal = bitStates[bit];
 		}
 		
 		return retVal;
@@ -98,7 +88,9 @@ public class ArduinoInterface {
 	 * Set all output pins to false.
 	 */
 	public void reset() {
-		relay1.set(Relay.Value.kOff);
-		relay2.set(Relay.Value.kOff);
+		set(0, false);
+		set(1, false);
+		set(2, false);
+		set(3, false);
 	}
 }

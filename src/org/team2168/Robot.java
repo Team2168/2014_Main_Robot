@@ -114,17 +114,7 @@ public class Robot extends IterativeRobot {
 		}
 		lastAngle = curAngle;
 		
-		//Set Hot Goal bits for arduino lights
-		arduino.set(0, Vision.getInstance().getCamLeftHot());
-		arduino.set(1, Vision.getInstance().getCamRightHot());
-		
-		//Let the arduino know the number of balls we're going to shoot in auto. 
-		switch(autonomousCommand.numBalls()) {
-			case 2:
-				arduino.set(2, true);
-			default:
-				arduino.set(2, false);
-		}
+		setArduinoAutonomousStatuses();
 	}
 
 	/**
@@ -149,9 +139,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		
-		//Set Hot Goal bits for arduino lights
-		arduino.set(0, Vision.getInstance().getCamLeftHot());
-		arduino.set(1, Vision.getInstance().getCamRightHot());
+		setArduinoAutonomousStatuses();
 	}
 
 	/**
@@ -191,6 +179,26 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
+	
+	private void setArduinoAutonomousStatuses() {
+		//Set Hot Goal bits for arduino lights
+		if(!Vision.getInstance().getCamLeftHot() &&
+		   !Vision.getInstance().getCamRightHot()) {
+			//neither goal is hot... error
+			arduino.set(0, true);
+			arduino.set(1, true);
+		} else {
+			arduino.set(0, Vision.getInstance().getCamLeftHot());
+			arduino.set(1, Vision.getInstance().getCamRightHot());
+		}
+		
+		//Let the arduino know the number of balls we're going to shoot in auto.		
+		if(autonomousCommand.numBalls() == 2) {
+			arduino.set(2, true);
+		} else {
+			arduino.set(2, false);
+		}
+ 	}
 
 	private void autoSelectInit() {
 		//NOTE: ONLY ADD AutoCommandGroup objects to this chooser!
