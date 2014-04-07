@@ -39,20 +39,12 @@ public class Robot extends IterativeRobot {
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
 	private Compressor compressor;
 	private static boolean matchStarted = false;
-	private static Robot instance = null;
-
 	private static Command autonomousCommand;
 	private static Command teleopInitCommand;
 	SendableChooser autoChooser;
-	
-	
 	ConsolePrinter printer;
-
 	DriverStationLCD lcd;
-	
 
-
-	
 	/**
 	 * This method is run when the robot is first powered on.
 	 */
