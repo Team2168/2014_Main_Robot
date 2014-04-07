@@ -26,7 +26,6 @@ import org.team2168.subsystems.Drivetrain;
 import org.team2168.utils.ConsolePrinter;
 import org.team2168.utils.ConstantsBase;
 import org.team2168.utils.Debouncer;
-import org.team2168.utils.FalconGyro;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -40,7 +39,7 @@ public class Robot extends IterativeRobot {
 	private double lastAngle;
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
 	private Compressor compressor;
-	private static boolean matchStarted = false;
+	public static boolean matchStarted = false;
 	private ArduinoInterface arduino = ArduinoInterface.getInstance();
 	
 	ConsolePrinter printer;
@@ -102,12 +101,13 @@ public class Robot extends IterativeRobot {
 		//Check to see if the gyro is drifting, if it is re-initialize it.
 		//Thanks FRC254.
 		double curAngle = CommandBase.drivetrain.getGyroAngle();
+		System.out.println(curAngle - lastAngle);
 		if (gyroDriftDetector
 				.update(Math.abs(curAngle - lastAngle) > (.75 / 50.0))
 				&& gyroReinits < 3 && !matchStarted) {
 			gyroReinits++;
 			System.out.println("!!! Sensed drift, about to auto-reinit gyro ("+ gyroReinits + ")");
-			CommandBase.drivetrain.reinitGyro();
+			CommandBase.drivetrain.reInitGyro();
 			CommandBase.drivetrain.resetGyro();
 			gyroDriftDetector.reset();
 			curAngle = CommandBase.drivetrain.getGyroAngle();
@@ -132,9 +132,6 @@ public class Robot extends IterativeRobot {
 		
 		//No compressor for auto mode, lower battery load
 		//compressor.start();
-
-		matchStarted = true;
-		FalconGyro.setMatchStarted(matchStarted);
 	}
 
 	/**
@@ -203,7 +200,7 @@ public class Robot extends IterativeRobot {
 			arduino.set(2, false);
 		}
  	}
-
+	
 	private void autoSelectInit() {
 		//NOTE: ONLY ADD AutoCommandGroup objects to this chooser!
 		autoChooser = new SendableChooser();
