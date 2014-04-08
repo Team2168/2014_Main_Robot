@@ -93,9 +93,9 @@ public class OI {
 		
 		// Auto CONTROLLER BUTTON MAP //////////////////////////		
 		auto.ButtonA().whenPressed(new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
-		auto.ButtonB().whenPressed(new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		auto.ButtonB().whenPressed(new Center_RotHotGoal_1Ball());
 		auto.ButtonX().whenPressed(new Left_LeftHotGoal_1Ball());
-		auto.ButtonY().whenPressed(new Right_RightHotGoal_2Ball());
+		auto.ButtonY().whenPressed(new ShootStraight_2Ball_DrvFwd());
 		auto.ButtonRightBumper().whenPressed(new NoBall_DrvFwd());
 		
 		
