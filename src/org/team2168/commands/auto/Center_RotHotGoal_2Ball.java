@@ -1,7 +1,6 @@
 package org.team2168.commands.auto;
 
 import org.team2168.RobotMap;
-import org.team2168.commands.Sleep;
 import org.team2168.commands.drivetrain.AutoDriveXDistance;
 import org.team2168.commands.drivetrain.RotateDrivetrainRelative;
 import org.team2168.commands.intake.IntakeDown;
@@ -18,9 +17,20 @@ import org.team2168.commands.winch.Reload;
 import org.team2168.commands.winch.WaitUntilBallSettled;
 import org.team2168.commands.winch.WaitUntilFired;
 
+/**
+ * This command is for Auto
+ * It performs a two ball two hot atonomous mode
+ * The command assumes the Robot is placed in the center of the field facing fwd and the Vision camera is
+ * facing the right hot goal target.
+ * 
+ * The robot will rotate to the Goal that is not hot, and 
+ * @author kevin
+ *
+ */
+
 public class Center_RotHotGoal_2Ball extends AutoCommandGroup{ 
 	
-	public static final String name = "2 Ball, 2 Hot, Drive Fwd";
+	public static final String name = "2 Ball - 2 Hot - Robot In Center";
 
 	public Center_RotHotGoal_2Ball() {
 super(name);
