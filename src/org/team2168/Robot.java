@@ -207,11 +207,11 @@ public class Robot extends IterativeRobot {
 		//NOTE: ONLY ADD AutoCommandGroup objects to this chooser!
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault(ShootStraight_2Ball_DrvFwd.name, new ShootStraight_2Ball_DrvFwd());
-		autoChooser.addObject(ShootStraight_DrvFwd.name, new ShootStraight_DrvFwd());
+		autoChooser.addObject(Center_RotHotGoal_2Ball.name, new Center_RotHotGoal_2Ball());
+		autoChooser.addObject(Center_RotHotGoal_1Ball.name, new Center_RotHotGoal_1Ball());
 		autoChooser.addObject(Left_LeftHotGoal_1Ball.name, new Left_LeftHotGoal_1Ball());
 		autoChooser.addObject(Right_RightHotGoal_1Ball.name, new Right_RightHotGoal_1Ball());
 		autoChooser.addObject(NoBall_DrvFwd.name, new NoBall_DrvFwd());
-		autoChooser.addObject(Center_RotHotGoal_1Ball.name, new Center_RotHotGoal_1Ball());
 		//autoChooser.addObject("Center_RotDrvFwdHotGoal_1Ball", new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
 		//autoChooser.addObject("ShootStraight_2BallDrvFwd", new ShootStraight_2Ball_DrvFwd());
 		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
