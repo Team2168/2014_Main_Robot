@@ -8,7 +8,7 @@ import org.team2168.subsystems.Vision;
  * A command waits for a valid frame and determines if the left or right goal is hot.
  * This command returns immediately after received a valid frame from the camera.
  * If the frame contains a hot goal, the command indicates that side is hot, if the
- * frame containes no hot goals, the command indicates the other side is hot.
+ * frame contains no hot goals, the command indicates the other side is hot.
  * 
  * @author Kevin
  */

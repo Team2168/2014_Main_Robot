@@ -37,20 +37,31 @@ public class WaitForLeftHot extends CommandBase {
 	 */
 	protected void execute() {
 
-		// did we receive a valid frame and does it see a left target
-		if (Vision.getInstance().isValidFrame() && (Vision.getInstance().getCamLeftOrRightHot() == -1))
+		// did we receive a valid frame from camera
+		if (Vision.getInstance().isValidFrame())
 		{
+			//if yes, is it the right goal?
+			if(Vision.getInstance().getCamLeftOrRightHot() == 1)
+				Vision.getInstance().setLeftOrRightHot(1);
+			//the right goal is off, so left goal is hot
+			else
+				Vision.getInstance().setLeftOrRightHot(-1);
 			
-			Vision.getInstance().setLeftOrRightHot(-1);
 			System.out.println(Vision.getInstance().getLeftOrRightHot() + " (1 for right, -1 for left 0 for none)");
 			System.out.println("Took " + this.timeSinceInitialized() + " seconds");
-			stop = true;
-
-		} else
+			
+			//wait for left hot
+			if (Vision.getInstance().getLeftOrRightHot() == -1)
+				stop = true;
+		
+		} 
+		else
 			// keep on trying
 			stop = false;
 
 	}
+
+	
 
 	/**
 	 * Make this return true when this Command no longer needs to run execute()

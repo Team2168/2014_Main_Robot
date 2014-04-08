@@ -28,7 +28,7 @@ import org.team2168.commands.winch.WaitUntilFired;
  */
 public class Center_RotHotGoal_1Ball extends AutoCommandGroup{
 	
-	public static final String name = "1 Ball - 1 Hot - Robot In Center";
+	public static final String name = "1 Ball - Robot In Center - 1 Hot";
 
 	public Center_RotHotGoal_1Ball() {
 		super(name);
