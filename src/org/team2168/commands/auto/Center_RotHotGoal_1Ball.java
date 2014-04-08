@@ -19,10 +19,7 @@ public class Center_RotHotGoal_1Ball extends AutoCommandGroup{
 		addParallel(new TusksLongShotPosition());
 		addParallel(new IntakeDown());
 
-		addSequential(new WaitForFirstHot(), firstHotGoalTimeOut);
-
-		// lets see if this works
-		addSequential(new WaitForChildren());
+		addSequential(new WaitForFirstHot());
 
 		// Rotate DriveTrain = +/- min rotation angle, this will get angle
 		//   from camera once executed

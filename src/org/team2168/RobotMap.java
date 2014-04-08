@@ -197,7 +197,7 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant ballTapperDisengageAngle =
 			new Constant("ballTapperDisengageAngle", 0.0);
 	public static final Constant intakeWheelSpeedWhenLowering =
-			new Constant("intakeWheelSpeedWhenLowering", -0.25);
+			new Constant("intakeWheelSpeedWhenLowering", -0.3);
 
 	/****************************************************************
      *                  Operator Interface Parameters               *

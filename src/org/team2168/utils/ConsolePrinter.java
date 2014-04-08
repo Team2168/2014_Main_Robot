@@ -2,6 +2,7 @@ package org.team2168.utils;
 
 import java.util.TimerTask;
 
+import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.subsystems.Tusks;
 import org.team2168.subsystems.Vision;
@@ -51,6 +52,8 @@ public class ConsolePrinter {
 		SmartDashboard.putBoolean("Intake Limit:", IntakePosition.getInstance().getIntakeLimitSwitch());
 		SmartDashboard.putNumber("Pot Voltage:", Winch.getInstance().getWinchPotentiometerVoltage());	
 		SmartDashboard.putNumber("Catapult Angle", Winch.getInstance().getCatapultAngle());
+		
+		SmartDashboard.putString("AutoName", Robot.getAutoName());
 		
 		
 		SmartDashboard.putNumber("Intake Ball presence", Winch.getInstance().getIntakeBallSensorVoltage());

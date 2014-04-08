@@ -40,15 +40,18 @@ public class Robot extends IterativeRobot {
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
 	private Compressor compressor;
 	private static boolean matchStarted = false;
+
 	private ArduinoInterface arduino = ArduinoInterface.getInstance();
-	
-	ConsolePrinter printer;
 
 	SendableChooser autoChooser;
-	AutoCommandGroup autonomousCommand;
-	Command teleopInitCommand;
-	DriverStationLCD lcd;
+	private static AutoCommandGroup autonomousCommand;
+	private static Command teleopInitCommand;
 
+	DriverStationLCD lcd;
+	ConsolePrinter printer;
+
+
+	
 	/**
 	 * This method is run when the robot is first powered on.
 	 */
@@ -208,9 +211,18 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject(Left_LeftHotGoal_1Ball.name, new Left_LeftHotGoal_1Ball());
 		autoChooser.addObject(Right_RightHotGoal_1Ball.name, new Right_RightHotGoal_1Ball());
 		autoChooser.addObject(NoBall_DrvFwd.name, new NoBall_DrvFwd());
-		//autoChooser.addObject("Center_RotHotGoal_1Ball", new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
-		//autoChooser.addObject("Center_RotDrvFwdHotGoal_1Ball", new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
-		//autoChooser.addObject("ShootStraight_2BallDrvFwd", new ShootStraight_2Ball_DrvFwd());
+		autoChooser.addObject("Center_RotHotGoal_1Ball", new Center_RotHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		autoChooser.addObject("Center_RotDrvFwdHotGoal_1Ball", new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		autoChooser.addObject("ShootStraight_2BallDrvFwd", new ShootStraight_2Ball_DrvFwd());
 		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
+	}
+
+	public static String getAutoName()
+	{
+		if(autonomousCommand != null)
+			return autonomousCommand.getName();
+		else
+			return "None";
+		
 	}
 }
