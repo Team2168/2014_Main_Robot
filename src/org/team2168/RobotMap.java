@@ -160,7 +160,7 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant ballSettledVoltage =
 			new Constant("ballSettledVoltage", 1.6);
 	public static final Constant ballSettleTime =
-			new Constant("ballSettleTime", 0.8);
+			new Constant("ballSettleTime", 0.6);
 	public static final Constant ballPresentVoltage =
 			new Constant("ballPresentVoltage", 0.9);
 	public static final Constant ballPresentTime =
@@ -212,7 +212,7 @@ public class RobotMap extends ConstantsBase {
      *                  Autonomous Parameters               *
      ****************************************************************/
 	public static final Constant rotationAngleToHot =
-			new Constant("rotationAngleToHot", 5.0);
+			new Constant("rotationAngleToHot", 6.5);
 	public static final Constant CameraSteadyStateSecs =
 			new Constant("CameraSteadyStateSecs", 1.1);
 	public static final Constant VisionTimeOutSecs =

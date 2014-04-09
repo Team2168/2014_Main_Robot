@@ -39,21 +39,20 @@ super(name);
 		addParallel(new TusksLongShotPosition());
 
 		// move intake out of way, spin wheel to keep ball in robot
-		addParallel(new IntakeDriveMotor(
-				RobotMap.intakeWheelSpeedWhenLowering.getDouble()));
-		addSequential(new IntakeDown(), 1.5);
+		addParallel(new IntakeDriveMotor(RobotMap.intakeWheelSpeedWhenLowering.getDouble()));
+		addSequential(new IntakeDown(), 1.0);
 		addParallel(new IntakeDriveMotor(0.0));
 		addSequential(new EngageTappers());
 		
 		//wait for hot goal and rotate to other goal.
 		// Rotate DriveTrain = +/- min rotation angle, this will get angle
 		//   from camera once executed
-		addSequential(new WaitForFirstHot(),3);
+		addSequential(new WaitForFirstHot(),2);
 		addSequential(new RotateDrivetrainRelative(0.0,true,true));
 		
 		
 		// wait for ball to settle
-		addSequential(new WaitUntilBallSettled(), 2.0);
+		addSequential(new WaitUntilBallSettled(), 1.5);
 
 		// First ball
 		addSequential(new FireAndReload());
