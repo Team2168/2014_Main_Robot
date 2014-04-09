@@ -19,8 +19,8 @@ public class ServoBallTapper extends Subsystem {
 	//  There's no good reason to not have this supported.
 	private static final double MAX_ANGLE_LEFT = 170.0;
 	private static final double MAX_ANGLE_RIGHT = 170.0;
-	private static final double MIN_ANGLE_LEFT = 10.0;
-	private static final double MIN_ANGLE_RIGHT = 15.0;
+	private static final double MIN_ANGLE_LEFT = 0.0;
+	private static final double MIN_ANGLE_RIGHT = 10.0;
 
 	/**
 	 * A private constructor to prevent multiple instances from being created.

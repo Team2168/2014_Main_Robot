@@ -8,7 +8,7 @@ import org.team2168.subsystems.Vision;
  * A command waits for a valid frame and determines if the left or right goal is hot.
  * This command returns immediately after received a valid frame from the camera.
  * If the frame contains a hot goal, the command indicates that side is hot, if the
- * frame containes no hot goals, the command indicates the other side is hot.
+ * frame contains no hot goals, the command indicates the other side is hot.
  * 
  * @author Kevin
  */
@@ -42,20 +42,32 @@ public class WaitForFirstHot extends CommandBase {
 	 */
 	protected void execute() {
 
-		// did we receive a valid frame?
-		if (Vision.getInstance().isValidFrame() && Vision.getInstance().getCamLeftOrRightHot() != 0)
+		// did we receive a valid frame from camera
+		if (Vision.getInstance().isValidFrame())
 		{
+			//if yes, is it the right goal?
+			if(Vision.getInstance().getCamLeftOrRightHot() == 1)
+			{
+				Vision.getInstance().setLeftOrRightHot(1);
+				System.out.println(Vision.getInstance().getLeftOrRightHot() + " (1 for right, -1 for left 0 for none)");
+				System.out.println("Took " + this.timeSinceInitialized() + " seconds");
+			}
+			//the right goal is off, so left goal is hot
+			else
+			{
+				Vision.getInstance().setLeftOrRightHot(-1);
+				System.out.println(Vision.getInstance().getLeftOrRightHot() + " (1 for right, -1 for left 0 for none)");
+				System.out.println("Took " + this.timeSinceInitialized() + " seconds");
+			}
 			
-			Vision.getInstance().setLeftOrRightHot(Vision.getInstance().getCamLeftOrRightHot());
-			System.out.println(Vision.getInstance().getLeftOrRightHot() + " (1 for right, -1 for left 0 for none)");
-			System.out.println("Took " + this.timeSinceInitialized() + " seconds");
 			stop = true;
-
-		} else
+		
+		} 
+		else
 			// keep on trying
 			stop = false;
 
-	}
+		}
 
 	/**
 	 * Make this return true when this Command no longer needs to run execute()

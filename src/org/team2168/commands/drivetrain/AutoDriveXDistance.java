@@ -36,8 +36,8 @@ public class AutoDriveXDistance extends CommandBase{
 	protected void execute() {
 		//TODO set the margin of error
 		
-		double rightSpeed = 0.25;
-		double leftSpeed = 0.25;
+		double rightSpeed = 0.7;
+		double leftSpeed = 0.7;
 		double currentDistance = drivetrain.getAveragedEncoderDistance();
 
 		//precalculate the steering adjustment value

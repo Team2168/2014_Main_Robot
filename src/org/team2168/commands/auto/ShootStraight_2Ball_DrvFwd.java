@@ -1,58 +1,64 @@
 package org.team2168.commands.auto;
 
 import org.team2168.RobotMap;
-import org.team2168.commands.Sleep;
 import org.team2168.commands.drivetrain.AutoDriveXDistance;
 import org.team2168.commands.intake.IntakeDown;
 import org.team2168.commands.intake.IntakeDriveMotor;
+import org.team2168.commands.intake.IntakeSingleBall;
+import org.team2168.commands.intake.IntakeUp;
+import org.team2168.commands.tapper.DisengageTappers;
+import org.team2168.commands.tapper.EngageTappers;
 import org.team2168.commands.tusks.TusksLongShotPosition;
-import org.team2168.commands.tusks.TusksTrussShotPosition;
 import org.team2168.commands.winch.Fire;
 import org.team2168.commands.winch.FireAndReload;
 import org.team2168.commands.winch.Reload;
+import org.team2168.commands.winch.WaitUntilBallSettled;
 import org.team2168.commands.winch.WaitUntilFired;
 
 public class ShootStraight_2Ball_DrvFwd extends AutoCommandGroup {
-
+	public static final String name = "2 Ball, Shoot Straight, Drive Fwd";
+	
 	public ShootStraight_2Ball_DrvFwd() {
-		//Extend the tusks and drive wheels to prevent the ball from
-		//  falling backwards.
-		addParallel(new IntakeDriveMotor(-0.15));
+		super(name);
 		
-		//once the intake is down, stop driving the intake motors
-		addSequential(new IntakeDown(), RobotMap.intakeLowerTimeout.getDouble());
-		addSequential(new TusksLongShotPosition());
-		//Stop intaking
+		// set tusks to long shot
+		addParallel(new TusksLongShotPosition());
+
+		// move intake out of way, spin wheel to keep ball in robot
+		addParallel(new IntakeDriveMotor(
+				RobotMap.intakeWheelSpeedWhenLowering.getDouble()));
+		addSequential(new IntakeDown(), 1.5);
 		addParallel(new IntakeDriveMotor(0.0));
+		addSequential(new EngageTappers());
 		
-		//ball settle
-		addSequential(new Sleep(), RobotMap.autoBallSettleTime.getDouble());
+		// wait for ball to settle
+		addSequential(new WaitUntilBallSettled(), 2.0);
+
+		// First ball
 		addSequential(new FireAndReload());
-		
-		//Move tusks in so we can intake ball
-		addSequential(new TusksTrussShotPosition());
-		
-		//Run the intake to pick up another ball.
-		addParallel(new IntakeDriveMotor(-1.0));
-		addSequential(new Sleep(), RobotMap.autoIntakeRunTime.getDouble());
-		
-		addSequential(new TusksLongShotPosition());
-		addParallel(new IntakeDriveMotor(0.0));
-		
-		//Ball settle
-		addSequential(new Sleep(), RobotMap.autoBallSettleTime.getDouble());
-		
-		// fire, then drive and reload
+
+		// intake second ball
+		addSequential(new IntakeSingleBall(), 3.0);
+		addSequential(new EngageTappers());
+
+		// set tusks
+		addParallel(new TusksLongShotPosition());
+
+		// wait for ball to settle
+		addSequential(new WaitUntilBallSettled(),
+				RobotMap.autoBallSettleTime.getDouble());
+
+		// Second Ball
 		addSequential(new Fire());
 		addSequential(new WaitUntilFired());
 		
+		//drive fwd for pts
 		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
 		
-		addSequential(new TusksTrussShotPosition());
-		
+		//Get ready for the match 
+		addParallel(new DisengageTappers());
+		addParallel(new IntakeUp());
 		addParallel(new Reload());
-		
-		addSequential(new AutoDriveXDistance(80));
 	}
 	
 	public int numBalls() {
