@@ -56,21 +56,22 @@ public class Robot extends IterativeRobot {
 	 * This method is run when the robot is first powered on.
 	 */
 	public void robotInit() {
-		compressor = new Compressor(RobotMap.pressureSwitch.getInt(),
-				RobotMap.compressorRelay.getInt());
-		
-		printer = new ConsolePrinter(200);
+		//initialize compressor
+		compressor = new Compressor(RobotMap.pressureSwitch.getInt(), RobotMap.compressorRelay.getInt());
 
 		// Initialize all subsystems
 		CommandBase.init();
-
-		lcd = DriverStationLCD.getInstance();
 		
 		//Initialize auto mode chooser
 		autoSelectInit();
 
+		//create thread to write dashboard variables
+		printer = new ConsolePrinter(200);
 		printer.startThread();
 		
+		//init message box on driverstation
+		lcd = DriverStationLCD.getInstance();
+
 		//Console Message so we know robot finished loading
 		System.out.println("****Robot Done Loading****");
 	}
@@ -79,13 +80,16 @@ public class Robot extends IterativeRobot {
 	 * This method is run once each time the robot is disabled.
 	 */
 	public void disabledInit() {
-		//prevent null case if entering telop during testing
+		//prevent null case if entering telop during testing without entering auto
 		autonomousCommand = (AutoCommandGroup) autoChooser.getSelected();
 		teleopInitCommand = new TeleopDefaults();
 		
+		//reset sensors
 		Winch.getInstance().resetWinchEncoder();
 		Drivetrain.getInstance().resetEncoders();
-
+		
+		//TODO: this doesn't do anything by itself, need to add a call to
+		//Commandbase.init, but we need to test that doesn't break anything
 		ConstantsBase.readConstantsFromFile();
 	}
 
@@ -93,6 +97,7 @@ public class Robot extends IterativeRobot {
 	 * This method is run repeatedly while the robot is disabled.
 	 */
 	public void disabledPeriodic() {
+		//get auto selection from dashboard and write it to lcd
 		autonomousCommand = (AutoCommandGroup) autoChooser.getSelected();
 		lcd.println(DriverStationLCD.Line.kUser2, 1, autonomousCommand.getName());
 		lcd.updateLCD();
@@ -101,22 +106,10 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().removeAll();
 		Scheduler.getInstance().disable();
 		
-		//Check to see if the gyro is drifting, if it is re-initialize it.
-		//Thanks FRC254.
-		double curAngle = CommandBase.drivetrain.getGyroAngle();
-		if (gyroDriftDetector
-				.update(Math.abs(curAngle - lastAngle) > (.75 / 50.0))
-				&& gyroReinits < 3 && !matchStarted) {
-			gyroReinits++;
-			System.out.println("!!! Sensed drift, about to auto-reinit gyro ("+ gyroReinits + ")");
-			CommandBase.drivetrain.reinitGyro();
-			CommandBase.drivetrain.resetGyro();
-			gyroDriftDetector.reset();
-			curAngle = CommandBase.drivetrain.getGyroAngle();
-			System.out.println("Finished auto-reinit gyro");
-		}
-		lastAngle = curAngle;
+		//recal gyro if robot moved while disabled
+		gyroReinit();
 		
+		//set arduino lights
 		setArduinoAutonomousStatuses();
 	}
 
@@ -142,6 +135,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		
+		//drive lights
 		setArduinoAutonomousStatuses();
 	}
 
@@ -155,17 +149,18 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		
 		//don't try to cancel a command if it isn't initialized yet
-		if(autonomousCommand != null) {
+		if(autonomousCommand != null)
 			autonomousCommand.cancel();
-		}
+
 		Scheduler.getInstance().enable();
 
+		//drive winch down in auto to help drivers
 		if(DriverStation.getInstance().isFMSAttached())
 			teleopInitCommand.start();
 
 		compressor.start();
 		
-		//Turn all Arduino pins when we leave auto mode.
+		//Turn off all Arduino pins when we leave auto mode.
 		arduino.reset();
 	}
 
@@ -202,7 +197,35 @@ public class Robot extends IterativeRobot {
 			arduino.set(2, false);
 		}
  	}
+	
+	/**
+	 * Method which checks to see if gyro drifts and resets 
+	 * the gyro. Call this in a loop
+	 */
+	private void gyroReinit()
+	{
+		//Check to see if the gyro is drifting, if it is re-initialize it.
+				//Thanks FRC254.
+				double curAngle = CommandBase.drivetrain.getGyroAngle();
+				if (gyroDriftDetector
+						.update(Math.abs(curAngle - lastAngle) > (.75 / 50.0))
+						&& gyroReinits < 3 && !matchStarted) {
+					gyroReinits++;
+					System.out.println("!!! Sensed drift, about to auto-reinit gyro ("+ gyroReinits + ")");
+					CommandBase.drivetrain.reinitGyro();
+					CommandBase.drivetrain.resetGyro();
+					gyroDriftDetector.reset();
+					curAngle = CommandBase.drivetrain.getGyroAngle();
+					System.out.println("Finished auto-reinit gyro");
+				}
+				lastAngle = curAngle;
 
+		
+	}
+	
+	/**
+	 * creates Autonomous mode chooser
+	 */
 	private void autoSelectInit() {
 		//NOTE: ONLY ADD AutoCommandGroup objects to this chooser!
 		autoChooser = new SendableChooser();
@@ -217,6 +240,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
 	}
 
+	/**
+	 * 
+	 * @return string name of autonomous command
+	 */
 	public static String getAutoName()
 	{
 		if(autonomousCommand != null)
