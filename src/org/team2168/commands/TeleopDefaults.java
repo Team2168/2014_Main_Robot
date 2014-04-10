@@ -1,6 +1,5 @@
 package org.team2168.commands;
 
-import org.team2168.commands.intake.IntakeUp;
 import org.team2168.commands.tapper.DisengageTappers;
 import org.team2168.commands.winch.Reload;
 
@@ -15,6 +14,5 @@ public class TeleopDefaults extends CommandGroup {
 	public TeleopDefaults() {
 		addSequential(new DisengageTappers());
 		addSequential(new Reload(), 5.0);
-		addSequential(new IntakeUp());
 	}
 }
