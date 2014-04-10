@@ -50,8 +50,6 @@ public class Robot extends IterativeRobot {
 	DriverStationLCD lcd;
 	ConsolePrinter printer;
 
-
-	
 	/**
 	 * This method is run when the robot is first powered on.
 	 */
