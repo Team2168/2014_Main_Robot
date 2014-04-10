@@ -1,10 +1,10 @@
 package org.team2168;
 
-import org.team2168.utils.BitRelay;
+import edu.wpi.first.wpilibj.DigitalOutput;
 
 public class ArduinoInterface {
 	private static ArduinoInterface instance = null;
-	private static BitRelay relay1, relay2;
+	private static DigitalOutput pin1, pin2, pin3, pin4;
 	private static final int NUM_BITS = 4;
 	private static boolean[] bitStates = new boolean[NUM_BITS];
 	
@@ -27,8 +27,10 @@ public class ArduinoInterface {
 	 * Ensure nobody can call the constructor on this class directly.
 	 */
 	private ArduinoInterface() {
-		relay1 = new BitRelay(RobotMap.arduinoRelay1.getInt());
-		relay2 = new BitRelay(RobotMap.arduinoRelay2.getInt());
+		pin1 = new DigitalOutput(RobotMap.arduinoPin1.getInt());
+		pin2 = new DigitalOutput(RobotMap.arduinoPin2.getInt());
+		pin3 = new DigitalOutput(RobotMap.arduinoPin3.getInt());
+		pin4 = new DigitalOutput(RobotMap.arduinoPin4.getInt());
 		
 		//Initialize outputs to off state.
 		reset();
@@ -57,16 +59,16 @@ public class ArduinoInterface {
 		
 		switch(bit) {
 		case 0:
-			relay1.setForward(val);
+			pin1.set(val);
 			break;
 		case 1:
-			relay1.setReverse(val);
+			pin2.set(val);
 			break;
 		case 2:
-			relay2.setForward(val);
+			pin3.set(val);
 			break;
 		case 3:
-			relay2.setReverse(val);
+			pin4.set(val);
 			break;
 		default:
 			//invalid bit number, do nothing

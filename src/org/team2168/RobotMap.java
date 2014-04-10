@@ -53,6 +53,14 @@ public class RobotMap extends ConstantsBase {
 			new Constant("winchEncoderB", 7);
 	public static final Constant intakeDownLimitSwitch =
 			new Constant("intakeDownLimitSwitch", 8);
+	public static final Constant arduinoPin1 =
+			new Constant("arduinoPin1", 10);
+	public static final Constant arduinoPin2 =
+			new Constant("arduinoPin2", 11);
+	public static final Constant arduinoPin3 =
+			new Constant("arduinoPin3", 12);
+	public static final Constant arduinoPin4 =
+			new Constant("arduinoPin4", 13);
 	public static final Constant pressureSwitch =
 			new Constant("pressureSwitch", 14);
 	
@@ -64,10 +72,7 @@ public class RobotMap extends ConstantsBase {
 			new Constant("compressorRelay", 2);
 	public static final Constant ballTapperRelay =
 			new Constant("ballTapperRelay", 3);
-	public static final Constant arduinoRelay1 =
-			new Constant("arduinoRelay1", 4);
-	public static final Constant arduinoRelay2 =
-			new Constant("arduinoRelay2", 5);
+
 
 	//Solenoid Channels(third slot on cRio)///////////////////////////
 	public static final Constant intakeExtPort = 
