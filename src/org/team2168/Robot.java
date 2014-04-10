@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
 	private int gyroReinits;
 	private double lastAngle;
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
-	private Compressor compressor;
+	private static Compressor compressor;
 	private static boolean matchStarted = false;
 
 	private ArduinoInterface arduino = ArduinoInterface.getInstance();
@@ -202,29 +202,26 @@ public class Robot extends IterativeRobot {
 	 * Method which checks to see if gyro drifts and resets 
 	 * the gyro. Call this in a loop
 	 */
-	private void gyroReinit()
-	{
+	private void gyroReinit() {
 		//Check to see if the gyro is drifting, if it is re-initialize it.
-				//Thanks FRC254.
-				double curAngle = CommandBase.drivetrain.getGyroAngle();
-				if (gyroDriftDetector
-						.update(Math.abs(curAngle - lastAngle) > (.75 / 50.0))
-						&& gyroReinits < 3 && !matchStarted) {
-					gyroReinits++;
-					System.out.println("!!! Sensed drift, about to auto-reinit gyro ("+ gyroReinits + ")");
-					CommandBase.drivetrain.reinitGyro();
-					CommandBase.drivetrain.resetGyro();
-					gyroDriftDetector.reset();
-					curAngle = CommandBase.drivetrain.getGyroAngle();
-					System.out.println("Finished auto-reinit gyro");
-				}
-				lastAngle = curAngle;
-
-		
+		//Thanks FRC254.
+		double curAngle = CommandBase.drivetrain.getGyroAngle();
+		if(gyroDriftDetector.update(Math.abs(curAngle - lastAngle) > (0.75 / 50.0))
+				&& !matchStarted) {
+				//&& gyroReinits < 3 && !matchStarted) {
+			gyroReinits++;
+			System.out.println("!!! Sensed drift, about to auto-reinit gyro ("+ gyroReinits + ")");
+			CommandBase.drivetrain.reinitGyro();
+			CommandBase.drivetrain.resetGyro();
+			gyroDriftDetector.reset();
+			curAngle = CommandBase.drivetrain.getGyroAngle();
+			System.out.println("Finished auto-reinit gyro");
+		}
+		lastAngle = curAngle;	
 	}
 	
 	/**
-	 * creates Autonomous mode chooser
+	 * Creates Autonomous mode chooser.
 	 */
 	private void autoSelectInit() {
 		//NOTE: ONLY ADD AutoCommandGroup objects to this chooser!
@@ -244,12 +241,19 @@ public class Robot extends IterativeRobot {
 	 * 
 	 * @return string name of autonomous command
 	 */
-	public static String getAutoName()
-	{
-		if(autonomousCommand != null)
+	public static String getAutoName() {
+		if(autonomousCommand != null) {
 			return autonomousCommand.getName();
-		else
+		} else {
 			return "None";
-		
+		}
+	}
+	
+	public static void startCompressor() {
+		compressor.start();
+	}
+	
+	public static void stopCompressor() {
+		compressor.stop();
 	}
 }
