@@ -68,6 +68,12 @@ public class ConsolePrinter {
 		SmartDashboard.putBoolean("Truss Status", Tusks.getInstance().isTrussShot());
 		SmartDashboard.putBoolean("Wall Status", Tusks.getInstance().isShortRangeShot());
 		SmartDashboard.putBoolean("Far Status", Tusks.getInstance().isLongRangeShot());
+
+//		SmartDashboard.putBoolean("isAuto", DriverStation.getInstance().isAutonomous());
+//		SmartDashboard.putBoolean("isDisabled", DriverStation.getInstance().isDisabled());
+//		SmartDashboard.putBoolean("isEnabled", DriverStation.getInstance().isEnabled());
+//		SmartDashboard.putBoolean("isOperator", DriverStation.getInstance().isOperatorControl());
+//		SmartDashboard.putBoolean("matchStarted", Robot.matchStarted);
 		}
 	}
 

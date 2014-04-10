@@ -38,6 +38,7 @@ public class Robot extends IterativeRobot {
 	private int gyroReinits;
 	private double lastAngle;
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
+
 	private static Compressor compressor;
 	private static boolean matchStarted = false;
 
@@ -103,8 +104,8 @@ public class Robot extends IterativeRobot {
 		//Kill all active commands
 		Scheduler.getInstance().removeAll();
 		Scheduler.getInstance().disable();
-		
-		//recal gyro if robot moved while disabled
+
+		//Check to see if the gyro is drifting, if it is re-initialize it.
 		gyroReinit();
 		
 		//set arduino lights
@@ -195,7 +196,7 @@ public class Robot extends IterativeRobot {
 			arduino.set(2, false);
 		}
  	}
-	
+
 	/**
 	 * Method which checks to see if gyro drifts and resets 
 	 * the gyro. Call this in a loop
@@ -209,7 +210,7 @@ public class Robot extends IterativeRobot {
 				//&& gyroReinits < 3 && !matchStarted) {
 			gyroReinits++;
 			System.out.println("!!! Sensed drift, about to auto-reinit gyro ("+ gyroReinits + ")");
-			CommandBase.drivetrain.reinitGyro();
+			CommandBase.drivetrain.reInitGyro();
 			CommandBase.drivetrain.resetGyro();
 			gyroDriftDetector.reset();
 			curAngle = CommandBase.drivetrain.getGyroAngle();

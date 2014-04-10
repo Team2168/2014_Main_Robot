@@ -9,6 +9,7 @@ package org.team2168.utils;
 
 import edu.wpi.first.wpilibj.AccumulatorResult;
 import edu.wpi.first.wpilibj.AnalogChannel;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.SensorBase;
 import edu.wpi.first.wpilibj.Timer;
@@ -28,10 +29,15 @@ import edu.wpi.first.wpilibj.util.BoundaryException;
  * determine the default offset. This is subtracted from each sample to
  * determine the heading.
  * 
- * Modified to make initGyro public, ala cheezygyro. This allows a the robot to
- * re-zero the gyro if it was drifting before the match started. This could
- * happen if the robot was being moved around shortly after power on (during the
- * first gyro init).
+ * Modified to allow external calls in to initialize the gyro, ala cheezygyro.
+ * This allows a the robot to re-zero the gyro if it was drifting before the
+ * match has started. This could happen if the robot was being moved around
+ * shortly after power on (during the first gyro init).
+ * 
+ * Also modified to prevent this class from blocking execution while
+ * initializing the gyro.
+ * 
+ * @author James@team2168.org
  */
 public class FalconGyro extends SensorBase implements PIDSource, ISensor,
 		LiveWindowSendable {
@@ -57,7 +63,7 @@ public class FalconGyro extends SensorBase implements PIDSource, ISensor,
 	 * calculations are in progress, this is typically done when the robot is
 	 * first turned on while it's sitting at rest before the competition starts.
 	 */
-	public void initGyro() {
+	private void initGyro() {
 		result = new AccumulatorResult();
 		if (m_analog == null) {
 			System.out.println("Null m_analog");
@@ -70,23 +76,9 @@ public class FalconGyro extends SensorBase implements PIDSource, ISensor,
 		m_analog.getModule().setSampleRate(sampleRate);
 
 		Timer.delay(1.0);
-		m_analog.initAccumulator();
-
-		Timer.delay(kCalibrationSampleTime);
-
-		m_analog.getAccumulatorOutput(result);
-
-		m_center = (int) ((double) result.value / (double) result.count + .5);
-
-		m_offset = ((double) result.value / (double) result.count)
-				- (double) m_center;
-
-		m_analog.setAccumulatorCenter(m_center);
-
-		m_analog.setAccumulatorDeadband(0); // /< TODO: compute / parameterize
-											// this
-		m_analog.resetAccumulator();
-
+		
+		reInitGyro();
+		
 		setPIDSourceParameter(PIDSourceParameter.kAngle);
 
 		UsageReporting.report(UsageReporting.kResourceType_Gyro,
@@ -95,6 +87,46 @@ public class FalconGyro extends SensorBase implements PIDSource, ISensor,
 				m_analog.getChannel(), this);
 	}
 
+	/**
+	 * Initialize the gyro. This method will block for the calibration period
+	 * or until the match has started, whichever happens first. If this method
+	 * is called during a match (the robot is enabled), the previous calibration
+	 * value will be kept.
+	 */
+	public void reInitGyro() {
+		double startTime = Timer.getFPGATimestamp();
+		
+		//Don't bother re-initializing the gyro if the match has already started 
+		if(DriverStation.getInstance().isDisabled()) {
+			m_analog.initAccumulator();
+			//make sure we wait long enough to accumulate at least one sample
+			Timer.delay(0.025);
+			
+			//Attempt to calibrate the gyro. Delay until we have waited for the
+			//  length of the calibration period or a match has started,
+			//  whichever happens first.
+			while((Timer.getFPGATimestamp() < startTime + kCalibrationSampleTime)
+					&& DriverStation.getInstance().isDisabled()) {
+				Timer.delay(0.005);
+			}
+	
+			m_analog.getAccumulatorOutput(result);
+	
+			//Determine the new zero, where value is the accumulated analog data
+			//  over the time specified (count).
+			m_center = (int) ((double) result.value / (double) result.count + .5);
+	
+			m_offset = ((double) result.value / (double) result.count)
+					- (double) m_center;
+	
+			m_analog.setAccumulatorCenter(m_center);
+	
+			m_analog.setAccumulatorDeadband(0);
+	
+			m_analog.resetAccumulator();
+		}
+	}
+	
 	/**
 	 * Gyro constructor given a slot and a channel. .
 	 * 

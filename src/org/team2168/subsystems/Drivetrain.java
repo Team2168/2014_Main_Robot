@@ -170,8 +170,8 @@ public class Drivetrain extends Subsystem {
 	/**
 	 * Re-initialize the gyro. This should not be called during a match.
 	 */
-	public void reinitGyro() {
-		gyro.initGyro();
+	public void reInitGyro() {
+		gyro.reInitGyro();
 	}
 
 	/**
