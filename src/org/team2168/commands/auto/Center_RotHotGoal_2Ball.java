@@ -3,6 +3,7 @@ package org.team2168.commands.auto;
 import org.team2168.RobotMap;
 import org.team2168.commands.drivetrain.AutoDriveXDistance;
 import org.team2168.commands.drivetrain.RotateDrivetrainRelative;
+import org.team2168.commands.drivetrain.StupidDriveFwd;
 import org.team2168.commands.intake.IntakeDown;
 import org.team2168.commands.intake.IntakeDriveMotor;
 import org.team2168.commands.intake.IntakeSingleBall;
@@ -74,6 +75,7 @@ super(name);
 		
 		//drive fwd for pts
 //		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
+		addSequential(new StupidDriveFwd(0.6), 0.8);
 		
 		//Get ready for the match 
 		addParallel(new DisengageTappers());
