@@ -10,7 +10,7 @@ public class NoBall_DrvFwd extends AutoCommandGroup {
 		super(name);
 		
 		// Drive forward to inscrease likelyhood of shoot and gain 5 pts
-		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
+//		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
 	}
 	
 	public int numBalls() {

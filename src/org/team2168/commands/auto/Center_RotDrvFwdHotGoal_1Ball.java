@@ -35,7 +35,7 @@ public class Center_RotDrvFwdHotGoal_1Ball extends AutoCommandGroup {
 		addSequential(new Sleep(), 1.0);
 
 		// Drive forward to inscrease likelyhood of shoot and gain 5 pts, should run 55 inches forward
-		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
+//		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
 
 		//Let the ball settle before a shot
 		addSequential(new Sleep(), 2.0);

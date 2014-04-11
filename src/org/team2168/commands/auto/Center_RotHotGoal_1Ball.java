@@ -58,11 +58,11 @@ public class Center_RotHotGoal_1Ball extends AutoCommandGroup{
 		addSequential(new WaitUntilFired());
 		
 		//drive fwd for pts
-		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
+//		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
 		
 		//Get ready for the match 
 		addParallel(new DisengageTappers());
-		addParallel(new IntakeUp());
+//		addParallel(new IntakeUp());
 		addParallel(new Reload());
 	}
 	
