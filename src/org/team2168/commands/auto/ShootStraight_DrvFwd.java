@@ -3,6 +3,7 @@ package org.team2168.commands.auto;
 import org.team2168.RobotMap;
 import org.team2168.commands.Sleep;
 import org.team2168.commands.drivetrain.AutoDriveXDistance;
+import org.team2168.commands.drivetrain.StupidDriveFwd;
 import org.team2168.commands.intake.IntakeDown;
 import org.team2168.commands.intake.IntakeDriveMotor;
 import org.team2168.commands.tusks.TusksLongShotPosition;
@@ -38,7 +39,9 @@ public class ShootStraight_DrvFwd extends AutoCommandGroup {
 		addSequential(new Fire());
 		addSequential(new WaitUntilFired());
 		
-//		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()/2));
+		//stop gap to get 5pts in auto, this doesn't necessarily drive straight!
+		//REMOVE when we figure out why drive straight isn't working
+		addSequential(new StupidDriveFwd(0.25), 1.5);
 		
 		addSequential(new TusksTrussShotPosition());
 		
