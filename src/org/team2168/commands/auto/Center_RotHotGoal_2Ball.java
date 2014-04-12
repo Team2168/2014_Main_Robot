@@ -1,6 +1,7 @@
 package org.team2168.commands.auto;
 
 import org.team2168.RobotMap;
+import org.team2168.commands.Sleep;
 import org.team2168.commands.drivetrain.AutoDriveXDistance;
 import org.team2168.commands.drivetrain.RotateDrivetrainRelative;
 import org.team2168.commands.drivetrain.StupidDriveFwd;
@@ -55,6 +56,8 @@ super(name);
 		// wait for ball to settle
 		addSequential(new WaitUntilBallSettled(), 1.5);
 
+		addSequential(new Sleep(), 0.6);
+		
 		// First ball
 		addSequential(new FireAndReload());
 
