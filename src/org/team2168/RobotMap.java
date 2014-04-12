@@ -217,7 +217,7 @@ public class RobotMap extends ConstantsBase {
      *                  Autonomous Parameters               *
      ****************************************************************/
 	public static final Constant rotationAngleToHot =
-			new Constant("rotationAngleToHot", 7.5);
+			new Constant("rotationAngleToHot", 8.5);
 	public static final Constant CameraSteadyStateSecs =
 			new Constant("CameraSteadyStateSecs", 1.1);
 	public static final Constant VisionTimeOutSecs =

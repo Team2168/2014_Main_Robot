@@ -56,7 +56,7 @@ super(name);
 		// wait for ball to settle
 		addSequential(new WaitUntilBallSettled(), 1.5);
 
-		addSequential(new Sleep(), 0.6);
+		addSequential(new Sleep(), 0.9);
 		
 		// First ball
 		addSequential(new FireAndReload());
