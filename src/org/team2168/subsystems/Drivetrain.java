@@ -74,37 +74,83 @@ public class Drivetrain extends Subsystem {
 		setDefaultCommand(new DrivetrainWithJoystick());
 	}
 
-	public void driveLeft(double speed) {
+	/**
+	 * Drive the left motors.
+	 * 
+	 * @param speed Normalized speed to drive the motors (1.0 to -1.0)
+	 * @param limiter true to enable the rate limiter.
+	 */
+	public void driveLeft(double speed, boolean limiter) {
 		if (INVERT_LEFT)
 			speed = -speed;
 
-		lastLeftSpeed = rateLimit(speed, lastLeftSpeed,
-				RobotMap.driveRateLimit.getDouble());
+		if(limiter) {
+			lastLeftSpeed = rateLimit(speed, lastLeftSpeed,
+					RobotMap.driveRateLimit.getDouble());
+		} else {
+			lastLeftSpeed = speed;
+		}
 
 		leftMotor.set(lastLeftSpeed);
 	}
+	
+	/**
+	 * Drive the left motors. Rate limiter enabled by default.
+	 * @param speed
+	 */
+	public void driveLeft(double speed) {
+		driveLeft(speed, true);
+	}
 
-	public void driveRight(double speed) {
+	/**
+	 * Drive the right motors.
+	 * 
+	 * @param speed Normalized speed to drive the motors (1.0 to -1.0)
+	 * @param limiter true to enable the rate limiter.
+	 */
+	public void driveRight(double speed, boolean limiter) {
 		if (INVERT_RIGHT)
 			speed = -speed;
 
-		lastRightSpeed = rateLimit(speed, lastRightSpeed,
-				RobotMap.driveRateLimit.getDouble());
+		if(limiter) {
+			lastRightSpeed = rateLimit(speed, lastRightSpeed,
+					RobotMap.driveRateLimit.getDouble());
+		} else {
+			lastRightSpeed = speed;
+		}
 
 		rightMotor.set(lastRightSpeed);
+	}
+	
+	/**
+	 * Drive the right motors. Use rate limiter by default.
+	 * @param speed Normalized speed to drive the motors (1.0 to -1.0)
+	 */
+	public void driveRight(double speed) {
+		driveRight(speed, true);
 	}
 
 	/**
 	 * A method to drive the motors on the drivetrain with.
 	 * 
-	 * @param rightSpeed
-	 *            the speed to drive the right motor at
-	 * @param leftSpeed
-	 *            the speed to drive the left motor at
+	 * @param rightSpeed the speed to drive the right motor at
+	 * @param leftSpeed the speed to drive the left motor at
+	 * @param limiter true to enable the rate limiter.
+	 */
+	public void drive(double rightSpeed, double leftSpeed, boolean limiter) {
+		this.driveRight(rightSpeed, limiter);
+		this.driveLeft(leftSpeed, limiter);
+	}
+	
+	/**
+	 * A method to drive the motors on the drivetrain with. Rate limiter is
+	 *   enabled by default.
+	 * 
+	 * @param rightSpeed the speed to drive the right motor at
+	 * @param leftSpeed the speed to drive the left motor at
 	 */
 	public void drive(double rightSpeed, double leftSpeed) {
-		this.driveRight(rightSpeed);
-		this.driveLeft(leftSpeed);
+		drive(rightSpeed, leftSpeed, true);
 	}
 
 	/**
@@ -127,32 +173,31 @@ public class Drivetrain extends Subsystem {
 
 	/**
 	 * Averages the distance of the two encoders to get the distance the robot
-	 * has traveled
+	 * has traveled.
 	 * 
 	 * @return distance in inches
 	 */
 	public double getAveragedEncoderDistance() {
-		// System.out.println("  l: " + getLeftEncoderDistance() + "  r: " +
-		// getRightEncoderDistance());
 		return (getLeftEncoderDistance() + getRightEncoderDistance()) / 2;
 	}
 
 	/**
-	 * resets right encoder to 0
-	 * 
+	 * Reset right encoder to 0.0
 	 */
 	public void resetRightEncoder() {
 		driveTrainEncoderRight.reset();
 	}
 
 	/**
-	 * resets left encoder to 0
-	 * 
+	 * Reset left encoder to 0.0
 	 */
 	public void resetLeftEncoder() {
 		driveTrainEncoderLeft.reset();
 	}
 
+	/**
+	 * Reset both encoders to 0.0;
+	 */
 	public void resetEncoders() {
 		resetLeftEncoder();
 		resetRightEncoder();
@@ -178,22 +223,16 @@ public class Drivetrain extends Subsystem {
 	 * Set the current robot heading to 0.0
 	 */
 	public void resetGyro() {
-		// double before = getGyroAngle();
 		gyro.reset();
-		// System.out.println("Gyro Before: " + before + " After: " +
-		// getGyroAngle());
 	}
 
 	/**
 	 * A simple rate limiter.
 	 * http://www.chiefdelphi.com/forums/showpost.php?p=1212189&postcount=3
 	 * 
-	 * @param input
-	 *            the input value (speed from command/joystick)
-	 * @param speed
-	 *            the speed currently being traveled at
-	 * @param limit
-	 *            the rate limit
+	 * @param input the input value (speed from command/joystick)
+	 * @param speed the speed currently being traveled at
+	 * @param limit the rate limit
 	 * @return the new output speed (rate limited)
 	 */
 	public static double rateLimit(double input, double speed, double limit) {
@@ -204,14 +243,10 @@ public class Drivetrain extends Subsystem {
 	 * A simple rate limiter.
 	 * http://www.chiefdelphi.com/forums/showpost.php?p=1212189&postcount=3
 	 * 
-	 * @param input
-	 *            the input value (speed from command/joystick)
-	 * @param speed
-	 *            the speed currently being traveled at
-	 * @param posRateLimit
-	 *            the rate limit for accelerating
-	 * @param negRateLimit
-	 *            the rate limit for decelerating
+	 * @param input the input value (speed from command/joystick)
+	 * @param speed the speed currently being traveled at
+	 * @param posRateLimit the rate limit for accelerating
+	 * @param negRateLimit the rate limit for decelerating
 	 * @return the new output speed (rate limited)
 	 */
 	public static double rateLimit(double input, double speed,
