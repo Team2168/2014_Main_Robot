@@ -6,32 +6,21 @@ import org.team2168.commands.drivetrain.RotateDrivetrainRelative;
 import org.team2168.commands.drivetrain.StupidDriveFwd;
 import org.team2168.commands.intake.IntakeDown;
 import org.team2168.commands.intake.IntakeDriveMotor;
+import org.team2168.commands.intake.IntakeSingleBall;
 import org.team2168.commands.intake.IntakeUp;
 import org.team2168.commands.tapper.DisengageTappers;
 import org.team2168.commands.tapper.EngageTappers;
 import org.team2168.commands.tusks.TusksLongShotPosition;
-import org.team2168.commands.vision.WaitForFirstHot;
 import org.team2168.commands.winch.Fire;
 import org.team2168.commands.winch.FireAndReload;
 import org.team2168.commands.winch.Reload;
 import org.team2168.commands.winch.WaitUntilBallSettled;
 import org.team2168.commands.winch.WaitUntilFired;
 
-/**
- * This command is for Auto
- * It performs a two ball two hot atonomous mode
- * The command assumes the Robot is placed in the center of the field facing fwd and the Vision camera is
- * facing the right hot goal target.
- * 
- * The robot will rotate to the Goal that is not hot, and 
- * @author kevin
- *
- */
-public class Center_RotHotGoal_1Ball extends AutoCommandGroup{
+public class Left_2ball_left2right extends AutoCommandGroup {
+	public static final String name = "Left, Shoot to Right, 2 ball Drive Fwd";
 	
-	public static final String name = "1 Ball - Robot In Center - 1 Hot";
-
-	public Center_RotHotGoal_1Ball() {
+	public Left_2ball_left2right() {
 		super(name);
 		
 		// set tusks to long shot
@@ -44,23 +33,31 @@ public class Center_RotHotGoal_1Ball extends AutoCommandGroup{
 		addParallel(new IntakeDriveMotor(0.0));
 		addSequential(new EngageTappers());
 		
-		//wait for hot goal and rotate to other goal.
-		// Rotate DriveTrain = +/- min rotation angle, this will get angle
-		//   from camera once executed
-
-		addSequential(new WaitForFirstHot(),3);
-		addSequential(new RotateDrivetrainRelative(0.0,true,true));
+		addSequential(new RotateDrivetrainRelative(8.5));
 		
 		// wait for ball to settle
 		addSequential(new WaitUntilBallSettled(), 2.0);
 
+		// First ball
+		addSequential(new FireAndReload());
 
-		// fire
+		// intake second ball
+		addSequential(new IntakeSingleBall(), 3.0);
+		addSequential(new EngageTappers());
+
+		// set tusks
+		addParallel(new TusksLongShotPosition());
+
+		// wait for ball to settle
+		addSequential(new WaitUntilBallSettled(),
+				RobotMap.autoBallSettleTime.getDouble());
+
+		// Second Ball
 		addSequential(new Fire());
 		addSequential(new WaitUntilFired());
 		
-		//stop gap to get 5pts in auto, this doesn't necessarily drive straight!
-		//REMOVE when we figure out why drive straight isn't working
+		//drive fwd for pts
+//		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
 		addSequential(new StupidDriveFwd(0.25), 1.5);
 		
 		//Get ready for the match 
@@ -70,6 +67,6 @@ public class Center_RotHotGoal_1Ball extends AutoCommandGroup{
 	}
 	
 	public int numBalls() {
-		return 1;
+		return 2;
 	}
 }

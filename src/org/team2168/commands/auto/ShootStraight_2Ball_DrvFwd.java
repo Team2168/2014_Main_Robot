@@ -2,6 +2,7 @@ package org.team2168.commands.auto;
 
 import org.team2168.RobotMap;
 import org.team2168.commands.drivetrain.AutoDriveXDistance;
+import org.team2168.commands.drivetrain.StupidDriveFwd;
 import org.team2168.commands.intake.IntakeDown;
 import org.team2168.commands.intake.IntakeDriveMotor;
 import org.team2168.commands.intake.IntakeSingleBall;
@@ -53,11 +54,12 @@ public class ShootStraight_2Ball_DrvFwd extends AutoCommandGroup {
 		addSequential(new WaitUntilFired());
 		
 		//drive fwd for pts
-		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
+//		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
+		addSequential(new StupidDriveFwd(0.25), 1.5);
 		
 		//Get ready for the match 
 		addParallel(new DisengageTappers());
-		addParallel(new IntakeUp());
+//		addParallel(new IntakeUp());
 		addParallel(new Reload());
 	}
 	

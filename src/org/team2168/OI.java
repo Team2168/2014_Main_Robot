@@ -5,6 +5,7 @@ import org.team2168.commands.intake.*;
 import org.team2168.commands.tapper.*;
 import org.team2168.commands.tusks.*;
 import org.team2168.commands.winch.*;
+import org.team2168.commands.drivetrain.AutoDriveXDistance;
 import org.team2168.commands.flashlight.*;
 import org.team2168.gamepads.F310;
 
@@ -92,7 +93,7 @@ public class OI {
 		
 		
 		// Auto CONTROLLER BUTTON MAP //////////////////////////		
-		auto.ButtonA().whenPressed(new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		auto.ButtonA().whenPressed(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
 		auto.ButtonB().whenPressed(new Center_RotHotGoal_1Ball());
 		auto.ButtonX().whenPressed(new Left_LeftHotGoal_1Ball());
 		auto.ButtonY().whenPressed(new ShootStraight_2Ball_DrvFwd());
