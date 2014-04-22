@@ -20,7 +20,7 @@ public class AutoDriveXDistance extends CommandBase{
 
 	protected void initialize() {
 		finished = false;
-		drivetrain.drive(0, 0);
+		drivetrain.drive(0, 0, false);
 		drivetrain.resetEncoders();
 		//drivetrain.resetGyro();
 		endDistance = drivetrain.getAveragedEncoderDistance() + distance;
@@ -66,7 +66,7 @@ public class AutoDriveXDistance extends CommandBase{
 				(drivingForward && currentDistance >= endDistance) ||
 				(!drivingForward && currentDistance <= endDistance)) {
 			//we're there, stop
-			drivetrain.drive(0, 0);
+			drivetrain.drive(0, 0, false);
 			finished = true; 
 		} else if(currentDistance < endDistance) {
 			//Drive forward 
@@ -87,7 +87,7 @@ public class AutoDriveXDistance extends CommandBase{
 	
 
 	protected void interrupted() {
-		drivetrain.drive(0, 0);
+		drivetrain.drive(0, 0, false);
 	}
 
 	protected boolean isFinished() {
@@ -95,7 +95,7 @@ public class AutoDriveXDistance extends CommandBase{
 	}
 
 	protected void end() {
-		drivetrain.drive(0, 0);
+		drivetrain.drive(0, 0, false);
 	}
 	
 }
