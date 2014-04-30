@@ -15,7 +15,7 @@ public class StupidDriveFwd extends CommandBase {
 	}
 
 	protected void initialize() {
-		drivetrain.drive(0.0, 0.0);
+		drivetrain.drive(0.0, 0.0, false);
 	}
 
 	/**
@@ -32,11 +32,11 @@ public class StupidDriveFwd extends CommandBase {
 	
 	protected void end() {
 		//make sure we are stopped for good measure
-		drivetrain.drive(0, 0);
+		drivetrain.drive(0, 0, false);
 	}
 
 	protected void interrupted() {
 		//Clear the current command to motor controllers if we're interrupted.
-		drivetrain.drive(0, 0);
+		drivetrain.drive(0, 0, false);
 	}
 }

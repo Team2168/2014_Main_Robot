@@ -1,9 +1,11 @@
 package org.team2168.commands.drivetrain;
 
+import org.team2168.RobotMap;
 import org.team2168.commands.CommandBase;
 
 public class AutoDriveXDistance extends CommandBase{
 	private double distance;
+	private double speed;
 	private double endDistance;
 	private boolean finished;
 	private double angle;
@@ -16,6 +18,13 @@ public class AutoDriveXDistance extends CommandBase{
 	public AutoDriveXDistance(double distance) {
 		requires(drivetrain);
 		this.distance = distance;
+		this.speed = RobotMap.autoNormalSpeed.getDouble();
+	}
+	
+	public AutoDriveXDistance(double distance, double speed) {
+		requires(drivetrain);
+		this.distance = distance;
+		this.speed = speed;
 	}
 
 	protected void initialize() {
@@ -29,15 +38,15 @@ public class AutoDriveXDistance extends CommandBase{
 		drivingForward = drivetrain.getAveragedEncoderDistance() < endDistance;
 		
 		//don't drive if the destination position is really close to our
-		// current position.
+		//current position.
 		finished = Math.abs(distance) < 0.5;
 	}
 
 	protected void execute() {
 		//TODO set the margin of error
 		
-		double rightSpeed = 0.7;
-		double leftSpeed = 0.7;
+		double rightSpeed = speed;
+		double leftSpeed = speed;
 		double currentDistance = drivetrain.getAveragedEncoderDistance();
 
 		//precalculate the steering adjustment value

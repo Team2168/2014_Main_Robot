@@ -79,8 +79,8 @@ super(name);
 		addSequential(new WaitUntilFired());
 		
 		//drive fwd for pts
-//		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
-		addSequential(new StupidDriveFwd(0.6), 0.8);
+		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble(),
+				RobotMap.autoFastSpeed.getDouble()));
 		
 		//Get ready for the match 
 		addParallel(new DisengageTappers());
