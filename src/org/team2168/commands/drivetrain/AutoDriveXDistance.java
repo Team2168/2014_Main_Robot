@@ -79,10 +79,10 @@ public class AutoDriveXDistance extends CommandBase{
 			finished = true; 
 		} else if(currentDistance < endDistance) {
 			//Drive forward 
-			drivetrain.drive(rightSpeed, leftSpeed);
+			drivetrain.drive(rightSpeed, leftSpeed); //use ratelimiter
 		} else {
 			//Drive backwards
-			drivetrain.drive(-rightSpeed, -leftSpeed);
+			drivetrain.drive(-rightSpeed, -leftSpeed); //use ratelimiter
 		}
 //		System.out.println("Right Speed: " + rightSpeed + 
 //				" Left Speed: " + leftSpeed + 
@@ -96,7 +96,7 @@ public class AutoDriveXDistance extends CommandBase{
 	
 
 	protected void interrupted() {
-		drivetrain.drive(0, 0, false);
+		drivetrain.drive(0, 0, false); //bypass rate limiter
 	}
 
 	protected boolean isFinished() {
@@ -104,7 +104,7 @@ public class AutoDriveXDistance extends CommandBase{
 	}
 
 	protected void end() {
-		drivetrain.drive(0, 0, false);
+		drivetrain.drive(0, 0, false); //bypass rate limiter
 	}
 	
 }

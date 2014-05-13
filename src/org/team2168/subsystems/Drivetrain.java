@@ -272,6 +272,7 @@ public class Drivetrain extends Subsystem {
 				speed = input;
 			}
 		}
+		System.out.println("Rate Limiter Working");
 		return speed;
 	}
 }
