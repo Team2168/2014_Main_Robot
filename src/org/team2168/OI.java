@@ -38,11 +38,11 @@ public class OI {
 		operator.ButtonRightBumper().whenReleased(new AutomaticEngageTappers());
 		operator.ButtonLeftBumper().whenPressed(new IntakeUp_Safe());
 		
-		operator.ButtonRightTrigger().whileHeld(new IntakeDriveMotor(RobotMap.intakeWheelVoltage.getDouble()));
-		operator.ButtonRightTrigger().whenPressed(new DisengageTappers());
+		operator.ButtonRightTrigger().whileHeld(new IntakeDriveIn(RobotMap.intakeWheelVoltage.getDouble()));
+		operator.ButtonRightTrigger().whenPressed(new AutomaticEngageTappers());
 		
-		operator.ButtonLeftTrigger().whileHeld(new IntakeDriveMotor(-RobotMap.intakeWheelVoltage.getDouble()));
-		operator.ButtonLeftTrigger().whenPressed(new AutomaticEngageTappers());
+		operator.ButtonLeftTrigger().whileHeld(new IntakeDriveOut(RobotMap.intakeWheelVoltage.getDouble()));
+		operator.ButtonLeftTrigger().whenPressed(new DisengageTappers());
 		
 		operator.ButtonLeftDPad().whenPressed(new DisengageTappers());
 		operator.ButtonRightDPad().whenPressed(new EngageTappers());

@@ -56,15 +56,15 @@ super(name);
 		// wait for ball to settle
 		addSequential(new WaitUntilBallSettled(), 1.5);
 		
-		addSequential(new Sleep(), 0.6);
+		//wait so that we guarantee hot goal switch
+		addSequential(new Sleep(), 0.1);
 
-		addSequential(new Sleep(), 0.9);
 		
 		// First ball
 		addSequential(new FireAndReload());
 
 		// intake second ball
-		addSequential(new IntakeSingleBall(), 3.0);
+		addSequential(new IntakeSingleBall(), 2.0);
 		addSequential(new EngageTappers());
 
 		// set tusks
