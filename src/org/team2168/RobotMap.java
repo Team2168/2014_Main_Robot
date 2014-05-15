@@ -230,6 +230,10 @@ public class RobotMap extends ConstantsBase {
 			new Constant("autoBallSettleTime", 2.0);
 	public static final Constant autoIntakeRunTime = 
 			new Constant("autoIntakeRunTime", 1.0);
+	public static final Constant autoNormalSpeed =
+			new Constant("autoNormalSpeed", 0.25);
+	public static final Constant autoFastSpeed =
+			new Constant("autoFastSpeed", 0.6);
 
 
 	/****************************************************************

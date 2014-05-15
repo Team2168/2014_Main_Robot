@@ -44,7 +44,7 @@ public class Center_RotDrvFwdHotGoal_1Ball extends AutoCommandGroup {
 		// fire
 		addSequential(new FireAndReload());
 		
-		addSequential(new StupidDriveFwd(0.25), 1.5);
+		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
 	}
 	
 	public int numBalls() {

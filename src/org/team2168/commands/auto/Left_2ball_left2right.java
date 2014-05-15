@@ -57,8 +57,7 @@ public class Left_2ball_left2right extends AutoCommandGroup {
 		addSequential(new WaitUntilFired());
 		
 		//drive fwd for pts
-//		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
-		addSequential(new StupidDriveFwd(0.25), 1.5);
+		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
 		
 		//Get ready for the match 
 		addParallel(new DisengageTappers());

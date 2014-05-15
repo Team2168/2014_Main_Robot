@@ -42,11 +42,10 @@ super(name);
 		addSequential(new WaitUntilFired());
 		
 		//drive fwd for pts
-//		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
 		
 		//stop gap to get 5pts in auto, this doesn't necessarily drive straight!
 		//REMOVE when we figure out why drive straight isn't working
-		addSequential(new StupidDriveFwd(0.25), 1.5);
+		addSequential(new AutoDriveXDistance(RobotMap.autoDriveDistance.getDouble()));
 		
 		//Get ready for the match 
 		addParallel(new DisengageTappers());

@@ -1,9 +1,11 @@
 package org.team2168.commands.drivetrain;
 
+import org.team2168.RobotMap;
 import org.team2168.commands.CommandBase;
 
 public class AutoDriveXDistance extends CommandBase{
 	private double distance;
+	private double speed;
 	private double endDistance;
 	private boolean finished;
 	private double angle;
@@ -16,11 +18,18 @@ public class AutoDriveXDistance extends CommandBase{
 	public AutoDriveXDistance(double distance) {
 		requires(drivetrain);
 		this.distance = distance;
+		this.speed = RobotMap.autoNormalSpeed.getDouble();
+	}
+	
+	public AutoDriveXDistance(double distance, double speed) {
+		requires(drivetrain);
+		this.distance = distance;
+		this.speed = speed;
 	}
 
 	protected void initialize() {
 		finished = false;
-		drivetrain.drive(0, 0);
+		drivetrain.drive(0, 0, false);
 		drivetrain.resetEncoders();
 		//drivetrain.resetGyro();
 		endDistance = drivetrain.getAveragedEncoderDistance() + distance;
@@ -29,15 +38,15 @@ public class AutoDriveXDistance extends CommandBase{
 		drivingForward = drivetrain.getAveragedEncoderDistance() < endDistance;
 		
 		//don't drive if the destination position is really close to our
-		// current position.
+		//current position.
 		finished = Math.abs(distance) < 0.5;
 	}
 
 	protected void execute() {
 		//TODO set the margin of error
 		
-		double rightSpeed = 0.7;
-		double leftSpeed = 0.7;
+		double rightSpeed = speed;
+		double leftSpeed = speed;
 		double currentDistance = drivetrain.getAveragedEncoderDistance();
 
 		//precalculate the steering adjustment value
@@ -66,14 +75,14 @@ public class AutoDriveXDistance extends CommandBase{
 				(drivingForward && currentDistance >= endDistance) ||
 				(!drivingForward && currentDistance <= endDistance)) {
 			//we're there, stop
-			drivetrain.drive(0, 0);
+			drivetrain.drive(0, 0, false);
 			finished = true; 
 		} else if(currentDistance < endDistance) {
 			//Drive forward 
-			drivetrain.drive(rightSpeed, leftSpeed);
+			drivetrain.drive(rightSpeed, leftSpeed); //use ratelimiter
 		} else {
 			//Drive backwards
-			drivetrain.drive(-rightSpeed, -leftSpeed);
+			drivetrain.drive(-rightSpeed, -leftSpeed); //use ratelimiter
 		}
 //		System.out.println("Right Speed: " + rightSpeed + 
 //				" Left Speed: " + leftSpeed + 
@@ -87,7 +96,7 @@ public class AutoDriveXDistance extends CommandBase{
 	
 
 	protected void interrupted() {
-		drivetrain.drive(0, 0);
+		drivetrain.drive(0, 0, false); //bypass rate limiter
 	}
 
 	protected boolean isFinished() {
@@ -95,7 +104,7 @@ public class AutoDriveXDistance extends CommandBase{
 	}
 
 	protected void end() {
-		drivetrain.drive(0, 0);
+		drivetrain.drive(0, 0, false); //bypass rate limiter
 	}
 	
 }
