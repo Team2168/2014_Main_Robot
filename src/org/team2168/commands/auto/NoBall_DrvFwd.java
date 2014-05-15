@@ -13,8 +13,8 @@ public class NoBall_DrvFwd extends AutoCommandGroup {
 		
 		//stop gap to get 5pts in auto, this doesn't necessarily drive straight!
 		//REMOVE when we figure out why drive straight isn't working
-		addSequential(new AutoDriveXDistance(100));
-		addSequential(new Sleep(), 5);
+		addSequential(new AutoDriveXDistance(40));
+
 	}
 	
 	public int numBalls() {
