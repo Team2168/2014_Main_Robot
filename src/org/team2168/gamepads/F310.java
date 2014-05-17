@@ -237,11 +237,11 @@ public class F310 extends Joystick
 	}
 
 	public JoystickAnalogButton ButtonLeftTrigger() {
-		return new JoystickAnalogButton(this, AXIS_SHOULDER_TRIGGER, -0.5);
+		return new JoystickAnalogButton(this, AXIS_SHOULDER_TRIGGER, 0.5);
 	}
 	
 	public JoystickAnalogButton ButtonRightTrigger() {
-		return new JoystickAnalogButton(this, AXIS_SHOULDER_TRIGGER, 0.5);
+		return new JoystickAnalogButton(this, AXIS_SHOULDER_TRIGGER, -0.5);
 	}
 	
 	public JoystickAnalogButton ButtonLeftDPad() {

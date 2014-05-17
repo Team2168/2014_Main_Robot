@@ -34,13 +34,27 @@ public class IntakeRollers extends Subsystem{
 	
 	/**
 	 * Drive the intakes motors.
-	 * @param speed value from 1.0 to -1.0, positive brings ball into robot.
+	 * @param speed value from 1.0 to -1.0, negative brings ball into robot.
 	 */
 	public void driveIntake(double speed)  //TODO: CHECK SIGN, seems like positive doesn't take the ball into the robot
 	{
 		intakeMotorController.set(speed);
+		
+		
 	}
 	
+	
+	public void driveIntakeIn(double speed)
+	{ if (speed >= 0)
+		speed = -speed;
+	 driveIntake(speed);
+	 
+	}
+	public void driveIntakeOut (double speed)
+	{
+		speed = Math.abs(speed);
+	driveIntake(speed);
+	}
 	public void stopMotors(){
 		driveIntake(0);
 	}
