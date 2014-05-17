@@ -5,8 +5,6 @@ import org.team2168.commands.CommandBase;
 
 /**
  * A command to run the intake motors at the specified speed.
- *
- * @author James
  */
 public class IntakeDriveIn extends CommandBase {
 	double speed = 0.0;
