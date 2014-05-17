@@ -93,6 +93,14 @@ public abstract class ConstantsBase {
       return value;
     }
 
+    /**
+     * 
+     * @return true for non-zero values
+     */
+    public boolean getBoolean() {
+    	return value != 0.0;
+    }
+    
     public int getInt() {
       return (int)value;
     }
