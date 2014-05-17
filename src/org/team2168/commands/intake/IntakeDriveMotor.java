@@ -14,7 +14,7 @@ public class IntakeDriveMotor extends CommandBase {
 	/**
 	 * Creates a new RunIntake command.
 	 * @param speed the speed to run the intake motors at (1.0 to -1.0)
-	 *   positive rolls balls into the robot.
+	 *   negative rolls balls into the robot.
 	 */
 	public IntakeDriveMotor(double speed) {
     	requires(intakeRollers);
