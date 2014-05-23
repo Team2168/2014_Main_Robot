@@ -5,20 +5,18 @@ import org.team2168.commands.CommandBase;
 
 /**
  * A command to run the intake motors at the specified speed.
- *
- * @author James
  */
 public class IntakeDriveOut extends CommandBase {
-	double speed = 0.0;
-	
-	/**
-	 * Creates a new RunIntake command.
-	 * @param speed the speed to run the intake motors at (1.0 to -1.0)
-	 *   negative rolls balls into the robot.
-	 */
-	public IntakeDriveOut(double speed) {
-    	requires(intakeRollers);
-    	this.speed = speed;
+    double speed = 0.0;
+
+    /**
+     * Creates a new RunIntake command.
+     * @param speed the speed to run the intake motors at (1.0 to -1.0)
+     *   negative rolls balls into the robot.
+     */
+    public IntakeDriveOut(double speed) {
+        requires(intakeRollers);
+        this.speed = speed;
     }
 
     /**

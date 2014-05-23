@@ -86,8 +86,6 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant catExtPort2 = new Constant("catExtPort2", 7);
 	public static final Constant catRetPort2 = new Constant("catRetPort2", 8);
 	
-	//Solenoid Channels(fourth slot on cRio)//////////////////////////
-	
 	
 	//Analog Input Channels///////////////////////////////////////////
 	public static final Constant gyroPort = new Constant("gyroPort", 1);
@@ -192,7 +190,9 @@ public class RobotMap extends ConstantsBase {
 			new Constant("intakeLowerTimeout", 2.5);
 	public static final Constant intakeWheelVoltage =
 			new Constant("intakeWheelVoltage", 0.7);
-	
+	public static final Constant intakeWheelSpeedWhenLowering =
+			new Constant("intakeWheelSpeedWhenLowering", -0.3);
+
 	public static final Constant ballTapperEngageAngle =
 			//new Constant("ballTapperEngageAngle", 55.0); //practice bot
 			new Constant("ballTapperEngageAngle", 70.0);
@@ -201,9 +201,17 @@ public class RobotMap extends ConstantsBase {
 			new Constant("ballTapperShotAngle", 60.0); //comp bot
 	public static final Constant ballTapperDisengageAngle =
 			new Constant("ballTapperDisengageAngle", 0.0);
-	public static final Constant intakeWheelSpeedWhenLowering =
-			new Constant("intakeWheelSpeedWhenLowering", -0.3);
 
+	public static final Constant servoMaxAngleLeft =
+			new Constant("servoMaxAngleLeft", 170.0);
+	public static final Constant servoMinAngleLeft =
+			new Constant("servoMinAngleLeft", 0.0);
+	public static final Constant servoMaxAngleRight =
+			new Constant("servoMaxAngleRight", 170.0);
+	public static final Constant servoMinAngleRight =
+			new Constant("servoMinAngleRight", 0.0);
+
+	
 	/****************************************************************
      *                  Operator Interface Parameters               *
      ****************************************************************/
@@ -235,10 +243,6 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant autoFastSpeed =
 			new Constant("autoFastSpeed", 0.6);
 
-
-	/****************************************************************
-     *                  Networking Paramters                        *
-     ****************************************************************/
 
 	
 
