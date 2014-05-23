@@ -195,6 +195,9 @@ public class Robot extends IterativeRobot {
 		} else {
 			arduino.set(2, false);
 		}
+		
+		//Clear the last bit. It should always be zero in auto mode.
+		arduino.set(3,  false);
  	}
 
 	/**
