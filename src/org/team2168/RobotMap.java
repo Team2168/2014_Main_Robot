@@ -148,13 +148,13 @@ public class RobotMap extends ConstantsBase {
 			new Constant("catapultRaiseAngle", 45.0);
 	public static final Constant catapultRaiseVoltage =
 			//new Constant("catapultRaiseVoltage", 2.951); //practice bot
-			new Constant("catapultRaiseVoltage", 4.221); //comp bot
+			new Constant("catapultRaiseVoltage", 4.88); //comp bot
 	public static final Constant catapultLowerAngle =
 			//new Constant("catapultLowerAngle", -23.0); //practice bot
 			new Constant("catapultLowerAngle", -26.0); //comp bot?
 	public static final Constant catapultLowerVoltage =
 			//new Constant("catapultLowerVoltage", 3.938); //practice bot.
-			new Constant("catapultLowerVoltage", 3.209); //comp bot
+			new Constant("catapultLowerVoltage", 3.75); //comp bot
 	public static final Constant catapultWaitUntilFiredAngle =
 			new Constant("catapultWaitUntilFiredAngle", 30.0);
 	//TODO: Determine appropriate threshold voltage values for ball presence
@@ -193,12 +193,13 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant intakeWheelVoltage =
 			new Constant("intakeWheelVoltage", 0.7);
 	
-	public static final Constant ballTapperEngageAngle =
-			//new Constant("ballTapperEngageAngle", 55.0); //practice bot
-			new Constant("ballTapperEngageAngle", 70.0);
+	public static final Constant leftBallTapperEngageAngle =
+			new Constant("leftBallTapperEngageAngle", 58.0);
+	public static final Constant rightBallTapperEngageAngle = 
+			new Constant("rightBallTapperEngageAngle", 73.0);
 	public static final Constant ballTapperShotAngle =
 			//new Constant("ballTapperShotAngle", 36.0); //practice bot
-			new Constant("ballTapperShotAngle", 60.0); //comp bot
+			new Constant("ballTapperShotAngle", 50.0); //comp bot
 	public static final Constant ballTapperDisengageAngle =
 			new Constant("ballTapperDisengageAngle", 0.0);
 	public static final Constant intakeWheelSpeedWhenLowering =
@@ -223,7 +224,7 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant VisionTimeOutSecs =
 			new Constant("VisionTimeOutSecs", 1.5);
 	public static final Constant autoDriveDistance = 
-			new Constant("autoDriveDistance", 40);
+			new Constant("autoDriveDistance", 60);
 	public static final Constant autoDelayBeforeStart =
 			new Constant("autoDelayBeforeStart", 2.0);
 	public static final Constant autoBallSettleTime = 

@@ -22,8 +22,8 @@ public class EngageTappers extends CommandBase {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		servoTapper.setLeftAngle(RobotMap.ballTapperEngageAngle.getDouble());
-		servoTapper.setRightAngle(RobotMap.ballTapperEngageAngle.getDouble());
+		servoTapper.setLeftAngle(RobotMap.leftBallTapperEngageAngle.getDouble());
+		servoTapper.setRightAngle(RobotMap.rightBallTapperEngageAngle.getDouble());
 	}
 
 	/**
