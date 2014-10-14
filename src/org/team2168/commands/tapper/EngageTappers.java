@@ -9,7 +9,7 @@ import org.team2168.commands.CommandBase;
 public class EngageTappers extends CommandBase {
 
 	public EngageTappers() {
-		requires(servoTapper);
+		requires(solenoidTapper);
 	}
 
 	/**
@@ -22,15 +22,14 @@ public class EngageTappers extends CommandBase {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		servoTapper.setLeftAngle(RobotMap.ballTapperEngageAngle.getDouble());
-		servoTapper.setRightAngle(RobotMap.ballTapperEngageAngle.getDouble());
+		solenoidTapper.engage();
 	}
 
 	/**
 	 * The command has completed when both tappers are at the angle specified.
 	 */
 	protected boolean isFinished() {
-		return true;
+		return solenoidTapper.isDisengaged();
 //		return (servoTapper.getLeftAngle() == RobotMap.ballTapperEngageAngle.getDouble())
 //				&& (servoTapper.getRightAngle() == RobotMap.ballTapperEngageAngle.getDouble());
 	}

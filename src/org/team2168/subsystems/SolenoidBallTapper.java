@@ -15,7 +15,7 @@ public class SolenoidBallTapper extends Subsystem {
 	 * A private constructor to prevent multiple instances from being created.
 	 */
 	private SolenoidBallTapper() {
-		tapperRelay = new Relay(RobotMap.ballTapperRelay.getInt());
+		tapperRelay = new Relay(RobotMap.ballTappersRelay.getInt());
 	}
 
 	/**

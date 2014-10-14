@@ -66,12 +66,9 @@ public class RobotMap extends ConstantsBase {
 	
 	
 	//Relay Output Channels///////////////////////////////////////////
-	public static final Constant flashlightRelay =
-			new Constant("flashlightRelay", 1);
-	public static final Constant compressorRelay =
-			new Constant("compressorRelay", 2);
-	public static final Constant ballTapperRelay =
-			new Constant("ballTapperRelay", 3);
+	public static final Constant flashlightRelay = new Constant("flashlightRelay", 1);
+	public static final Constant compressorRelay = new Constant("compressorRelay", 2);
+	public static final Constant ballTappersRelay = new Constant("ballTappersRelay", 3);
 
 
 	//Solenoid Channels(third slot on cRio)///////////////////////////
@@ -147,14 +144,14 @@ public class RobotMap extends ConstantsBase {
 	public static final Constant catapultRaiseAngle =
 			new Constant("catapultRaiseAngle", 45.0);
 	public static final Constant catapultRaiseVoltage =
-			//new Constant("catapultRaiseVoltage", 2.951); //practice bot
-			new Constant("catapultRaiseVoltage", 4.221); //comp bot
+			new Constant("catapultRaiseVoltage", 2.843); //practice bot 10/11/2014
+			//new Constant("catapultRaiseVoltage", 4.221); //comp bot
 	public static final Constant catapultLowerAngle =
-			//new Constant("catapultLowerAngle", -23.0); //practice bot
-			new Constant("catapultLowerAngle", -26.0); //comp bot?
+			new Constant("catapultLowerAngle", -23.0); //practice bot
+			//new Constant("catapultLowerAngle", -26.0); //comp bot?
 	public static final Constant catapultLowerVoltage =
-			//new Constant("catapultLowerVoltage", 3.938); //practice bot.
-			new Constant("catapultLowerVoltage", 3.209); //comp bot
+			new Constant("catapultLowerVoltage", 3.789); //practice bot. 10/11/2014
+			//new Constant("catapultLowerVoltage", 3.209); //comp bot
 	public static final Constant catapultWaitUntilFiredAngle =
 			new Constant("catapultWaitUntilFiredAngle", 30.0);
 	//TODO: Determine appropriate threshold voltage values for ball presence
