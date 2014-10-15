@@ -169,7 +169,12 @@ public class Winch extends Subsystem {
 	 * @return The voltage read from the sensor. 0.0 to 5.0
 	 */
 	public double getWinchBallSensorVoltage() {
-		return winchBallSensor.getVoltage();
+		double voltage = winchBallSensor.getVoltage();
+		//throw away values that are out of range
+		if (voltage >= 1.5) {
+			voltage = 0.0;
+		}
+		return voltage;
 	}
 	
 	/**

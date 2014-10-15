@@ -39,14 +39,14 @@ public class SolenoidBallTapper extends Subsystem {
 	 * Engage the tapper (stop ball motion)
 	 */
 	public void engage() {
-		tapperRelay.set(Relay.Value.kForward);
+		tapperRelay.set(Relay.Value.kReverse);
 	}
 
 	/**
 	 * Disengage the tapper (allow intake/firing)
 	 */
 	public void disengage() {
-		tapperRelay.set(Relay.Value.kReverse);
+		tapperRelay.set(Relay.Value.kForward);
 	}
 	
 	/**
@@ -54,7 +54,7 @@ public class SolenoidBallTapper extends Subsystem {
 	 * @return true if engaged
 	 */
 	public boolean isEngaged() {
-		return tapperRelay.get() == Relay.Value.kForward;
+		return tapperRelay.get() == Relay.Value.kReverse;
 	}
 	
 	/**
@@ -62,6 +62,6 @@ public class SolenoidBallTapper extends Subsystem {
 	 * @return true if disengaged
 	 */
 	public boolean isDisengaged() {
-		return tapperRelay.get() == Relay.Value.kReverse;
+		return tapperRelay.get() == Relay.Value.kForward;
 	}
 }
