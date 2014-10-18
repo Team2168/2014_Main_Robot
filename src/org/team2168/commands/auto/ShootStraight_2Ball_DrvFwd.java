@@ -31,13 +31,13 @@ public class ShootStraight_2Ball_DrvFwd extends AutoCommandGroup {
 		addSequential(new IntakeDown(), 1.5);
 		addParallel(new IntakeDriveMotor(0.0));
 		addSequential(new EngageTappers());
-		
+	
 		// wait for ball to settle
 		addSequential(new WaitUntilBallSettled(), 2.0);
-
+	
 		// First ball
 		addSequential(new FireAndReload());
-
+	
 		// intake second ball
 		addSequential(new IntakeSingleBall(), 3.0);
 		addSequential(new EngageTappers());
